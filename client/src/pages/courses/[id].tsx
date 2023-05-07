@@ -27,6 +27,7 @@ export const getServerSideProps: GetServerSideProps<CoursePageProps> = async (
     /(?:(?:^|.*;\s*)authToken\s*\=\s*([^;]*).*$)|^.*$/,
     "$1"
   );
+  const apiURL = process.env.API_ENDPOINT;
 
   if (!id) {
     return {
@@ -35,16 +36,11 @@ export const getServerSideProps: GetServerSideProps<CoursePageProps> = async (
   }
 
   try {
-    const res = await axios.get(
-      `http://127.0.0.1:8000/api/onlineCourse/${id}`,
-      {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      }
-    );
-
-    console.log("Response:", res);
+    const res = await axios.get(`${apiURL}/courses/${id}`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
 
     if (res.status === 404) {
       return {
@@ -60,7 +56,6 @@ export const getServerSideProps: GetServerSideProps<CoursePageProps> = async (
       },
     };
   } catch (error) {
-    console.log(error);
     return {
       notFound: true,
     };

@@ -4,6 +4,7 @@ import { useRouter } from "next/router";
 import { GetServerSideProps } from "next";
 import Modal from "@/components/SlideOver";
 import { useState } from "react";
+import axios from "axios";
 
 interface User {
   id: number;
@@ -24,6 +25,7 @@ export const getServerSideProps: GetServerSideProps<UserPageProps> = async (
     /(?:(?:^|.*;\s*)authToken\s*\=\s*([^;]*).*$)|^.*$/,
     "$1"
   );
+  const apiURL = process.env.API_ENDPOINT;
 
   if (!id) {
     return {
@@ -32,15 +34,11 @@ export const getServerSideProps: GetServerSideProps<UserPageProps> = async (
   }
 
   try {
-    const res = await fetch(`https://jsonplaceholder.typicode.com/todos/1`, {
-      method: "GET",
+    const res = await axios.get(`${apiURL}/users/${id}`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
     });
-
-    if (!res.ok) {
-      return {
-        notFound: true,
-      };
-    }
 
     if (res.status === 404) {
       return {
@@ -48,7 +46,7 @@ export const getServerSideProps: GetServerSideProps<UserPageProps> = async (
       };
     }
 
-    const user = await res.json();
+    const user = res.data;
 
     return {
       props: {
