@@ -1,0 +1,59 @@
+# Laravel API
+
+api/.phpunit.cache
+api/node_modules
+api/public/build
+api/public/hot
+api/public/storage
+api/storage/*.key
+api/vendor
+api/.env
+api/.env.backup
+api/.env.production
+api/.phpunit.result.cache
+api/Homestead.json
+api/Homestead.yaml
+api/auth.json
+api/npm-debug.log
+api/yarn-error.log
+api/.fleet
+api/.idea
+api/.vscode
+
+
+
+# Next.js Client
+
+# dependencies
+client/node_modules
+client/.pnp
+client/.pnp.js
+
+# testing
+client/coverage
+
+# next.js
+client/.next/
+client/out/
+
+# production
+client/build
+
+# misc
+client/.DS_Store
+client/*.pem
+
+# debug
+client/npm-debug.log*
+client/yarn-debug.log*
+client/yarn-error.log*
+
+# local env files
+client/.env*.local
+
+# vercel
+client/.vercel
+
+# typescript
+client/*.tsbuildinfo
+client/next-env.d.ts
