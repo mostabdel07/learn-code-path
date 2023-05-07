@@ -6,6 +6,7 @@ import { useState } from "react";
 import axios from "axios";
 import SlideOver from "@/components/SlideOver";
 import Modal from "@/components/Modal";
+import { useAuth } from "@/contexts/auth";
 
 interface User {
   id: number;
@@ -66,6 +67,8 @@ export const getServerSideProps: GetServerSideProps<UserPageProps> = async (
 
 export default function UserPage({ user }: UserPageProps) {
   const router = useRouter();
+  const { token } = useAuth();
+  const apiURL = process.env.API_ENDPOINT;
 
   const [editUser, setEditUser] = useState({
     username: user.username,
@@ -77,17 +80,49 @@ export default function UserPage({ user }: UserPageProps) {
     setEditUser((prevUser) => ({ ...prevUser, [name]: value }));
   }
 
-  function handleSave() {
+  const handleSave = () => {
     console.log(editUser);
     setOpenSlideOver(false);
     setOpenModalEdit(true);
     // TODO: Fetch
-  }
+    console.log(token);
+
+    axios
+      .put(
+        `${apiURL}/users/${user.id}`,
+        { editUser },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      )
+      .then((response) => {
+        // handle success response
+        console.log(response);
+      })
+      .catch((error) => {
+        // handle error response
+        console.log(error);
+      });
+  };
 
   function handleDelete() {
     console.log(user);
     setOpenModalDelete(false);
     // TODO: Fetch
+    console.log(token);
+
+    axios
+      .delete(`${apiURL}/users/${user.id}`)
+      .then((response) => {
+        // handle success response
+        console.log(response);
+      })
+      .catch((error) => {
+        // handle error response
+        console.log(error);
+      });
   }
 
   const [openSlideOver, setOpenSlideOver] = useState(false);

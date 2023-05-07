@@ -1,11 +1,11 @@
 import Hero from "@/components/Hero";
 import HomeLayout from "@/layouts/HomeLayout";
-import Contact from "@/sections/Contact";
-import About from "@/sections/About";
-import Gallery from "@/sections/Gallery";
-import Features from "@/sections/Features";
+import Contact from "@/components/home/Contact";
+import About from "@/components/home/About";
+import Gallery from "@/components/home/Gallery";
+import Features from "@/components/home/Features";
 import { useAuth } from "@/contexts/auth";
-import Header from "@/sections/Header";
+import Header from "@/components/home/Header";
 
 export default function HomePage() {
   const { isAuthenticated } = useAuth();

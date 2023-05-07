@@ -15,13 +15,13 @@ export default function Hero() {
         <div className="flex items-center justify-center mt-4">
           <Link
             href="/courses"
-            className="px-4 py-2 mr-4 text-white uppercase rounded-lg bg-gray-800 border-2 border-transparent text-md hover:bg-gray-900"
+            className="px-4 py-2 mr-4 text-gray-900 dark:text-white uppercase rounded-lg bg-white dark:bg-gray-800 border-2 border-transparent text-md"
           >
             Ver cursos
           </Link>
           <Link
             href="/login"
-            className="px-4 py-2 text-white uppercase rounded-lg bg-transparent border-2 border-white  hover:bg-gray-800 hover:text-white text-md"
+            className="px-4 py-2 text-white uppercase rounded-lg bg-transparent border-2 border-white hover:bg-red-500 dark:hover:bg-indigo-950 hover:text-white text-md"
           >
             Log in
           </Link>

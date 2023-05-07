@@ -91,11 +91,11 @@ class UserController extends Controller
         $validatedData = $request->validate([
             'username' => 'required|string|max:255',
             'email' => 'required|string|email|max:255|unique:users,email',
-            'password' => ['required', 'string', 'min:8', 'regex:/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).+$/'],
+            // 'password' => ['required', 'string', 'min:8', 'regex:/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).+$/'],
         ]);
 
-        $validatedData['password'] = Hash::make($validatedData['password']);
-        $validatedData['role_id'] = 3;
+        // $validatedData['password'] = Hash::make($validatedData['password']);
+        // $validatedData['role_id'] = 3;
         
         $user = User::find($id);
         $user->update($validatedData);

@@ -1,0 +1,18 @@
+import Slider from "@/components/Slider";
+import React from "react";
+
+export default function Gallery() {
+  return (
+    <section
+      id="gallery"
+      className="py-8 lg:py-16 bg-gray-100 dark:bg-gray-900"
+    >
+      <div>
+        <h2 className="text-center text-2xl text-gray-900 dark:text-white font-bold md:text-4xl">
+          Galería
+        </h2>
+      </div>
+      <Slider />
+    </section>
+  );
+}
