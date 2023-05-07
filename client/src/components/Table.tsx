@@ -264,7 +264,7 @@ export default function Table(props: Props) {
                                 <td className="flex items-center px-4 py-4 text-sm font-medium text-gray-900 whitespace-nowrap dark:text-white">
                                   <Image
                                     className="w-10 h-10 rounded-full"
-                                    src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
+                                    src="https://cdn2.iconfinder.com/data/icons/flatfaces-everyday-people-square/128/beard_male_man_face_avatar-512.png"
                                     alt="Jese image"
                                     height="256"
                                     width="256"
