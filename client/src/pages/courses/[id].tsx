@@ -3,6 +3,10 @@ import Image from "next/image";
 import { useRouter } from "next/router";
 import { GetServerSideProps } from "next";
 import axios from "axios";
+import { useState } from "react";
+import SlideOver from "@/components/SlideOver";
+import Modal from "@/components/Modal";
+import { useAuth } from "@/contexts/auth";
 
 interface Course {
   id: number;
@@ -65,8 +69,47 @@ export const getServerSideProps: GetServerSideProps<CoursePageProps> = async (
 export default function CoursePage({ course }: CoursePageProps) {
   const router = useRouter();
 
+  const apiURL = process.env.API_ENDPOINT;
+
+  const [openSlideOver, setOpenSlideOver] = useState(false);
+  const [openModalEdit, setOpenModalEdit] = useState(false);
+  const [openModalDelete, setOpenModalDelete] = useState(false);
+
+  function handleOpenSlideOver() {
+    setOpenSlideOver(true);
+  }
+
+  function handleCloseSlideOver() {
+    setOpenSlideOver(false);
+  }
+
+  function handleCloseModalEdit() {
+    setOpenModalEdit(false);
+  }
+
+  function handleCloseModalDelete() {
+    setOpenModalDelete(false);
+  }
+
   if (!course || router.isFallback) {
     return <div>Loading...</div>;
+  }
+
+  const { token } = useAuth();
+
+  async function handleDelete(id: number) {
+    console.log(id);
+    console.log(token);
+    try {
+      const response = await axios.delete(`${apiURL}/courses/${id}`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      console.log(response);
+    } catch (error) {
+      console.log(error);
+    }
   }
 
   return (
@@ -220,10 +263,22 @@ export default function CoursePage({ course }: CoursePageProps) {
                   </div>
                 </div>
               </div>
-              <div className="flex">
+              <div className="flex justify-center mt-4">
                 <span className="title-font font-medium text-2xl text-gray-900">
                   {parseFloat(course.price) == 0.0 ? "Free" : course.price}
                 </span>
+                <button
+                  className="inline-flex text-white bg-blue-500 border-0 py-2 px-6 focus:outline-none hover:bg-blue-600 rounded text-lg"
+                  // onClick={handleOpenSlideOver}
+                >
+                  Editar
+                </button>
+                <button
+                  className="ml-4 inline-flex text-white bg-red-500 border-0 py-2 px-6 focus:outline-none hover:bg-red-600 rounded text-lg"
+                  onClick={() => setOpenModalDelete(true)}
+                >
+                  Eliminar
+                </button>
                 <button className="flex ml-auto text-white bg-indigo-500 border-0 py-2 px-6 focus:outline-none hover:bg-indigo-600 rounded">
                   Añadir
                 </button>
@@ -239,6 +294,62 @@ export default function CoursePage({ course }: CoursePageProps) {
                     <path d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z"></path>
                   </svg>
                 </button>
+                <SlideOver
+                  openSlideOver={openSlideOver}
+                  onClose={handleCloseSlideOver}
+                >
+                  <form className="mb-6">
+                    <button
+                      type="button"
+                      className="text-white bg-green-700 hover:bg-green-800 w-full focus:ring-4 focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-green-600 dark:hover:bg-green-700 focus:outline-none dark:focus:ring-green-800 block"
+                      // onClick={handleSave}
+                    >
+                      Guardar
+                    </button>
+                  </form>
+                </SlideOver>
+                {/* Modal aviso guardar */}
+                <Modal
+                  title="Aviso"
+                  openModal={openModalEdit}
+                  onClose={handleCloseModalEdit}
+                >
+                  <div className="bg-white px-4 pb-4 sm:p-6 sm:pb-8 sm:mt-0">
+                    <p className="text-center sm:text-left">
+                      ¡Se han guardado los cambios correctamente!
+                    </p>
+                  </div>
+                </Modal>
+                {/* Modal aviso eliminar */}
+                <Modal
+                  title="Eliminar curso"
+                  openModal={openModalDelete}
+                  onClose={handleCloseModalDelete}
+                >
+                  <div className="bg-white px-4 pb-4 sm:p-6 sm:pb-4 sm:mt-0">
+                    <p className="text-center sm:text-left">
+                      Estas seguro de eliminar el curso &quot;
+                      <span className="font-bold italic">{course.title}</span>
+                      &quot; definitivamente.
+                    </p>
+                  </div>
+                  <div className="bg-gray-50 px-4 py-3 sm:flex sm:flex-row-reverse sm:px-6">
+                    <button
+                      type="button"
+                      className="inline-flex w-full justify-center rounded-md bg-red-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-red-500 sm:ml-3 sm:w-auto"
+                      onClick={() => handleDelete(course.id)}
+                    >
+                      Aceptar
+                    </button>
+                    <button
+                      type="button"
+                      className="mt-3 inline-flex w-full justify-center rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50 sm:mt-0 sm:w-auto"
+                      onClick={handleCloseModalDelete}
+                    >
+                      Cancelar
+                    </button>
+                  </div>
+                </Modal>
               </div>
             </div>
           </div>
