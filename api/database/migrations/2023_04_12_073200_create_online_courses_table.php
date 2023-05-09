@@ -17,7 +17,10 @@ return new class extends Migration
             $table->decimal('price', 8, 2);            
             $table->string('img');
             $table->string('headline');
-            $table->string('instructor')->default('Desconocido');
+            $table->foreignId('instructor_id')
+            ->nullable()
+            ->constrained()
+            ->nullOnDelete();
             $table->timestamps();
         });
     }

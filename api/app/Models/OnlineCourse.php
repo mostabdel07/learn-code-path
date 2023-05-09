@@ -14,9 +14,13 @@ class OnlineCourse extends Model
         'price',
         'img',
         'headline',
-        'intructor',
-        'id'
-
+        'instructor_id',
+        'id',
     ];
+
+    public function instructor()
+    {
+        return $this->belongsTo(Instructor::class);
+    }
 
 }
