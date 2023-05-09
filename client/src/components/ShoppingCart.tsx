@@ -2,9 +2,58 @@ import { useShoppingCart } from "@/contexts/ShoppingCartContext";
 import React from "react";
 import CartItem from "./CartItem";
 import useOnlineCourses from "@/hooks/useOnlineCourses";
+import { GetServerSideProps } from "next";
+
+interface Course {
+  id: number;
+  title: string;
+  headline: string;
+  instructor: string;
+  price: string;
+  img: string;
+  created_at: string;
+  updated_at: string;
+}
 
 type ShoppingCartProps = {
   isOpen: boolean;
+  course: Course;
+};
+
+export const getServerSideProps: GetServerSideProps<ShoppingCartProps> = async (
+  context
+) => {
+  const token = context.req.headers.cookie?.replace(
+    /(?:(?:^|.*;\s*)authToken\s*\=\s*([^;]*).*$)|^.*$/,
+    "$1"
+  );
+  const apiURL = process.env.API_ENDPOINT;
+
+  try {
+    const res = await axios.get(`${apiURL}/courses/${id}`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+
+    if (res.status === 404) {
+      return {
+        notFound: true,
+      };
+    }
+
+    const course = res.data;
+
+    return {
+      props: {
+        course,
+      },
+    };
+  } catch (error) {
+    return {
+      notFound: true,
+    };
+  }
 };
 
 const ShoppingCart = ({ isOpen }: ShoppingCartProps) => {
@@ -40,7 +89,7 @@ const ShoppingCart = ({ isOpen }: ShoppingCartProps) => {
         className="absolute top-2 right-2 inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-gray-500 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500"
         onClick={closeCart}
       >
-        <span className="sr-only">Close</span>
+        Close
         <svg
           className="h-6 w-6"
           xmlns="http://www.w3.org/2000/svg"

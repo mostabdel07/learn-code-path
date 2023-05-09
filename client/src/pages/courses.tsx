@@ -7,7 +7,7 @@ import useOnlineCourses from "@/hooks/useOnlineCourses";
 const CoursesPage = () => {
   const { data, loading, error } = useOnlineCourses();
   return (
-    <DefaultLayout title="Cursos populares">
+    <DefaultLayout title="Cursos">
       <Panel data={data} loading={loading} error={error} />
     </DefaultLayout>
   );

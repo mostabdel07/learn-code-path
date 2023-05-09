@@ -13,35 +13,37 @@ const UsersPage = () => {
   const apiURL = process.env.API_ENDPOINT;
 
   useEffect(() => {
-    fetch(`${apiURL}/users`, {
-      method: "GET",
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    })
-      .then((response) => {
-        if (!response.ok) {
-          throw new Error(
-            `This is an HTTP error: The status is ${response.status}`
-          );
-        }
-        return response.json();
+    if (token) {
+      fetch(`${apiURL}/users`, {
+        method: "GET",
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
       })
-      .then((actualData) => {
-        setData(actualData);
-        setError(null);
-      })
-      .catch((err) => {
-        setError(err.message);
-        setData(null);
-      })
-      .finally(() => {
-        setLoading(false);
-      });
+        .then((response) => {
+          if (!response.ok) {
+            throw new Error(
+              `This is an HTTP error: The status is ${response.status}`
+            );
+          }
+          return response.json();
+        })
+        .then((actualData) => {
+          setData(actualData);
+          setError(null);
+        })
+        .catch((err) => {
+          setError(err.message);
+          setData(null);
+        })
+        .finally(() => {
+          setLoading(false);
+        });
+    }
   }, [token]);
 
   return (
-    <DefaultLayout title="Listado de usuarios">
+    <DefaultLayout title="Usuarios">
       <Table data={data} loading={loading} error={error} />
     </DefaultLayout>
   );

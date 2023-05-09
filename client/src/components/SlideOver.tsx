@@ -6,12 +6,14 @@ interface SlideOverProps {
   children: React.ReactNode;
   openSlideOver: boolean;
   onClose: () => void;
+  title: string;
 }
 
 export default function SlideOver({
   children,
   openSlideOver,
   onClose,
+  title,
 }: SlideOverProps) {
   function handleClose() {
     onClose();
@@ -19,7 +21,7 @@ export default function SlideOver({
 
   return (
     <Transition.Root show={openSlideOver} as={Fragment}>
-      <Dialog as="div" className="relative z-10" onClose={handleClose}>
+      <Dialog as="div" className="relative z-50" onClose={handleClose}>
         <Transition.Child
           as={Fragment}
           enter="ease-in-out duration-500"
@@ -68,7 +70,7 @@ export default function SlideOver({
                   <div className="flex h-full flex-col overflow-y-scroll bg-white py-6 shadow-xl">
                     <div className="px-4 sm:px-6">
                       <Dialog.Title className="text-base font-semibold leading-6 text-gray-900">
-                        Editar Usuario
+                        {title}
                       </Dialog.Title>
                     </div>
                     <div className="relative mt-6 flex-1 px-4 sm:px-6">

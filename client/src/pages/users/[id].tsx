@@ -156,19 +156,8 @@ const UserPage = ({ user }: UserPageProps) => {
   }
 
   return (
-    <DefaultLayout title="Mi panel">
+    <DefaultLayout title="Gestionar usuario">
       <section className="text-gray-600 body-font">
-        <div className="flex flex-col text-center w-full mt-6 mb-12">
-          <h1 className="text-2xl font-medium title-font mb-4 text-gray-900 tracking-widest">
-            Información del usuario
-          </h1>
-          <p className="lg:w-2/3 mx-auto leading-relaxed text-base">
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Culpa fugit
-            quia iste dicta saepe debitis voluptates, nobis, facere, aperiam
-            repellendus ducimus numquam incidunt fugiat architecto doloremque
-            repudiandae! Natus, voluptas quisquam?
-          </p>
-        </div>
         <div className="container mx-auto flex px-5 py-24 md:flex-row flex-col items-center">
           <div className="lg:max-w-lg lg:w-full md:w-1/2 w-5/6 mb-10 md:mb-0">
             <Image
@@ -215,6 +204,7 @@ const UserPage = ({ user }: UserPageProps) => {
               </button>
 
               <SlideOver
+                title="Editar usuario"
                 openSlideOver={openSlideOver}
                 onClose={handleCloseSlideOver}
               >

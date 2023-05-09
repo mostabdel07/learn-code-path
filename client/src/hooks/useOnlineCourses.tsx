@@ -22,31 +22,33 @@ const useOnlineCourses = () => {
 
   useEffect(() => {
     const fetchData = async () => {
-      try {
-        const response = await fetch(`${apiURL}/courses`, {
-          method: "GET",
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        });
+      if (token) {
+        try {
+          const response = await fetch(`${apiURL}/courses`, {
+            method: "GET",
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          });
 
-        if (!response.ok) {
-          throw new Error(
-            `This is an HTTP error: The status is ${response.status}`
-          );
+          if (!response.ok) {
+            throw new Error(
+              `This is an HTTP error: The status is ${response.status}`
+            );
+          }
+
+          const responseData = await response.json();
+
+          console.log(responseData);
+          setData(responseData);
+          setError(null);
+        } catch (error: any) {
+          // Todo any
+          setError(error.message);
+          setData(null);
+        } finally {
+          setLoading(false);
         }
-
-        const responseData = await response.json();
-        console.log("hoock");
-        console.log(responseData);
-        setData(responseData);
-        setError(null);
-      } catch (error: any) {
-        // Todo any
-        setError(error.message);
-        setData(null);
-      } finally {
-        setLoading(false);
       }
     };
 
