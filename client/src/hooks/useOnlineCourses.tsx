@@ -37,6 +37,7 @@ const useOnlineCourses = () => {
         }
 
         const responseData = await response.json();
+        console.log("hoock");
         console.log(responseData);
         setData(responseData);
         setError(null);

@@ -7,6 +7,7 @@ import axios from "axios";
 import SlideOver from "@/components/SlideOver";
 import Modal from "@/components/Modal";
 import { useAuth } from "@/contexts/auth";
+import withAuth from "@/components/withAuth";
 
 interface User {
   id: number;
@@ -65,12 +66,12 @@ export const getServerSideProps: GetServerSideProps<UserPageProps> = async (
   }
 };
 
-export default function UserPage({ user }: UserPageProps) {
+const UserPage = ({ user }: UserPageProps) => {
   const router = useRouter();
   const { token } = useAuth();
   const apiURL = process.env.API_ENDPOINT;
 
-  const [editUser, setEditUser] = useState({
+  const [editUser, setEditUser] = useState<Partial<User>>({
     username: user.username,
     email: user.email,
   });
@@ -80,49 +81,54 @@ export default function UserPage({ user }: UserPageProps) {
     setEditUser((prevUser) => ({ ...prevUser, [name]: value }));
   }
 
-  const handleSave = () => {
-    console.log(editUser);
+  async function handleSave(id: number) {
     setOpenSlideOver(false);
     setOpenModalEdit(true);
     // TODO: Fetch
     console.log(token);
 
-    axios
-      .put(
-        `${apiURL}/users/${user.id}`,
-        { editUser },
+    // Identify the changed properties
+    let changedProperties: Partial<User> = {};
+    if (editUser.username !== user.username) {
+      changedProperties.username = editUser.username;
+    }
+    if (editUser.email !== user.email) {
+      changedProperties.email = editUser.email;
+    }
+    console.log(changedProperties);
+
+    try {
+      const response = await axios.put(
+        `${apiURL}/users/${id}`,
+        changedProperties,
         {
           headers: {
             Authorization: `Bearer ${token}`,
           },
         }
-      )
-      .then((response) => {
-        // handle success response
-        console.log(response);
-      })
-      .catch((error) => {
-        // handle error response
-        console.log(error);
-      });
-  };
+      );
+      console.log(response);
+      if (response.status === 204) router.reload();
+    } catch (error) {
+      console.log(error);
+    }
+  }
 
-  function handleDelete() {
-    console.log(user);
-    setOpenModalDelete(false);
-    // TODO: Fetch
+  async function handleDelete(id: number) {
+    setOpenModalEdit(true);
+    console.log(id);
     console.log(token);
-
-    axios
-      .delete(`${apiURL}/users/${user.id}`)
-      .then((response) => {
-        // handle success response
-        console.log(response);
-      })
-      .catch((error) => {
-        // handle error response
-        console.log(error);
+    try {
+      const response = await axios.delete(`${apiURL}/users/${id}`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
       });
+      console.log(response);
+      if (response.status === 204) router.push("/users");
+    } catch (error) {
+      console.log(error);
+    }
   }
 
   const [openSlideOver, setOpenSlideOver] = useState(false);
@@ -267,7 +273,7 @@ export default function UserPage({ user }: UserPageProps) {
                   <button
                     type="button"
                     className="text-white bg-green-700 hover:bg-green-800 w-full focus:ring-4 focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-green-600 dark:hover:bg-green-700 focus:outline-none dark:focus:ring-green-800 block"
-                    onClick={handleSave}
+                    onClick={() => handleSave(user.id)}
                   >
                     Guardar
                   </button>
@@ -302,7 +308,7 @@ export default function UserPage({ user }: UserPageProps) {
                   <button
                     type="button"
                     className="inline-flex w-full justify-center rounded-md bg-red-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-red-500 sm:ml-3 sm:w-auto"
-                    onClick={handleDelete}
+                    onClick={() => handleDelete(user.id)}
                   >
                     Aceptar
                   </button>
@@ -321,4 +327,6 @@ export default function UserPage({ user }: UserPageProps) {
       </section>
     </DefaultLayout>
   );
-}
+};
+
+export default withAuth(UserPage);

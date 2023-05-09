@@ -8,6 +8,7 @@ import DarkModeSwitch from "./DarkModeSwitch";
 import Link from "next/link";
 import Image from "next/image";
 import { useShoppingCart } from "@/contexts/ShoppingCartContext";
+import { useRouter } from "next/router";
 
 const navigation = [
   { name: "Dashboard", href: "#", current: true },
@@ -22,15 +23,17 @@ function classNames(...classes: any) {
 
 export default function TopBar({ title }: any) {
   const { logout } = useAuth();
+  const router = useRouter();
 
   const handleLogout = () => {
     logout();
+    router.push("/login");
   };
 
   const { openCart, cartItems } = useShoppingCart();
 
   return (
-    <div className="sticky top-0 z-5">
+    <div className="sticky top-0 z-10">
       <Disclosure as="nav" className="bg-slate-200 dark:bg-slate-900">
         <>
           <div className="mx-auto max-w-80 px-2 sm:px-14 lg:px-12">
@@ -127,7 +130,7 @@ export default function TopBar({ title }: any) {
                             )}
                             onClick={handleLogout}
                           >
-                            Sign out
+                            Logout
                           </a>
                         )}
                       </Menu.Item>

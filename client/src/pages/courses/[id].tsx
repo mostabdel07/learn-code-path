@@ -7,6 +7,7 @@ import { useState } from "react";
 import SlideOver from "@/components/SlideOver";
 import Modal from "@/components/Modal";
 import { useAuth } from "@/contexts/auth";
+import withAuth from "@/components/withAuth";
 
 interface Course {
   id: number;
@@ -66,8 +67,9 @@ export const getServerSideProps: GetServerSideProps<CoursePageProps> = async (
   }
 };
 
-export default function CoursePage({ course }: CoursePageProps) {
+const CoursePage = ({ course }: CoursePageProps) => {
   const router = useRouter();
+  const { token } = useAuth();
 
   const apiURL = process.env.API_ENDPOINT;
 
@@ -94,8 +96,6 @@ export default function CoursePage({ course }: CoursePageProps) {
   if (!course || router.isFallback) {
     return <div>Loading...</div>;
   }
-
-  const { token } = useAuth();
 
   async function handleDelete(id: number) {
     console.log(id);
@@ -357,4 +357,6 @@ export default function CoursePage({ course }: CoursePageProps) {
       </section>
     </DefaultLayout>
   );
-}
+};
+
+export default withAuth(CoursePage);

@@ -1,24 +1,31 @@
 import { useRouter } from "next/router";
 import { useEffect } from "react";
 import { useAuth } from "@/contexts/auth";
+import Cookies from "js-cookie";
 
 const withAuth = <P extends object>(Component: React.ComponentType<P>) => {
   const WrappedComponent = (props: P) => {
     const router = useRouter();
     const { isAuthenticated } = useAuth();
 
+    // useEffect(() => {
+    //   if (!isAuthenticated) {
+    //     console.log(isAuthenticated);
+    //     router.push("/login");
+    //   }
+    // }, [isAuthenticated, router]);
+
+    // if (!isAuthenticated) {
+    //   return null;
+    // }
+
     useEffect(() => {
-      if (!isAuthenticated) {
-        console.log(isAuthenticated);
+      // Check if the user has a valid JWT token
+      const token = Cookies.get("authToken");
+      if (!token) {
         router.push("/login");
       }
-    }, [isAuthenticated, router]);
-
-    if (!isAuthenticated) {
-      return null;
-    }
-
-    console.log(isAuthenticated);
+    }, []);
 
     return <Component {...props} />;
   };
