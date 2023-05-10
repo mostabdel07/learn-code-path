@@ -19,8 +19,8 @@ class Instructor extends Model
         'id'
     ];
 
-    public function course(): BelongsTo
+    public function onlineCourses()
     {
-        return $this->belongsTo(Course::class);
+        return $this->hasMany(OnlineCourse::class);
     }
 }
