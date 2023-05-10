@@ -74,7 +74,7 @@ function SidebarLayout({ children, title }: any) {
 
   return (
     <div>
-      <nav className="fixed top-0 z-50 w-full bg-white border-b border-gray-200 dark:bg-indigo-950 dark:border-gray-700">
+      <nav className="fixed top-0 z-50 w-full bg-sky-500 border-b border-gray-100 dark:bg-sky-900 dark:border-gray-300">
         <div className="px-3 py-3 lg:px-5 lg:pl-3">
           <div className="flex items-center justify-between">
             <div className="flex items-center justify-start">
@@ -107,7 +107,7 @@ function SidebarLayout({ children, title }: any) {
                   className="h-8 mr-3"
                   alt="FlowBite Logo"
                 /> */}
-                <span className="self-center text-xl font-semibold sm:text-2xl whitespace-nowrap dark:text-white">
+                <span className="self-center text-xl font-semibold sm:text-2xl whitespace-nowrap text-white">
                   LearnCodePath
                 </span>
               </a>
@@ -117,7 +117,7 @@ function SidebarLayout({ children, title }: any) {
                 <DarkModeSwitch />
                 <button
                   type="button"
-                  className="p-1 mr-4 text-gray-400 hover:text-white"
+                  className="p-1 mr-4 text-white hover:text-gray-200"
                   onClick={openCart}
                 >
                   <MdLocalGroceryStore className="h-6 w-6" aria-hidden="true" />
@@ -203,18 +203,18 @@ function SidebarLayout({ children, title }: any) {
 
       <aside
         id="logo-sidebar"
-        className={`fixed top-0 left-0 z-40 w-64 h-screen pt-20 transition-transform bg-white border-r border-gray-200 lg:translate-x-0  dark:bg-indigo-900 dark:border-gray-700 ${
+        className={`fixed top-0 left-0 z-40 w-64 h-screen pt-20 transition-transform bg-sky-100 border-r border-gray-200 lg:translate-x-0  dark:bg-sky-700 dark:border-gray-700 ${
           isOpen ? "" : "-translate-x-full"
         }`}
         aria-label="Sidebar"
       >
-        <div className="h-full px-3 pb-4 overflow-y-auto bg-white dark:bg-indigo-900">
+        <div className="h-full px-3 pb-4 overflow-y-auto bg-sky-100 dark:bg-sky-700">
           <ul className="space-y-2 font-medium">
             {links.map((item, index) => (
               <li key={index}>
                 <Link
                   href={item.path}
-                  className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700"
+                  className="flex items-center p-2 text-sky-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700"
                 >
                   <item.icon className="w-6 h-6 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white" />
                   <span className="ml-3">{item.title}</span>

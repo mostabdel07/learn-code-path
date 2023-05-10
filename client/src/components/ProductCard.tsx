@@ -119,7 +119,7 @@ const ProductCard = (props: Course) => {
         </div>
         <div className="flex items-center justify-between">
           <span className="text-3xl font-bold text-gray-900 dark:text-white">
-            {price}
+            {parseInt(price) === 0.0 ? "Free" : price}
           </span>
           <div className="flex flex-wrap">
             <button className="w-full sm:w-auto mx-1 my-1 px-2 py-1 text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded text-sm text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
