@@ -23,12 +23,10 @@ export const useAuthToken = () => {
 
   const saveUserID = (userId: number) => {
     localStorage.setItem("session_id", userId.toString());
-    setToken(null);
   };
 
   const clearUserID = () => {
     localStorage.removeItem("session_id");
-    setToken(null);
   };
 
   return { token, saveToken, clearToken, saveUserID, clearUserID };
