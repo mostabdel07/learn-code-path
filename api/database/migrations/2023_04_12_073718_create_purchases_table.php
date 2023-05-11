@@ -13,8 +13,13 @@ return new class extends Migration
     {
         Schema::create('purchases', function (Blueprint $table) {
             $table->id();
-            $table->date('date');
-            $table->double('total_price');
+            $table->foreignId('user_id')
+            ->constrained()
+            ->cascadeOnDelete();
+            $table->foreignId('online_course_id')
+            ->constrained()
+            ->cascadeOnDelete();
+            $table->timestamp('purchase_date')->default(\Illuminate\Support\Facades\DB::raw('CURRENT_TIMESTAMP'));
             $table->timestamps();
         });
     }

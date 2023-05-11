@@ -114,4 +114,21 @@ class OnlineCourseController extends Controller
         $onlineCourse->delete();
         return response()->json(null, 204);
     }
+
+    public function checkCourses(Request $request)
+    {
+        $courseIds = $request->all(); // Obtiene todos los datos enviados en el cuerpo de la solicitud
+
+    // Verifica la existencia de cada curso individualmente
+    $existingCourses = true;
+    foreach ($courseIds as $courseId) {
+        if (!OnlineCourse::where('id', $courseId)->exists()) {
+            $existingCourses = false;
+            break;
+        }
+    }
+
+    // Devuelve true si todos los cursos existen, false en caso contrario
+    return $existingCourses ? 'true' : 'false';
+    }
 }

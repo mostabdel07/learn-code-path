@@ -23,4 +23,9 @@ class OnlineCourse extends Model
         return $this->belongsTo(Instructor::class);
     }
 
+    public function purchases()
+    {
+        return $this->hasMany(Purchase::class);
+    }
+
 }

@@ -11,18 +11,23 @@ class Purchase extends Model
     use HasFactory;
 
     protected $fillable = [
-        'date',
-        'total_price',
-
+        'user_id',
+        'course_id',
+        'purchase_date',
     ];
 
     protected $guarded = [
         'id'
     ];
 
-    public function courses(): BelongsToMany
+    public function user()
     {
-        return $this->belongsToMany(Course::class);
+        return $this->belongsTo(User::class);
+    }
+
+    public function course()
+    {
+        return $this->belongsTo(OnlineCourse::class);
     }
 
 }

@@ -30,3 +30,5 @@ Route::controller(AuthApiController::class)->group(function () {
 Route::apiResource('users', UserController::class);
 
 Route::apiResource('courses', OnlineCourseController::class);
+
+Route::post('check_courses', [OnlineCourseController::class, 'checkCourses']);
