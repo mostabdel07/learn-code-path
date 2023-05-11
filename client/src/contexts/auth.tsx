@@ -4,7 +4,7 @@ import { useAuthToken } from "@/hooks/useAuthToken";
 type AuthContextType = {
   isAuthenticated: boolean;
   token: string | null;
-  login: (token: string) => void;
+  login: (token: string, userId: number) => void;
   logout: () => void;
 };
 
@@ -24,18 +24,21 @@ export const useAuth = () => useContext(AuthContext);
 export const AuthProvider: React.FC<AuthContextProps> = ({
   children,
 }: AuthContextProps) => {
-  const { token, saveToken, clearToken } = useAuthToken();
+  const { token, saveToken, clearToken, saveUserID, clearUserID } =
+    useAuthToken();
   const [isAuthenticated, setIsAuthenticated] = useState<boolean>(
     Boolean(token)
   );
 
-  const login = (newToken: string) => {
+  const login = (newToken: string, userId: number) => {
     saveToken(newToken);
+    saveUserID(userId);
     setIsAuthenticated(true);
   };
 
   const logout = () => {
     clearToken();
+    clearUserID();
     setIsAuthenticated(false);
   };
 

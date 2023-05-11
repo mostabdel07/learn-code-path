@@ -4,8 +4,8 @@ import { useRouter } from "next/router";
 import { GetServerSideProps } from "next";
 import { useState } from "react";
 import axios from "axios";
-import SlideOver from "@/components/SlideOver";
-import Modal from "@/components/Modal";
+import SlideOver from "@/components/utilities/SlideOver";
+import Modal from "@/components/utilities/Modal";
 import { useAuth } from "@/contexts/auth";
 import withAuth from "@/components/withAuth";
 

@@ -1,4 +1,4 @@
-import ShoppingCart from "@/components/ShoppingCart";
+import ShoppingCart from "@/components/cart/ShoppingCart";
 import { useCart } from "@/hooks/useCart";
 import { createContext, useContext, ReactNode, useState } from "react";
 

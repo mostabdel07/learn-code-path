@@ -3,7 +3,7 @@ import { useRouter } from "next/router";
 import axios from "axios";
 import { useAuth } from "@/contexts/auth";
 import Link from "next/link";
-import TopBar from "@/components/TopBar";
+import TopBar from "@/components/navigation/TopBar";
 
 export default function LoginPage() {
   const [email, setEmail] = useState("");
@@ -32,14 +32,16 @@ export default function LoginPage() {
 
     console.log(data);
 
-    return data.authorisation.token;
+    return data;
   }
 
   const handleSubmit = async (e: any) => {
     e.preventDefault();
 
-    const token = await fetchToken();
-    login(token);
+    const data = await fetchToken();
+    const token = data.authorisation.token;
+    const userID = data.user.id;
+    login(token, userID);
     // Redirect to the '/new-page' page
     router.push("/dashboard");
 

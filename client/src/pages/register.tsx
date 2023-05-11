@@ -1,5 +1,5 @@
-import RegisterForm from "@/components/RegisterForm";
-import TopBar from "@/components/TopBar";
+import RegisterForm from "@/components/forms/RegisterForm";
+import TopBar from "@/components/navigation/TopBar";
 import Link from "next/link";
 import React from "react";
 

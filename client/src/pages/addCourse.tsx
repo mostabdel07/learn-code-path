@@ -1,4 +1,4 @@
-import AddCourseForm from "@/components/AddCourseForm";
+import AddCourseForm from "@/components/forms/AddCourseForm";
 import React from "react";
 
 const addCourse = () => {

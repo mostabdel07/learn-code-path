@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import ProductCard from "./ProductCard";
 import Modal from "react-modal";
-import AddCourseModal from "./AddCourseModal";
+import AddCourseModal from "./utilities/AddCourseModal";
 
 interface Course {
   id: number;
@@ -31,6 +31,8 @@ export default function Panel(props: Props) {
   const [addModal, setAddModal] = useState(false);
 
   if (!data || loading) {
+    console.log(data);
+    console.log(loading);
     return <div>Loading...</div>;
   }
 

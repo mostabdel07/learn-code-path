@@ -18,7 +18,7 @@ import {
 } from "@heroicons/react/20/solid";
 import Banner from "@/components/Banner";
 import Link from "next/link";
-import DarkModeSwitch from "./DarkModeSwitch";
+import DarkModeSwitch from "../utilities/DarkModeSwitch";
 
 const items = [
   {

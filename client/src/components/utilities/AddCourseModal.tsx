@@ -1,5 +1,5 @@
 import React from "react";
-import AddCourseForm from "./AddCourseForm";
+import AddCourseForm from "../forms/AddCourseForm";
 
 interface Props {
   closeModal: () => void;

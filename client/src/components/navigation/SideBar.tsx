@@ -21,7 +21,7 @@ import { IoIosBookmarks } from "react-icons/io";
 
 import { motion, useAnimation } from "framer-motion";
 import Link from "next/link";
-import DarkModeSwitch from "./DarkModeSwitch";
+import DarkModeSwitch from "../utilities/DarkModeSwitch";
 import { useShoppingCart } from "@/contexts/ShoppingCartContext";
 
 const links = [
@@ -51,7 +51,7 @@ function classNames(...classes: any) {
   return classes.filter(Boolean).join(" ");
 }
 
-function SidebarLayout({ children, title }: any) {
+function SideBar({ children, title }: any) {
   const { logout } = useAuth();
   const router = useRouter();
 
@@ -250,4 +250,4 @@ function SidebarLayout({ children, title }: any) {
   );
 }
 
-export default SidebarLayout;
+export default SideBar;

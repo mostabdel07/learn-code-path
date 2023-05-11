@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { BsChevronCompactLeft, BsChevronCompactRight } from "react-icons/bs";
 import { RxDotFilled } from "react-icons/rx";
 
-function Slider() {
+function Caroussel() {
   const slides = [
     {
       url: "dashboard-view.png",
@@ -62,4 +62,4 @@ function Slider() {
   );
 }
 
-export default Slider;
+export default Caroussel;

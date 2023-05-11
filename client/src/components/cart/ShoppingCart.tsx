@@ -2,64 +2,17 @@ import { useShoppingCart } from "@/contexts/ShoppingCartContext";
 import React from "react";
 import CartItem from "./CartItem";
 import useOnlineCourses from "@/hooks/useOnlineCourses";
-import { GetServerSideProps } from "next";
-import axios from "axios";
-
-interface Course {
-  id: number;
-  title: string;
-  headline: string;
-  instructor: string;
-  price: string;
-  img: string;
-  created_at: string;
-  updated_at: string;
-}
+import { useRouter } from "next/router";
 
 type ShoppingCartProps = {
   isOpen: boolean;
-  course: Course;
-};
-
-export const getServerSideProps: GetServerSideProps<ShoppingCartProps> = async (
-  context
-) => {
-  const token = context.req.headers.cookie?.replace(
-    /(?:(?:^|.*;\s*)authToken\s*\=\s*([^;]*).*$)|^.*$/,
-    "$1"
-  );
-  const apiURL = process.env.API_ENDPOINT;
-
-  try {
-    const res = await axios.get(`${apiURL}/courses/${id}`, {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    });
-
-    if (res.status === 404) {
-      return {
-        notFound: true,
-      };
-    }
-
-    const course = res.data;
-
-    return {
-      props: {
-        course,
-      },
-    };
-  } catch (error) {
-    return {
-      notFound: true,
-    };
-  }
 };
 
 const ShoppingCart = ({ isOpen }: ShoppingCartProps) => {
   const { cartItems, closeCart } = useShoppingCart();
   const { data, loading, error } = useOnlineCourses();
+
+  const router = useRouter();
 
   const totalPrice = cartItems.reduce((total: any, item) => {
     //Todo Any
@@ -77,6 +30,7 @@ const ShoppingCart = ({ isOpen }: ShoppingCartProps) => {
   }, 0);
 
   return (
+    // TODO: cambiar a SlideOver i contenido a tailwind UI cart
     <div
       id="drawer-right-example"
       className={`fixed top-0 right-0 z-50 h-screen p-4 overflow-y-auto transition-transform ${
@@ -136,7 +90,7 @@ const ShoppingCart = ({ isOpen }: ShoppingCartProps) => {
       <button
         type="button"
         className="w-full mt-5 inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-gray-800 text-base font-medium text-white hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500 sm:mt-0 sm:w-auto sm:text-sm"
-        onClick={() => console.log("Pagar")}
+        onClick={() => (closeCart(), router.push("/finalCart"))}
       >
         Pagar
       </button>

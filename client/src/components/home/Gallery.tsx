@@ -1,4 +1,4 @@
-import Slider from "@/components/Slider";
+import Caroussel from "@/components/Caroussel";
 import React from "react";
 
 export default function Gallery() {
@@ -12,7 +12,7 @@ export default function Gallery() {
           Galería
         </h2>
       </div>
-      <Slider />
+      <Caroussel />
     </section>
   );
 }

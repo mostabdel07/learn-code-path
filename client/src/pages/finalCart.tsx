@@ -1,6 +1,6 @@
 import React from "react";
 import { useShoppingCart } from "@/contexts/ShoppingCartContext";
-import CartItem from "@/components/CartItem";
+import CartItem from "@/components/cart/CartItem";
 import ProgressBar from "@/components/ProgressBar";
 import useOnlineCourses from "@/hooks/useOnlineCourses";
 import axios from "axios";
