@@ -59,7 +59,7 @@ const ShoppingCart = ({ isOpen }: ShoppingCartProps) => {
         <div className="mt-6">
           <Link
             href="/checkout"
-            className="flex items-center justify-center rounded-md border border-transparent bg-indigo-600 px-6 py-3 text-base font-medium text-white shadow-sm hover:bg-indigo-700"
+            className="flex items-center justify-center rounded-md border border-transparent bg-teal-500 px-6 py-3 text-base font-medium text-white shadow-sm hover:bg-teal-700"
             onClick={() => closeCart()}
           >
             Comprar
@@ -69,7 +69,7 @@ const ShoppingCart = ({ isOpen }: ShoppingCartProps) => {
           <p>
             <button
               type="button"
-              className="font-medium text-indigo-600 hover:text-indigo-500"
+              className="font-medium text-teal-600 hover:text-teal-500"
               onClick={() => closeCart()}
             >
               Seguir comprando

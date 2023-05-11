@@ -162,7 +162,7 @@ const DashboardPage = () => {
       <div className="bg-white rounded-lg shadow-xl pb-8">
         <div className="w-full h-[250px]">
           <img
-            src="https://vojislavd.com/ta-template-demo/assets/img/profile-background.jpg"
+            src="https://horizon-tailwind-react-git-tailwind-components-horizon-ui.vercel.app/static/media/banner.ef572d78f29b0fee0a09.png"
             className="w-full h-full rounded-tl-lg rounded-tr-lg"
           />
         </div>
@@ -180,7 +180,7 @@ const DashboardPage = () => {
             className="w-40 border-4 border-white rounded-full"
           />
           <div className="flex items-center space-x-2 mt-2">
-            <p className="text-2xl">{user.username}</p>
+            <p className="text-2xl text-black">{user.username}</p>
             <span className="bg-blue-500 rounded-full p-1" title="Verified">
               <svg
                 xmlns="http://www.w3.org/2000/svg"

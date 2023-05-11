@@ -43,7 +43,7 @@ const ProductCard = (props: Course) => {
   }
 
   return (
-    <div className="w-full h-full max-w-sm bg-white border border-gray-400 rounded-lg shadow-xl transition-all duration-300 dark:bg-gray-900 dark:border-gray-900 hover:drop-shadow-lg">
+    <div className="w-full h-full max-w-sm bg-white border border-gray-400 rounded-lg shadow-xl transition-all duration-300 dark:bg-gray-900 dark:border-gray-600 hover:drop-shadow-lg">
       <Link href={`/courses/${id}`}>
         <div className="relative w-full overflow-hidden bg-cover bg-no-repeat rounded-t-lg">
           <Image
