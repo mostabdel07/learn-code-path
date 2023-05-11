@@ -5,7 +5,7 @@ export default function Features() {
   return (
     <section
       id="features"
-      className="py-16 bg-gray-100 dark:bg-gray-900 overflow-hidden"
+      className="py-16 bg-ctm-light dark:bg-ctm-black overflow-hidden"
     >
       <div className="container m-auto py-8 px-4 lg:py-16 text-gray-500 lg:px-6">
         <div>

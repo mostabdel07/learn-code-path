@@ -6,6 +6,7 @@ import Link from "next/link";
 import { useShoppingCart } from "@/contexts/ShoppingCartContext";
 import Modal from "react-modal";
 import { useState } from "react";
+import { MdLocalGroceryStore } from "react-icons/md";
 
 interface Course {
   id: number;
@@ -42,17 +43,19 @@ const ProductCard = (props: Course) => {
   }
 
   return (
-    <div className="w-full h-full max-w-sm bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
-      <a href="#">
-        <Image
-          src={img}
-          alt="course"
-          width="0"
-          height="0"
-          sizes="100vw"
-          className="shrink-0 w-full h-auto rounded-t-lg"
-        />
-      </a>
+    <div className="w-full h-full max-w-sm bg-white border border-gray-400 rounded-lg shadow-xl transition-all duration-300 dark:bg-gray-900 dark:border-gray-900 hover:drop-shadow-lg">
+      <Link href={`/courses/${id}`}>
+        <div className="relative w-full overflow-hidden bg-cover bg-no-repeat rounded-t-lg">
+          <Image
+            src={img}
+            alt="course"
+            width="0"
+            height="0"
+            sizes="100vw"
+            className="transition duration-300 ease-in-out hover:scale-110 w-full"
+          />
+        </div>
+      </Link>
       <div className="flex flex-col justify-around px-5 py-5">
         <div>
           <a href="#">
@@ -118,21 +121,21 @@ const ProductCard = (props: Course) => {
           </span>
         </div>
         <div className="flex items-center justify-between">
-          <span className="text-3xl font-bold text-gray-900 dark:text-white">
-            {parseInt(price) === 0.0 ? "Free" : price}
+          <span className="text-xl font-bold text-gray-900 dark:text-white">
+            {parseInt(price) === 0.0 ? "Gratuito" : price}
           </span>
-          <div className="flex flex-wrap">
-            <button className="w-full sm:w-auto mx-1 my-1 px-2 py-1 text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded text-sm text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
-              <Link href={`/courses/${id}`}>Ver</Link>
-            </button>
-            {/* <button onClick={() => handleDelete(id)}>Delete</button> */}
-            <button
-              className="w-full sm:w-auto mx-1 my-1 px-2 py-1 text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded text-sm text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
-              onClick={() => addToCart(id)}
-            >
-              Añadir al carrito
-            </button>
-          </div>
+          {/* <button onClick={() => handleDelete(id)}>Delete</button> */}
+          <button
+            type="button"
+            className="my-2 px-4 py-2 text-white bg-teal-500 hover:bg-teal-700 focus:ring-4 focus:outline-none focus:ring-teal-300 font-medium rounded text-sm text-center"
+            onClick={() => addToCart(id)}
+          >
+            Añadir
+            <MdLocalGroceryStore
+              className="h-5 w-5 inline-block ml-2"
+              aria-hidden="true"
+            />
+          </button>
         </div>
       </div>
     </div>

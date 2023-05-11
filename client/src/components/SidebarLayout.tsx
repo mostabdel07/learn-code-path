@@ -26,24 +26,24 @@ import { useShoppingCart } from "@/contexts/ShoppingCartContext";
 
 const links = [
   {
-    title: "Panel",
+    title: "Mi panel",
     icon: MdDashboard,
     path: "/dashboard",
   },
   {
-    title: "Cursos",
+    title: "Cursos online",
     icon: IoIosBookmarks,
     path: "/courses",
-  },
-  {
-    title: "Formaciones",
-    icon: AiFillFire,
-    path: "#",
   },
   {
     title: "Usuarios",
     icon: FaUsers,
     path: "/users",
+  },
+  {
+    title: "Bootcamps",
+    icon: AiFillFire,
+    path: "#",
   },
 ];
 
@@ -74,8 +74,8 @@ function SidebarLayout({ children, title }: any) {
 
   return (
     <div>
-      <nav className="fixed top-0 z-50 w-full bg-sky-500 border-b border-gray-100 dark:bg-sky-900 dark:border-gray-300">
-        <div className="px-3 py-3 lg:px-5 lg:pl-3">
+      <nav className="fixed top-0 z-50 w-full bg-gray-200 dark:bg-ctm-dark shadow">
+        <div className="px-6 py-4 lg:px-8 lg:pl-3">
           <div className="flex items-center justify-between">
             <div className="flex items-center justify-start">
               <button
@@ -107,17 +107,16 @@ function SidebarLayout({ children, title }: any) {
                   className="h-8 mr-3"
                   alt="FlowBite Logo"
                 /> */}
-                <span className="self-center text-xl font-semibold sm:text-2xl whitespace-nowrap text-white">
+                <span className="self-center text-xl font-semibold sm:text-2xl whitespace-nowrap text-black dark:text-white">
                   LearnCodePath
                 </span>
               </a>
             </div>
             <div className="flex items-center">
               <div className="flex items-center ml-3">
-                <DarkModeSwitch />
                 <button
                   type="button"
-                  className="p-1 mr-4 text-white hover:text-gray-200"
+                  className="p-1 mr-4 text-black dark:text-white hover:text-gray-600 dark:hover:text-gray-300"
                   onClick={openCart}
                 >
                   <MdLocalGroceryStore className="h-6 w-6" aria-hidden="true" />
@@ -129,7 +128,7 @@ function SidebarLayout({ children, title }: any) {
                   )}
                 </button>
                 {/* Profile dropdown */}
-                <Menu as="div" className="relative ml-3">
+                <Menu as="div" className="relative mr-4">
                   <div>
                     <Menu.Button className="flex rounded-full  text-sm focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800">
                       <span className="sr-only">Open user menu</span>
@@ -195,6 +194,7 @@ function SidebarLayout({ children, title }: any) {
                     </Menu.Items>
                   </Transition>
                 </Menu>
+                <DarkModeSwitch />
               </div>
             </div>
           </div>
@@ -203,37 +203,48 @@ function SidebarLayout({ children, title }: any) {
 
       <aside
         id="logo-sidebar"
-        className={`fixed top-0 left-0 z-40 w-64 h-screen pt-20 transition-transform bg-sky-100 border-r border-gray-200 lg:translate-x-0  dark:bg-sky-700 dark:border-gray-700 ${
+        className={`fixed top-0 left-0 z-40 w-64 h-screen pt-20 transition-transform shadow bg-gray-200 dark:bg-ctm-dark lg:translate-x-0   ${
           isOpen ? "" : "-translate-x-full"
         }`}
         aria-label="Sidebar"
       >
-        <div className="h-full px-3 pb-4 overflow-y-auto bg-sky-100 dark:bg-sky-700">
+        <div className=" flex flex-col justify-between h-full px-3 pb-4 overflow-y-auto bg-gray-200 dark:bg-ctm-dark">
           <ul className="space-y-2 font-medium">
             {links.map((item, index) => (
               <li key={index}>
                 <Link
                   href={item.path}
-                  className="flex items-center p-2 text-sky-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700"
+                  className="flex items-center p-2 text-black dark:text-white rounded-lg hover:text-teal-700 hover:bg-teal-200 dark:hover:text-black  dark:hover:bg-gray-200"
                 >
-                  <item.icon className="w-6 h-6 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white" />
+                  <item.icon className="w-6 h-6 text-teal-500 transition duration-75 dark:text-teal-400 group-hover:text-gray-900 dark:group-hover:text-white" />
                   <span className="ml-3">{item.title}</span>
                 </Link>
               </li>
             ))}
           </ul>
+          <ul className="space-y-2 font-medium">
+            <li>
+              <Link
+                href={"/"}
+                className="flex items-center p-2 text-black dark:text-white rounded-lg hover:text-teal-700 hover:bg-teal-200 dark:hover:text-black  dark:hover:bg-gray-200"
+              >
+                <AiFillHome className="w-6 h-6 text-teal-500 transition duration-75 dark:text-teal-400 group-hover:text-gray-900 dark:group-hover:text-white" />
+                <span className="ml-3">Páguina inicio</span>
+              </Link>
+            </li>
+          </ul>
         </div>
       </aside>
 
-      <div className="mt-14 lg:ml-64">
-        <header className="bg-white shadow">
+      <div className="mt-14 lg:ml-64 text-gray-900 dark:text-white bg-white dark:bg-gray-900">
+        <header className="shadow bg-teal-300 dark:bg-ctm-black">
           <div className="mx-auto max-w-7xl px-4 py-2 sm:px-6 lg:px-8 sm:py-4 lg:py-6">
-            <h1 className="text-center text-3xl font-bold tracking-tight text-gray-900">
+            <h1 className="text-center text-3xl font-bold tracking-tight ">
               {title}
             </h1>
           </div>
         </header>
-        <div className="p-8 ">{children}</div>
+        <div className="min-h-screen p-8 ">{children}</div>
       </div>
     </div>
   );

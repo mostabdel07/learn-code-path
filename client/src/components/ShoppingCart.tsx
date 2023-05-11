@@ -3,6 +3,7 @@ import React from "react";
 import CartItem from "./CartItem";
 import useOnlineCourses from "@/hooks/useOnlineCourses";
 import { GetServerSideProps } from "next";
+import axios from "axios";
 
 interface Course {
   id: number;
@@ -78,7 +79,7 @@ const ShoppingCart = ({ isOpen }: ShoppingCartProps) => {
   return (
     <div
       id="drawer-right-example"
-      className={`fixed top-0 right-0 z-40 h-screen p-4 overflow-y-auto transition-transform ${
+      className={`fixed top-0 right-0 z-50 h-screen p-4 overflow-y-auto transition-transform ${
         isOpen ? "translate-x-0" : "translate-x-full"
       } bg-white w-80 dark:bg-gray-500`}
       tabIndex={-1}
@@ -89,7 +90,6 @@ const ShoppingCart = ({ isOpen }: ShoppingCartProps) => {
         className="absolute top-2 right-2 inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-gray-500 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500"
         onClick={closeCart}
       >
-        Close
         <svg
           className="h-6 w-6"
           xmlns="http://www.w3.org/2000/svg"

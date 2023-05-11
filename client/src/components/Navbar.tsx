@@ -69,7 +69,7 @@ export default function Navbar() {
   // const isLoggedIn = authToken !== null && authToken !== "";
 
   return (
-    <div className="bg-red-500 dark:bg-indigo-950 sticky top-0 z-10">
+    <div className="bg-white dark:bg-ctm-dark sticky top-0 z-10">
       <nav
         className="flex w-full items-center justify-between p-4 lg:px-8"
         aria-label="Global"
@@ -82,7 +82,7 @@ export default function Navbar() {
               src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=600"
               alt=""
             /> */}
-            <span className="self-center text-xl font-semibold whitespace-nowrap text-white">
+            <span className="self-center text-xl font-semibold whitespace-nowrap text-ctm-dark dark:text-white">
               Learn Code Path
             </span>
           </a>
@@ -97,7 +97,7 @@ export default function Navbar() {
             <Bars3Icon className="h-6 w-6" aria-hidden="true" />
           </button>
         </div>
-        <Popover.Group className="hidden lg:flex lg:gap-x-10 text-white">
+        <Popover.Group className="hidden lg:flex lg:gap-x-10 text-ctm-dark dark:text-white">
           {items.map((item, index) => (
             <a
               key={index}
@@ -112,24 +112,24 @@ export default function Navbar() {
           {isAuthenticated ? (
             <Link
               href="#"
-              className="px-4 py-1.5 relative rounded-full group text-white font-medium inline-block mr-4"
+              className="px-4 py-1.5 relative rounded-lg group text-white font-medium inline-block mr-6"
               onClick={handleLogout}
             >
-              <span className="absolute top-0 left-0 w-full h-full rounded-full opacity-50 filter blur-sm bg-gradient-to-br from-orange-600 to-yellow-500 dark:from-purple-600 dark:to-blue-500"></span>
-              <span className="h-full w-full inset-0 absolute mt-0.5 ml-0.5 bg-gradient-to-br filter group-active:opacity-0 rounded-full opacity-50 from-orange-600 to-yellow-500 dark:from-purple-600 dark:to-blue-500"></span>
-              <span className="absolute inset-0 w-full h-full transition-all duration-200 ease-out rounded-full shadow-xl bg-gradient-to-br filter group-active:opacity-0 group-hover:blur-sm from-orange-600 to-yellow-500 dark:from-purple-600 dark:to-blue-500"></span>
-              <span className="absolute inset-0 w-full h-full transition duration-200 ease-out rounded-full bg-gradient-to-br from-orange-600 to-yellow-500 dark:from-purple-600 dark:to-blue-500"></span>
+              <span className="absolute top-0 left-0 w-full h-full rounded-lg opacity-50 filter blur-sm bg-gradient-to-br from-orange-600 to-yellow-500 dark:from-purple-600 dark:to-blue-500"></span>
+              <span className="h-full w-full inset-0 absolute mt-0.5 ml-0.5 bg-gradient-to-br filter group-active:opacity-0 rounded-lg opacity-50 from-orange-600 to-yellow-500 dark:from-purple-600 dark:to-blue-500"></span>
+              <span className="absolute inset-0 w-full h-full transition-all duration-200 ease-out rounded-lg shadow-xl bg-gradient-to-br filter group-active:opacity-0 group-hover:blur-sm from-orange-600 to-yellow-500 dark:from-purple-600 dark:to-blue-500"></span>
+              <span className="absolute inset-0 w-full h-full transition duration-200 ease-out rounded-lg bg-gradient-to-br from-orange-600 to-yellow-500 dark:from-purple-600 dark:to-blue-500"></span>
               <span className="relative">Log out</span>
             </Link>
           ) : (
             <Link
               href="/login"
-              className="px-4 py-1.5 relative rounded-full group text-white font-medium inline-block mr-4"
+              className="px-4 py-1.5 relative rounded-lg group text-white font-medium inline-block mr-6"
             >
-              <span className="absolute top-0 left-0 w-full h-full rounded-full opacity-50 filter blur-sm bg-gradient-to-br from-orange-600 to-yellow-500 dark:from-purple-600 dark:to-blue-500"></span>
-              <span className="h-full w-full inset-0 absolute mt-0.5 ml-0.5 bg-gradient-to-br filter group-active:opacity-0 rounded-full opacity-50 from-orange-600 to-yellow-500 dark:from-purple-600 dark:to-blue-500"></span>
-              <span className="absolute inset-0 w-full h-full transition-all duration-200 ease-out rounded-full shadow-xl bg-gradient-to-br filter group-active:opacity-0 group-hover:blur-sm from-orange-600 to-yellow-500 dark:from-purple-600 dark:to-blue-500"></span>
-              <span className="absolute inset-0 w-full h-full transition duration-200 ease-out rounded-full bg-gradient-to-br from-orange-600 to-yellow-500 dark:from-purple-600 dark:to-blue-500"></span>
+              <span className="absolute top-0 left-0 w-full h-full rounded-lg opacity-50 filter blur-sm bg-gradient-to-br from-orange-600 to-yellow-500 dark:from-purple-600 dark:to-blue-500"></span>
+              <span className="h-full w-full inset-0 absolute mt-0.5 ml-0.5 bg-gradient-to-br filter group-active:opacity-0 rounded-lg opacity-50 from-orange-600 to-yellow-500 dark:from-purple-600 dark:to-blue-500"></span>
+              <span className="absolute inset-0 w-full h-full transition-all duration-200 ease-out rounded-lg shadow-xl bg-gradient-to-br filter group-active:opacity-0 group-hover:blur-sm from-orange-600 to-yellow-500 dark:from-purple-600 dark:to-blue-500"></span>
+              <span className="absolute inset-0 w-full h-full transition duration-200 ease-out rounded-lg bg-gradient-to-br from-orange-600 to-yellow-500 dark:from-purple-600 dark:to-blue-500"></span>
               <span className="relative">Log in</span>
             </Link>
           )}
