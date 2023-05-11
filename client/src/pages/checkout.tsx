@@ -5,8 +5,9 @@ import ProgressBar from "@/components/ProgressBar";
 import useOnlineCourses from "@/hooks/useOnlineCourses";
 import axios from "axios";
 import { useAuth } from "@/contexts/auth";
+import TopBar from "@/components/navigation/TopBar";
 
-const finalCart = () => {
+const CheckoutPage = () => {
   const { token } = useAuth();
   const { cartItems } = useShoppingCart();
   const { data, loading, error } = useOnlineCourses();
@@ -48,6 +49,7 @@ const finalCart = () => {
 
   return (
     <div>
+      <TopBar title="Carrito de compra" path="/courses" />
       <ProgressBar />
       {cartItems.map((item) => (
         <CartItem key={item.id} {...item} />
@@ -60,4 +62,4 @@ const finalCart = () => {
   );
 };
 
-export default finalCart;
+export default CheckoutPage;

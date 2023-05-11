@@ -3,19 +3,19 @@ import { Dialog, Transition } from "@headlessui/react";
 import { XMarkIcon } from "@heroicons/react/24/outline";
 import { ExclamationTriangleIcon } from "@heroicons/react/24/outline";
 
-interface SlideOverProps {
+interface ModalProps {
   children: React.ReactNode;
   openModal: boolean;
   onClose: () => void;
   title: string;
 }
 
-export default function SlideOver({
+export default function Modal({
   children,
   openModal,
   onClose,
   title,
-}: SlideOverProps) {
+}: ModalProps) {
   const [open, setOpen] = useState(true);
 
   function handleClose() {
@@ -27,7 +27,7 @@ export default function SlideOver({
     <Transition.Root show={openModal} as={Fragment}>
       <Dialog
         as="div"
-        className="fixed inset-0 overflow-y-auto"
+        className="fixed inset-0 overflow-y-auto z-50"
         onClose={handleClose}
       >
         <div className="min-h-screen px-4 text-center">

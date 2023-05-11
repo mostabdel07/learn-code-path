@@ -6,7 +6,7 @@ import React from "react";
 const register = () => {
   return (
     <>
-      <TopBar title="Registro" path="/" />
+      <TopBar title="Registro" path="/login" />
       <RegisterForm />;
     </>
   );
