@@ -620,11 +620,17 @@ const DashboardPage = () => {
               </div>
             </div>
 
-            <div className="mt-4 text-black">
+            <div className="mt-8 text-black">
               <h4 className="text-xl text-gray-900 font-bold">Mis cursos</h4>
               <MyCourses />
             </div>
-            <Calendar />
+
+            <div className="mt-8 text-black">
+              <h4 className="text-xl text-gray-900 font-bold">
+                Calendario de formaciones
+              </h4>
+              <Calendar />
+            </div>
           </div>
         </div>
       </div>

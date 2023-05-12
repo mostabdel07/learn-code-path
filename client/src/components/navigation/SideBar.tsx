@@ -63,6 +63,11 @@ const links = [
     icon: ImBook,
     path: "#",
   },
+  {
+    title: "Página inicio",
+    icon: AiFillHome,
+    path: "/",
+  },
 ];
 
 function classNames(...classes: any) {
@@ -249,12 +254,12 @@ function SideBar({ children, title }: any) {
         }`}
         aria-label="Sidebar"
       >
-        <div className=" flex flex-col justify-between h-full px-3 pb-4 overflow-y-auto bg-gray-200 dark:bg-ctm-dark">
-          <div className="relative flex flex-col items-center rounded-3xl w-full h-64 mx-auto p-4 bg-white bg-clip-border shadow-3xl shadow-shadow-500 dark:!bg-navy-800 dark:text-white dark:!shadow-none">
-            <div className="relative flex h-32 w-full justify-center rounded-xl bg-cover">
+        <div className=" flex flex-col justify-between space-y-6 h-full px-3 pb-4 overflow-y-auto bg-gray-200 dark:bg-ctm-dark">
+          <div className="relative flex flex-col items-center rounded-3xl w-56 h-56 mx-auto p-4 bg-white bg-clip-border shadow-3xl shadow-shadow-500 dark:!bg-navy-800 dark:text-white dark:!shadow-none">
+            <div className="relative flex h-20 w-full justify-center rounded-xl bg-cover">
               <img
                 src="https://horizon-tailwind-react-git-tailwind-components-horizon-ui.vercel.app/static/media/banner.ef572d78f29b0fee0a09.png"
-                className="absolute flex h-32 w-full justify-center rounded-xl bg-cover"
+                className="absolute flex h-20 w-full justify-center rounded-xl bg-cover"
               />
               <div className="absolute -bottom-12 flex h-[87px] w-[87px] items-center justify-center rounded-full border-[4px] border-white bg-pink-400 dark:!border-navy-700">
                 <Image
@@ -267,7 +272,7 @@ function SideBar({ children, title }: any) {
                 />
               </div>
             </div>
-            <div className="mt-16 flex flex-col items-center">
+            <div className="mt-12 flex flex-col items-center">
               <h4 className="text-xl font-bold text-teal-700">
                 {user?.username}
               </h4>
@@ -276,7 +281,10 @@ function SideBar({ children, title }: any) {
               </p>
             </div>
           </div>
-          <ul className="space-y-2 font-medium">
+          <ul className=" pb-40 space-y-2 font-medium">
+            <p className="p-2 font-medium text-lg text-black dark:text-white">
+              Navegación
+            </p>
             {links.map((item, index) => (
               <li key={index}>
                 <Link
@@ -289,26 +297,9 @@ function SideBar({ children, title }: any) {
               </li>
             ))}
           </ul>
-          <ul className="pt-4 font-medium border-t border-gray-700 dark:border-gray-200">
-            <li>
-              <Link
-                href={"/"}
-                className="flex items-center p-2 text-black dark:text-white rounded-lg hover:bg-teal-200 dark:hover:text-black  dark:hover:bg-gray-200"
-              >
-                <AiFillHome className="w-6 h-6 text-teal-500 transition duration-75 dark:text-teal-400 group-hover:text-gray-900 dark:group-hover:text-white" />
-                <span className="ml-3">Páguina inicio</span>
-              </Link>
-            </li>
-          </ul>
-          <div className="text-center">
-            <span className="text-sm text-gray-500 dark:text-gray-400">
-              © 2023
-              <a href="#" className="ml-1 hover:underline">
-                LearnCodePath
-              </a>
-              . Todos Los Derechos Reservados.
-            </span>
-            <div className="flex mt-4 space-x-6 justify-center">
+
+          <div className="pb-4 text-center">
+            <div className="flex mb-4 space-x-6 justify-center">
               <a
                 href="#"
                 className="text-gray-500 hover:text-gray-900 dark:hover:text-white"
@@ -391,6 +382,13 @@ function SideBar({ children, title }: any) {
                 </svg>
               </a>
             </div>
+            <span className="text-sm text-gray-500 dark:text-gray-400">
+              © 2023
+              <a href="#" className="ml-1 hover:underline">
+                LearnCodePath
+              </a>
+              . Todos Los Derechos Reservados.
+            </span>
           </div>
         </div>
       </aside>

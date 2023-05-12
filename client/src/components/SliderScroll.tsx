@@ -22,7 +22,7 @@ export default function SliderScroll(props: Props) {
 
   return (
     <div>
-      <div className="relative w-full flex gap-6 snap-x snap-mandatory overflow-x-auto py-6 px-4 bg-gray-300 rounded-xl">
+      <div className="relative w-full flex gap-6 snap-x snap-mandatory overflow-x-auto py-6 px-4 bg-gray-100 border border-gray-300 rounded-lg shadow-xl">
         {data &&
           data.map(({ id, title, img, headline }: Course) => (
             <div key={id} className="snap-center shrink-0">

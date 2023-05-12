@@ -1,5 +1,5 @@
 import { Menu, Transition } from "@headlessui/react";
-
+import { EllipsisVerticalIcon } from "@heroicons/react/24/outline";
 import { ChevronLeftIcon, ChevronRightIcon } from "@heroicons/react/24/solid";
 import {
   add,
@@ -23,40 +23,40 @@ const meetings = [
     name: "Leslie Alexander",
     imageUrl:
       "https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80",
-    startDatetime: "2022-05-11T13:00",
-    endDatetime: "2022-05-11T14:30",
+    startDatetime: "2023-05-11T13:00",
+    endDatetime: "2023-05-11T14:30",
   },
   {
     id: 2,
     name: "Michael Foster",
     imageUrl:
       "https://images.unsplash.com/photo-1519244703995-f4e0f30006d5?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80",
-    startDatetime: "2022-05-20T09:00",
-    endDatetime: "2022-05-20T11:30",
+    startDatetime: "2023-05-20T09:00",
+    endDatetime: "2023-05-20T11:30",
   },
   {
     id: 3,
     name: "Dries Vincent",
     imageUrl:
       "https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80",
-    startDatetime: "2022-05-20T17:00",
-    endDatetime: "2022-05-20T18:30",
+    startDatetime: "2023-05-20T17:00",
+    endDatetime: "2023-05-20T18:30",
   },
   {
     id: 4,
     name: "Leslie Alexander",
     imageUrl:
       "https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80",
-    startDatetime: "2022-06-09T13:00",
-    endDatetime: "2022-06-09T14:30",
+    startDatetime: "2023-06-09T13:00",
+    endDatetime: "2023-06-09T14:30",
   },
   {
     id: 5,
     name: "Michael Foster",
     imageUrl:
       "https://images.unsplash.com/photo-1519244703995-f4e0f30006d5?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80",
-    startDatetime: "2022-05-13T14:00",
-    endDatetime: "2022-05-13T14:30",
+    startDatetime: "2023-05-13T14:00",
+    endDatetime: "2023-05-13T14:30",
   },
 ];
 
@@ -177,7 +177,7 @@ export default function Calendar() {
           </div>
           <section className="mt-12 md:mt-0 md:pl-14">
             <h2 className="font-semibold text-gray-900">
-              Schedule for{" "}
+              Horario para{" "}
               <time dateTime={format(selectedDay, "yyyy-MM-dd")}>
                 {format(selectedDay, "MMM dd, yyy")}
               </time>
@@ -188,7 +188,7 @@ export default function Calendar() {
                   <Meeting meeting={meeting} key={meeting.id} />
                 ))
               ) : (
-                <p>No meetings for today.</p>
+                <p>No hay eventos para este día.</p>
               )}
             </ol>
           </section>
@@ -228,7 +228,7 @@ function Meeting({ meeting }) {
         <div>
           <Menu.Button className="-m-2 flex items-center rounded-full p-1.5 text-gray-500 hover:text-gray-600">
             <span className="sr-only">Open options</span>
-            {/* <DotsVerticalIcon className="w-6 h-6" aria-hidden="true" /> */}
+            <EllipsisVerticalIcon className="w-6 h-6" aria-hidden="true" />
           </Menu.Button>
         </div>
 
@@ -252,7 +252,7 @@ function Meeting({ meeting }) {
                       "block px-4 py-2 text-sm"
                     )}
                   >
-                    Edit
+                    Editar
                   </a>
                 )}
               </Menu.Item>
@@ -265,7 +265,7 @@ function Meeting({ meeting }) {
                       "block px-4 py-2 text-sm"
                     )}
                   >
-                    Cancel
+                    Cancelar
                   </a>
                 )}
               </Menu.Item>
