@@ -61,7 +61,7 @@ const links = [
   {
     title: "Bootcamps",
     icon: ImBook,
-    path: "#",
+    path: "/bootcamps",
   },
   {
     title: "Página inicio",
