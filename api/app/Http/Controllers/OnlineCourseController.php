@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\OnlineCourse;
+use App\Models\Purchase;
 use Illuminate\Http\Request;
 
 class OnlineCourseController extends Controller
@@ -117,18 +118,33 @@ class OnlineCourseController extends Controller
 
     public function checkCourses(Request $request)
     {
-        $courseIds = $request->all(); // Obtiene todos los datos enviados en el cuerpo de la solicitud
-
-    // Verifica la existencia de cada curso individualmente
-    $existingCourses = true;
-    foreach ($courseIds as $courseId) {
-        if (!OnlineCourse::where('id', $courseId)->exists()) {
-            $existingCourses = false;
-            break;
+        $courseIds = $request->input('course_ids'); // Obtén los IDs de los cursos enviados en el cuerpo de la solicitud
+    
+        // Verifica la existencia de cada curso individualmente
+        $existingCourses = true;
+        foreach ($courseIds as $courseId) {
+            if (!OnlineCourse::where('id', $courseId)->exists()) {
+                $existingCourses = false;
+                break;
+            }
         }
-    }
-
-    // Devuelve true si todos los cursos existen, false en caso contrario
-    return $existingCourses ? 'true' : 'false';
+    
+        // Si todos los cursos existen, guarda la compra en la tabla "purchases"
+        if ($existingCourses) {
+            $userId = $request->input('user_id'); // Obtén el ID del usuario enviado en la solicitud
+            $purchaseDate = now(); // Obtén la fecha actual
+    
+            // Crea el registro de compra en la tabla "purchases"
+            foreach ($courseIds as $courseId) {
+                Purchase::create([
+                    'user_id' => $userId,
+                    'online_course_id' => $courseId,
+                    'purchase_date' => $purchaseDate
+                ]);
+            }
+        }
+    
+        // Devuelve true si todos los cursos existen, false en caso contrario
+        return $existingCourses ? 'true' : 'false';
     }
 }

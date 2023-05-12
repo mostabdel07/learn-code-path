@@ -34,11 +34,21 @@ const CheckoutPage = () => {
       console.log(cartItems);
       const courseIds = cartItems.map((item) => item.id);
       console.log(courseIds);
-      const response = await axios.post(`${apiURL}/check_courses`, courseIds, {
-        headers: {
-          Authorization: `Bearer ${token}`,
+      const userId = localStorage.getItem("session_id");
+      console.log("session" + userId);
+
+      const response = await axios.post(
+        `${apiURL}/check_courses`,
+        {
+          course_ids: courseIds,
+          user_id: userId,
         },
-      });
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
 
       // Aquí puedes manejar la respuesta del backend como desees
       console.log(response.data);
