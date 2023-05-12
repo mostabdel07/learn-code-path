@@ -26,6 +26,8 @@ export const getServerSideProps: GetServerSideProps<UserPageProps> = async (
   context
 ) => {
   const { id } = context.params ?? {};
+  console.log("id");
+  console.log(id);
   const token = context.req.headers.cookie?.replace(
     /(?:(?:^|.*;\s*)authToken\s*\=\s*([^;]*).*$)|^.*$/,
     "$1"
@@ -169,7 +171,7 @@ const UserPage = ({ user }: UserPageProps) => {
             />
           </div>
           <div className="lg:flex-grow md:w-1/2 lg:pl-24 md:pl-16 flex flex-col md:items-start md:text-left items-center text-center">
-            <h2 className="title-font sm:text-4xl text-3xl mb-4 font-medium text-gray-900">
+            <h2 className="title-font sm:text-4xl text-3xl mb-4 font-medium text-gray-900 dark:text-gray-200">
               {user.username}
               <span className="ml-2 text-blue-500">#{user.id}</span>
             </h2>

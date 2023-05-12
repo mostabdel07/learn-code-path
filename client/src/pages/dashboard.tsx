@@ -9,6 +9,10 @@ import { useAuth } from "@/contexts/auth";
 import Modal from "@/components/utilities/Modal";
 import SlideOver from "@/components/utilities/SlideOver";
 import { useRouter } from "next/router";
+import ProductCard from "@/components/ProductCard";
+import Card from "@/components/Card";
+import MyCourses from "@/components/MyCourses";
+import Calendar from "@/components/Calendar";
 
 interface User {
   id: number;
@@ -18,12 +22,6 @@ interface User {
   created_at: string;
   updated_at: string;
 }
-
-const stats = [
-  { id: 1, name: "Cursos dispobibles", value: "+ 1.000" },
-  { id: 2, name: "Usuarios registrados", value: "3.400" },
-  { id: 3, name: "Usuarios activos", value: "1.275" },
-];
 
 const DashboardPage = () => {
   // const { data, loading, error } = useOnlineCourses();
@@ -622,14 +620,11 @@ const DashboardPage = () => {
               </div>
             </div>
 
-            <div className="mt-4">
-              <canvas
-                id="verticalBarChart"
-                // style="display: block; box-sizing: border-box; height: 414px; width: 828px;"
-                width="1656"
-                height="828"
-              ></canvas>
+            <div className="mt-4 text-black">
+              <h4 className="text-xl text-gray-900 font-bold">Mis cursos</h4>
+              <MyCourses />
             </div>
+            <Calendar />
           </div>
         </div>
       </div>

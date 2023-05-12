@@ -306,7 +306,7 @@ function SideBar({ children, title }: any) {
               <a href="#" className="ml-1 hover:underline">
                 LearnCodePath
               </a>
-              . Todos Los Derechos Reservado.
+              . Todos Los Derechos Reservados.
             </span>
             <div className="flex mt-4 space-x-6 justify-center">
               <a

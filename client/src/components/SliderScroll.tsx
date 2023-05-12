@@ -14,22 +14,17 @@ interface Course {
 
 interface Props {
   data: Course[] | null;
-  loading: boolean;
-  error: string | null;
 }
 
 export default function SliderScroll(props: Props) {
-  const { data, loading, error } = props;
+  const { data } = props;
+  console.log(data);
 
   return (
     <div>
-      {loading && <div>A moment please...</div>}
-      {error && (
-        <div>{`There is a problem fetching the post data - ${error}`}</div>
-      )}
-      <div className="relative w-full flex gap-6 snap-x snap-mandatory overflow-x-auto py-6 px-4 bg-gray-200">
+      <div className="relative w-full flex gap-6 snap-x snap-mandatory overflow-x-auto py-6 px-4 bg-gray-300 rounded-xl">
         {data &&
-          data.map(({ id, title, img, headline }: any) => (
+          data.map(({ id, title, img, headline }: Course) => (
             <div key={id} className="snap-center shrink-0">
               <Card title={title} img={img} headline={headline} />
             </div>
