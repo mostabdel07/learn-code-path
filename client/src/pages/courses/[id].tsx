@@ -8,6 +8,7 @@ import SlideOver from "@/components/utilities/SlideOver";
 import Modal from "@/components/utilities/Modal";
 import { useAuth } from "@/contexts/auth";
 import withAuth from "@/components/withAuth";
+import EditCourseForm from "@/components/forms/EditCourseForm";
 
 interface Course {
   id: number;
@@ -73,6 +74,17 @@ const CoursePage = ({ course }: CoursePageProps) => {
 
   const apiURL = process.env.API_ENDPOINT;
 
+  const [editCourse, setEditCourse] = useState<Partial<Course>>({
+    id: course.id,
+    title: course.title,
+    headline: course.headline,
+    instructor: course.instructor,
+    price: course.price,
+    img: course.img,
+    created_at: course.created_at,
+    updated_at: course.updated_at,
+  });
+
   const [openSlideOver, setOpenSlideOver] = useState(false);
   const [openModalEdit, setOpenModalEdit] = useState(false);
   const [openModalDelete, setOpenModalDelete] = useState(false);
@@ -97,6 +109,55 @@ const CoursePage = ({ course }: CoursePageProps) => {
     return <div>Loading...</div>;
   }
 
+  function handleInputChange(event: React.ChangeEvent<HTMLInputElement>) {
+    const { name, value } = event.target;
+    console.log(name);
+    console.log(value);
+    setEditCourse((prevCourse) => ({ ...prevCourse, [name]: value }));
+  }
+
+  async function handleSave(id: number) {
+    setOpenSlideOver(false);
+    setOpenModalEdit(true);
+
+    console.log(token);
+
+    // Identify the changed properties
+    let changedProperties: Partial<Course> = {};
+    if (editCourse.title !== course.title) {
+      changedProperties.title = editCourse.title;
+    }
+    if (editCourse.headline !== course.headline) {
+      changedProperties.headline = editCourse.headline;
+    }
+    if (editCourse.instructor !== course.instructor) {
+      changedProperties.instructor = editCourse.instructor;
+    }
+    if (editCourse.price !== course.price) {
+      changedProperties.price = editCourse.price;
+    }
+    if (editCourse.img !== course.img) {
+      changedProperties.img = editCourse.img;
+    }
+    console.log(changedProperties);
+
+    try {
+      const response = await axios.put(
+        `${apiURL}/courses/${id}`,
+        changedProperties,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+      console.log(response);
+      if (response.status === 204) router.reload();
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
   async function handleDelete(id: number) {
     console.log(id);
     console.log(token);
@@ -107,6 +168,7 @@ const CoursePage = ({ course }: CoursePageProps) => {
         },
       });
       console.log(response);
+      if (response.status === 204) router.push("/courses");
     } catch (error) {
       console.log(error);
     }
@@ -269,7 +331,7 @@ const CoursePage = ({ course }: CoursePageProps) => {
                 </span>
                 <button
                   className="inline-flex text-white bg-blue-500 border-0 py-2 px-6 focus:outline-none hover:bg-blue-600 rounded text-lg"
-                  // onClick={handleOpenSlideOver}
+                  onClick={handleOpenSlideOver}
                 >
                   Editar
                 </button>
@@ -295,18 +357,15 @@ const CoursePage = ({ course }: CoursePageProps) => {
                   </svg>
                 </button>
                 <SlideOver
+                  title="Editar curso"
                   openSlideOver={openSlideOver}
                   onClose={handleCloseSlideOver}
                 >
-                  <form className="mb-6">
-                    <button
-                      type="button"
-                      className="text-white bg-green-700 hover:bg-green-800 w-full focus:ring-4 focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-green-600 dark:hover:bg-green-700 focus:outline-none dark:focus:ring-green-800 block"
-                      // onClick={handleSave}
-                    >
-                      Guardar
-                    </button>
-                  </form>
+                  <EditCourseForm
+                    editCourse={editCourse}
+                    handleInputChange={handleInputChange}
+                    handleSave={handleSave}
+                  />
                 </SlideOver>
                 {/* Modal aviso guardar */}
                 <Modal
@@ -330,7 +389,7 @@ const CoursePage = ({ course }: CoursePageProps) => {
                     <p className="text-center sm:text-left">
                       Estas seguro de eliminar el curso &quot;
                       <span className="font-bold italic">{course.title}</span>
-                      &quot; definitivamente.
+                      &quot; definitivamente?
                     </p>
                   </div>
                   <div className="bg-gray-50 px-4 py-3 sm:flex sm:flex-row-reverse sm:px-6">
