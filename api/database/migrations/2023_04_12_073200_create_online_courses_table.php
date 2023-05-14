@@ -14,9 +14,10 @@ return new class extends Migration
         Schema::create('online_courses', function (Blueprint $table) {
             $table->id();
             $table->string('title');
-            $table->decimal('price', 8, 2);            
-            $table->string('img');
             $table->string('headline');
+            $table->decimal('price', 8, 2);
+            $table->integer('rating');            
+            $table->string('img');
             $table->foreignId('instructor_id')
             ->nullable()
             ->constrained()

@@ -16,6 +16,7 @@ class OnlineCourse extends Model
         'headline',
         'instructor_id',
         'id',
+        'rating',
     ];
 
     public function instructor()

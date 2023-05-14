@@ -27,10 +27,10 @@ class CourseApiController extends Controller
 
                 $data = json_decode($response);
 
-                
-
+        
                 foreach ($data->results as $key => $course) {
 
+                    $rating = mt_rand(3, 5);
                     // Genera un número aleatorio entre 0 y 2 para determinar el tipo de precio
                     $priceType = mt_rand(0, 2);
 
@@ -78,9 +78,10 @@ class CourseApiController extends Controller
                     $onlineCourse = OnlineCourse::create([
                         'id' => $course->id,
                         'title' => $course->title,
-                        'price' => $price,
-                        'img' => $course->image_480x270,
                         'headline' => $course->headline,
+                        'price' => $price,
+                        'rating' => $rating,
+                        'img' => $course->image_480x270,
                         'instructor_id' => $instructor->id,
                     ]);
 
