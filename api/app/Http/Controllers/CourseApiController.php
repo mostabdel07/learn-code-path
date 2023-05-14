@@ -31,9 +31,41 @@ class CourseApiController extends Controller
 
                 foreach ($data->results as $key => $course) {
 
-                    $price=$course->price;
-                    $price = str_replace('€', '', $price);
-                    $price = floatval($price);
+                    // Genera un número aleatorio entre 0 y 2 para determinar el tipo de precio
+                    $priceType = mt_rand(0, 2);
+
+                    if ($priceType === 0) {
+                        // Un tercio de los cursos son gratuitos
+                        $price = 0;
+                    } else {
+                        // Dos tercios de los cursos tienen un precio entre 1 y 99
+
+                        // Genera un número aleatorio entre 0 y 1 para determinar si el precio es menor a 20
+                        $isLessThan20 = mt_rand(0, 1);
+
+                        if ($isLessThan20) {
+                            // La mitad de los cursos es menor a 20
+                            $randomPercentage = mt_rand(1, 100);
+                            if ($randomPercentage <= 35) {
+                                // El 30% de los cursos tienen valores decimales terminados en .99 o .95
+                                $price = mt_rand(1, 19) + (mt_rand(0, 1) ? 0.99 : 0.95);
+                            } else {
+                                // El 70% de los cursos son enteros
+                                $price = mt_rand(1, 19);
+                            }
+                        } else {
+                            // La mitad de los cursos es mayor a 20
+                            $randomPercentage = mt_rand(1, 100);
+                            if ($randomPercentage <= 35) {
+                                // El 30% de los cursos tienen valores decimales terminados en .99 o .95
+                                $price = mt_rand(20, 99) + (mt_rand(0, 1) ? 0.99 : 0.95);
+                            } else {
+                                // El 70% de los cursos son enteros
+                                $price = mt_rand(20, 99);
+                            }
+                        }
+                    }
+
 
                     $instructorName = $course->visible_instructors[0]->title;
                     $instructorJobTitle = $course->visible_instructors[0]->job_title;
