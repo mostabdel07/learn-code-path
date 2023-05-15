@@ -4,9 +4,12 @@ import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
 import axios from "axios";
 import { useAuth } from "@/contexts/auth";
+import useInstructors from "@/hooks/useInstructors";
+import SelectMenu from "../SelectMenu";
 
 function AddCourseForm() {
   const { token } = useAuth();
+  const { data } = useInstructors();
 
   const [errorList, setErrorList] = useState<any>([]);
 
@@ -32,15 +35,14 @@ function AddCourseForm() {
     img: yup
       .string()
       .required("La imagen es obligatoria")
-      .matches(/^(\/)+/, "La URL de la imagen debe empezar con una barra /"),
+      .matches(
+        /^https:\/\/.*/,
+        "La URL de la imagen debe empezar con 'https://'"
+      ),
     headline: yup
       .string()
       .required("El titular es obligatorio")
       .max(150, "El titular debe tener como máximo 150 caracteres"),
-    instructor: yup
-      .string()
-      .required("El instructor es obligatorio")
-      .max(30, "El instructor debe tener como máximo 30 caracteres"),
   });
 
   const {
@@ -52,12 +54,18 @@ function AddCourseForm() {
     mode: "onChange",
   });
 
+  const sortedInstructors = data
+    ? data.sort((a, b) =>
+        a.name.localeCompare(b.name, "es", { sensitivity: "base" })
+      )
+    : [];
+
   const onSubmit = async (data: FormValues) => {
     try {
       console.log(data);
       console.log(token);
       const response = await axios.post(
-        "http://127.0.0.1:8000/api/onlineCourse",
+        "http://127.0.0.1:8000/api/courses",
         data,
         {
           headers: {
@@ -84,7 +92,7 @@ function AddCourseForm() {
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="max-w-lg mx-auto">
       <div className="mb-4">
-        <label className="block font-medium text-gray-700">Title</label>
+        <label className="block font-medium text-gray-700">Título</label>
         <input
           {...register("title")}
           className="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-300 rounded-md shadow-sm focus:outline-none focus:border-blue-500 focus:ring-blue-500"
@@ -94,27 +102,7 @@ function AddCourseForm() {
         )}
       </div>
       <div className="mb-4">
-        <label className="block font-medium text-gray-700">Price</label>
-        <input
-          {...register("price")}
-          className="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-300 rounded-md shadow-sm focus:outline-none focus:border-blue-500 focus:ring-blue-500"
-        />
-        {errors.price && (
-          <span className="text-red-600">{errors.price.message}</span>
-        )}
-      </div>
-      <div className="mb-4">
-        <label className="block font-medium text-gray-700">Image</label>
-        <input
-          {...register("img")}
-          className="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-300 rounded-md shadow-sm focus:outline-none focus:border-blue-500 focus:ring-blue-500"
-        />
-        {errors.img && (
-          <span className="text-red-600">{errors.img.message}</span>
-        )}
-      </div>
-      <div className="mb-4">
-        <label className="block font-medium text-gray-700">Headline</label>
+        <label className="block font-medium text-gray-700">Descripción</label>
         <input
           {...register("headline")}
           className="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-300 rounded-md shadow-sm focus:outline-none focus:border-blue-500 focus:ring-blue-500"
@@ -124,14 +112,39 @@ function AddCourseForm() {
         )}
       </div>
       <div className="mb-4">
-        <label className="block font-medium text-gray-700">Instructor</label>
+        <label className="block font-medium text-gray-700">Imagen</label>
         <input
-          {...register("instructor")}
+          {...register("img")}
           className="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-300 rounded-md shadow-sm focus:outline-none focus:border-blue-500 focus:ring-blue-500"
         />
-        {errors.instructor && (
-          <span className="text-red-600">{errors.instructor.message}</span>
+        {errors.img && (
+          <span className="text-red-600">{errors.img.message}</span>
         )}
+      </div>
+      <div className="mb-4">
+        <label className="block font-medium text-gray-700">Precio</label>
+        <input
+          {...register("price")}
+          className="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-300 rounded-md shadow-sm focus:outline-none focus:border-blue-500 focus:ring-blue-500"
+        />
+        {errors.price && (
+          <span className="text-red-600">{errors.price.message}</span>
+        )}
+      </div>
+      <div className="mb-4">
+        <label className="block font-medium text-gray-700">Instructor</label>
+        {/* <select
+          {...register("instructor")}
+          className="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-300 rounded-md shadow-sm focus:outline-none focus:border-blue-500 focus:ring-blue-500"
+        >
+          {sortedInstructors && // Aseguramos que la lista de instructores exista
+            sortedInstructors.map((instructor) => (
+              <option key={instructor.id} value={instructor.name}>
+                {instructor.name}
+              </option>
+            ))}
+        </select> */}
+        <SelectMenu instructors={sortedInstructors} />
       </div>
       {errorList.length > 0 && (
         <div className="text-red-600">

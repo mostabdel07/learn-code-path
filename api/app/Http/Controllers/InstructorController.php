@@ -7,12 +7,20 @@ use Illuminate\Http\Request;
 
 class InstructorController extends Controller
 {
+
+    // public function __construct()
+    // {
+    //     $this->middleware('auth:api');
+    // }
+
+    
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        //
+        $instructors = Instructor::all();
+        return response()->json($instructors);
     }
 
     /**

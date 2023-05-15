@@ -7,6 +7,7 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\CourseApiController;
 use App\Http\Controllers\OnlineCourseController;
 use App\Http\Controllers\PurchaseController;
+use App\Http\Controllers\InstructorController;
 
 
 /*
@@ -32,6 +33,8 @@ Route::controller(AuthApiController::class)->group(function () {
 Route::apiResource('users', UserController::class);
 
 Route::apiResource('courses', OnlineCourseController::class);
+
+Route::apiResource('instructors', InstructorController::class);
 
 Route::post('check_courses', [OnlineCourseController::class, 'checkCourses']);
 

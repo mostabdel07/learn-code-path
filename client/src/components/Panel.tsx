@@ -2,6 +2,8 @@ import React, { useState } from "react";
 import ProductCard from "./ProductCard";
 import Modal from "react-modal";
 import AddCourseModal from "./utilities/AddCourseModal";
+import SlideOver from "./utilities/SlideOver";
+import AddCourseForm from "./forms/AddCourseForm";
 
 interface Course {
   id: number;
@@ -28,7 +30,15 @@ export default function Panel(props: Props) {
   const [minPrice, setMinPrice] = useState<number>(0);
   const [maxPrice, setMaxPrice] = useState<number>(0);
 
-  const [addModal, setAddModal] = useState(false);
+  const [openSlideOver, setOpenSlideOver] = useState(false);
+
+  function handleOpenSlideOver() {
+    setOpenSlideOver(true);
+  }
+
+  function handleCloseSlideOver() {
+    setOpenSlideOver(false);
+  }
 
   if (!data || loading) {
     console.log(data);
@@ -69,7 +79,8 @@ export default function Panel(props: Props) {
 
         <div className="flex items-center mt-4 gap-x-3">
           <button
-            onClick={() => setAddModal(true)}
+            //onClick={() => setAddModal(true)}
+            onClick={handleOpenSlideOver}
             className="flex items-center justify-center w-1/2 px-5 py-2 text-sm tracking-wide text-white transition-colors duration-200 bg-blue-500 rounded-lg shrink-0 sm:w-auto gap-x-2 hover:bg-blue-600 dark:hover:bg-blue-500 dark:bg-blue-600"
           >
             <svg
@@ -90,13 +101,13 @@ export default function Panel(props: Props) {
               <span>Añadir curso</span>
             </div>
           </button>
-          <Modal
-            isOpen={addModal}
-            onRequestClose={() => setAddModal(false)}
-            className="w-11/12 md:max-w-md mx-auto bg-white rounded-lg shadow-lg py-6 px-4 dark:bg-gray-900"
+          <SlideOver
+            title="Añadir curso"
+            openSlideOver={openSlideOver}
+            onClose={handleCloseSlideOver}
           >
-            <AddCourseModal closeModal={() => setAddModal(false)} />
-          </Modal>
+            <AddCourseForm />
+          </SlideOver>
         </div>
       </div>
 
