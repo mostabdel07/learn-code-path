@@ -6,10 +6,12 @@ import useOnlineCourses from "@/hooks/useOnlineCourses";
 import axios from "axios";
 import { useAuth } from "@/contexts/auth";
 import TopBar from "@/components/navigation/TopBar";
+import router from "next/router";
+import Cookies from "js-cookie";
 
 const CheckoutPage = () => {
   const { token } = useAuth();
-  const { cartItems } = useShoppingCart();
+  const { cartItems, clearCart } = useShoppingCart();
   const { data, loading, error } = useOnlineCourses();
 
   const totalPrice = cartItems.reduce((total: any, item) => {
@@ -50,7 +52,12 @@ const CheckoutPage = () => {
         }
       );
 
-      // Aquí puedes manejar la respuesta del backend como desees
+      if (response.data) {
+        clearCart();
+        Cookies.remove("shopping-cart");
+        router.push("/dashboard");
+      }
+
       console.log(response.data);
     } catch (error) {
       console.error(error);
