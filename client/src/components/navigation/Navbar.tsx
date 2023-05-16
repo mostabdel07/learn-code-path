@@ -16,7 +16,6 @@ import {
   PhoneIcon,
   PlayCircleIcon,
 } from "@heroicons/react/20/solid";
-import Banner from "@/components/Banner";
 import Link from "next/link";
 import DarkModeSwitch from "../utilities/DarkModeSwitch";
 

@@ -60,7 +60,7 @@ const meetings = [
   },
 ];
 
-function classNames(...classes) {
+function classNames(...classes: (string | boolean)[]) {
   return classes.filter(Boolean).join(" ");
 }
 
@@ -198,7 +198,7 @@ export default function Calendar() {
   );
 }
 
-function Meeting({ meeting }) {
+function Meeting({ meeting }: any) {
   let startDateTime = parseISO(meeting.startDatetime);
   let endDateTime = parseISO(meeting.endDatetime);
 
