@@ -9,10 +9,10 @@ use Illuminate\Validation\Rules;
 
 class UserController extends Controller
 {
-    public function __construct()
-    {
-        $this->middleware('auth:api');
-    }
+    // public function __construct()
+    // {
+    //     $this->middleware('auth:api');
+    // }
 
     /**
      * Display a listing of the resource.
@@ -69,7 +69,7 @@ class UserController extends Controller
      */
     public function show($id)
     {
-        $user = User::find($id);
+        $user = User::with('personalData', 'role')->find($id);
     
         if (!$user) {
             return response()->json(['error' => 'User not found'], 404);

@@ -31,9 +31,9 @@ class User extends Authenticatable implements JWTSubject
         'remember_token',
     ];
 
-    public function personal_data(): HasOne
+    public function personalData()
     {
-        return $this->hasOne(PersonalData::class);
+        return $this->belongsTo(PersonalDatas::class);
     }
 
     public function role()

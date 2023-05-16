@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
-class PersonalData extends Model
+class PersonalDatas extends Model
 {
     use HasFactory;
 
@@ -22,8 +22,8 @@ class PersonalData extends Model
         'id'
     ];
 
-    public function user(): BelongsTo
+    public function user()
     {
-        return $this->belongsTo(User::class);
+        return $this->hasOne(User::class);
     }
 }
