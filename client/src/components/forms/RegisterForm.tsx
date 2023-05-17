@@ -4,6 +4,7 @@ import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
 import axios from "axios";
 import Link from "next/link";
+import router from "next/router";
 
 function RegisterForm() {
   type FormValues = {
@@ -11,25 +12,33 @@ function RegisterForm() {
     email: string;
     password: string;
     confirmPassword: string;
+    acceptedTerms: boolean;
   };
 
   const schema = yup.object().shape({
-    username: yup.string().required("Name is required"),
-    email: yup.string().email("Invalid email").required("Email is required"),
+    username: yup.string().required("El nombre es obligatorio"),
+    email: yup
+      .string()
+      .email("Correo electrónico inválido")
+      .required("El correo electrónico es obligatorio"),
     password: yup
       .string()
-      .required("Password is required")
-      .min(6, "Password must be at least 6 characters"),
+      .required("La contraseña es obligatoria")
+      .min(6, "La contraseña debe tener al menos 6 caracteres"),
     confirmPassword: yup
       .string()
-      .required("Confirm Password is required")
-      .oneOf([yup.ref("password")], "Passwords must match"),
+      .required("Confirmar contraseña es obligatorio")
+      .oneOf([yup.ref("password")], "Las contraseñas deben coincidir"),
+    acceptedTerms: yup
+      .boolean()
+      .oneOf([true], "Debes aceptar los términos y condiciones"),
   });
 
   const {
     register,
     handleSubmit,
     formState: { errors, isValid },
+    reset,
   } = useForm<FormValues>({
     resolver: yupResolver(schema),
     mode: "onChange",
@@ -44,7 +53,8 @@ function RegisterForm() {
         formData
       );
       console.log(response.data);
-      //reset(); // Limpiar los campos del formulario después de una respuesta exitosa
+      reset();
+      router.push("/login");
     } catch (error) {
       console.error(error);
     }
@@ -52,100 +62,83 @@ function RegisterForm() {
 
   return (
     <>
-      <form onSubmit={handleSubmit(onSubmit)}>
-        <div>
-          <label>Name</label>
-          <input {...register("username")} />
-          {errors.username && <span>{errors.username.message}</span>}
-        </div>
-        <div>
-          <label>Email</label>
-          <input {...register("email")} />
-          {errors.email && <span>{errors.email.message}</span>}
-        </div>
-        <div>
-          <label>Password</label>
-          <input type="password" {...register("password")} />
-          {errors.password && <span>{errors.password.message}</span>}
-        </div>
-        <div>
-          <label>Confirm Password</label>
-          <input type="password" {...register("confirmPassword")} />
-          {errors.confirmPassword && (
-            <span>{errors.confirmPassword.message}</span>
-          )}
-        </div>
-        <button type="submit" disabled={!isValid}>
-          Register
-        </button>
-      </form>
-
       <section className="bg-gray-50 dark:bg-gray-900">
         <div className="flex flex-col items-center justify-center px-6 py-8 mx-auto md:h-screen lg:py-0">
-          <a
-            href="#"
-            className="flex items-center mb-6 text-2xl font-semibold text-gray-900 dark:text-white"
-          >
-            <img
-              className="w-8 h-8 mr-2"
-              src="https://flowbite.s3.amazonaws.com/blocks/marketing-ui/logo.svg"
-              alt="logo"
-            />
-            Flowbite
-          </a>
           <div className="w-full bg-white rounded-lg shadow dark:border md:mt-0 sm:max-w-md xl:p-0 dark:bg-gray-800 dark:border-gray-700">
             <div className="p-6 space-y-4 md:space-y-6 sm:p-8">
               <h1 className="text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-2xl dark:text-white">
-                Create and account
+                Crea tu cuenta
               </h1>
-              <form className="space-y-4 md:space-y-6" action="#">
+              <form
+                className="space-y-4 md:space-y-6"
+                action="#"
+                onSubmit={handleSubmit(onSubmit)}
+              >
                 <div>
-                  <label
-                    htmlFor="email"
-                    className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
-                  >
-                    Your email
+                  <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+                    Tu nombre de usuario
+                  </label>
+                  <input
+                    type="text"
+                    id="username"
+                    className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                    required
+                    {...register("username")}
+                  />
+                  {errors.username && (
+                    <span className="text-red-600">
+                      {errors.username.message}
+                    </span>
+                  )}
+                </div>
+                <div>
+                  <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+                    Tu email
                   </label>
                   <input
                     type="email"
-                    name="email"
                     id="email"
                     className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                    placeholder="name@company.com"
                     required
+                    {...register("email")}
                   />
+                  {errors.email && (
+                    <span className="text-red-600">{errors.email.message}</span>
+                  )}
                 </div>
                 <div>
-                  <label
-                    htmlFor="password"
-                    className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
-                  >
-                    Password
+                  <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+                    Tu contraseña
                   </label>
                   <input
                     type="password"
-                    name="password"
                     id="password"
-                    placeholder="••••••••"
                     className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                     required
+                    {...register("password")}
                   />
+                  {errors.password && (
+                    <span className="text-red-600">
+                      {errors.password.message}
+                    </span>
+                  )}
                 </div>
                 <div>
-                  <label
-                    htmlFor="confirm-password"
-                    className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
-                  >
-                    Confirm password
+                  <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+                    Repite contraseña
                   </label>
                   <input
-                    type="confirm-password"
-                    name="confirm-password"
+                    type="password"
                     id="confirm-password"
-                    placeholder="••••••••"
                     className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                     required
+                    {...register("confirmPassword")}
                   />
+                  {errors.confirmPassword && (
+                    <span className="text-red-600">
+                      {errors.confirmPassword.message}
+                    </span>
+                  )}
                 </div>
                 <div className="flex items-start">
                   <div className="flex items-center h-5">
@@ -155,6 +148,7 @@ function RegisterForm() {
                       type="checkbox"
                       className="w-4 h-4 border border-gray-300 rounded bg-gray-50 focus:ring-3 focus:ring-primary-300 dark:bg-gray-700 dark:border-gray-600 dark:focus:ring-primary-600 dark:ring-offset-gray-800"
                       required
+                      {...register("acceptedTerms")}
                     />
                   </div>
                   <div className="ml-3 text-sm">
@@ -162,30 +156,35 @@ function RegisterForm() {
                       htmlFor="terms"
                       className="font-light text-gray-500 dark:text-gray-300"
                     >
-                      I accept the{" "}
+                      Acepto los{" "}
                       <a
                         className="font-medium text-primary-600 hover:underline dark:text-primary-500"
                         href="#"
                       >
-                        Terms and Conditions
+                        terminos y condiciones
                       </a>
                     </label>
                   </div>
                 </div>
+                {errors.acceptedTerms && (
+                  <span className="text-red-600">
+                    {errors.acceptedTerms.message}
+                  </span>
+                )}
                 <button
                   type="submit"
+                  disabled={!isValid}
                   className="w-full text-white bg-primary-600 hover:bg-primary-700 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800"
                 >
-                  Create an account
+                  Crear cuenta
                 </button>
                 <p className="text-sm font-light text-gray-500 dark:text-gray-400">
-                  Already have an account?{" "}
-                  <a
-                    href="#"
-                    className="font-medium text-primary-600 hover:underline dark:text-primary-500"
-                  >
-                    Login here
-                  </a>
+                  Ya tienes cuenta?{" "}
+                  <Link href="/login">
+                    <span className="font-medium text-primary-600 hover:underline dark:text-primary-500">
+                      Login aquí
+                    </span>
+                  </Link>
                 </p>
               </form>
             </div>
