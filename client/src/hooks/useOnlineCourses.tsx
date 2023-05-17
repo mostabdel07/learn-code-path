@@ -8,6 +8,7 @@ interface Course {
   instructor: string;
   price: string;
   img: string;
+  rating: number;
   created_at: string;
   updated_at: string;
 }
