@@ -1,6 +1,8 @@
+import { useAuth } from "@/contexts/auth";
 import { Menu, Transition } from "@headlessui/react";
 import { EllipsisVerticalIcon } from "@heroicons/react/24/outline";
 import { ChevronLeftIcon, ChevronRightIcon } from "@heroicons/react/24/solid";
+import axios from "axios";
 import {
   add,
   eachDayOfInterval,
@@ -15,7 +17,7 @@ import {
   parseISO,
   startOfToday,
 } from "date-fns";
-import { Fragment, useState } from "react";
+import { Fragment, useEffect, useState } from "react";
 
 const meetings = [
   {
@@ -65,6 +67,9 @@ function classNames(...classes: (string | boolean)[]) {
 }
 
 export default function Calendar() {
+  const { token, userId } = useAuth();
+  const apiURL = process.env.API_ENDPOINT;
+
   let today = startOfToday();
   let [selectedDay, setSelectedDay] = useState(today);
   let [currentMonth, setCurrentMonth] = useState(format(today, "MMM-yyyy"));
@@ -88,6 +93,34 @@ export default function Calendar() {
   let selectedDayMeetings = meetings.filter((meeting) =>
     isSameDay(parseISO(meeting.startDatetime), selectedDay)
   );
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const res = await axios.get(`${apiURL}/user/${userId}/bootcamps`, {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        });
+        console.log("calendar");
+        console.log(res.data);
+        const data: any = res.data;
+        console.log(data);
+
+        if (res.status === 404) {
+          return {
+            notFound: true,
+          }; // set the state to null if the request returns a 404
+        } else {
+          // setMyCourses({ data: res.data }); // update the state with the fetched data
+          console.log(res.data);
+        }
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    fetchData();
+  }, [apiURL, token, userId]);
 
   return (
     <div className="pt-16">

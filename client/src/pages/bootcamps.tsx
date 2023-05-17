@@ -1,7 +1,10 @@
 import DefaultLayout from "@/layouts/DefaultLayout";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Image from "next/image";
 import { CheckIcon } from "@heroicons/react/24/outline";
+import axios from "axios";
+import router from "next/router";
+import { useAuth } from "@/contexts/auth";
 
 // Data for bootcamps
 const bootcampsData = [
@@ -42,26 +45,79 @@ const bootcampsData = [
 ];
 
 const BootcampsPage = () => {
-  const [subscribed, setSubscribed] = useState<boolean>(false);
-  const [subscriptionBootcamps, setSubscriptionBootcamps] = useState([]);
+  const { token } = useAuth();
+  const apiURL = process.env.API_ENDPOINT;
+  const [bootcamps, setBootcamps] = useState<object[]>([]);
+  const [subscriptions, setSubscriptios] = useState<number[]>([]);
 
-  const handleSubscribe = ($id: number) => {
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const res = await axios.get(`${apiURL}/bootcamps`, {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        });
+
+        if (res.status === 404) {
+          return {
+            notFound: true,
+          };
+        }
+
+        const data: any = res.data;
+        console.log(data);
+        if (data) {
+          setBootcamps(data);
+        }
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    fetchData();
+  }, [apiURL, token]);
+
+  const handleSubscribe = async (id: number) => {
     // Handle the subscription logic here
     // For example, you can show a success message or redirect to a subscription page
     console.log("Subscribed!");
-    // Simulating a subscription request
-    // You can replace this with your actual subscription logic
+    if (!subscriptions.includes(id)) {
+      setSubscriptios([...subscriptions, id]);
+    }
 
-    // Set the subscribed state to true
-    setSubscribed(true);
+    try {
+      const userId = localStorage.getItem("session_id");
+      console.log("session" + userId);
+
+      const response = await axios.post(
+        `${apiURL}/check_courses`,
+        {
+          bootcamp_id: id,
+          user_id: userId,
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+
+      if (response.data) {
+        router.reload();
+      }
+
+      console.log(response.data);
+    } catch (error) {
+      console.error(error);
+    }
   };
 
   return (
     <DefaultLayout title="Bootcamps">
       <section className="bg-white dark:bg-gray-900">
         <div className="container px-6 py-10 mx-auto">
-          {bootcampsData &&
-            bootcampsData.map(
+          {bootcamps &&
+            bootcamps.map(
               ({
                 id,
                 title,
@@ -121,20 +177,20 @@ const BootcampsPage = () => {
                       <div className="flex items-center">
                         <img
                           className="object-cover object-center w-10 h-10 rounded-full"
-                          src={instructor.profileImage}
+                          src="https://images.unsplash.com/photo-1531590878845-12627191e687?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=764&q=80"
                           alt="profile-image"
                         />
 
                         <div className="mx-4">
                           <h1 className="text-sm text-gray-700 dark:text-gray-200">
-                            {instructor.name}
+                            Amelia Anderson
                           </h1>
                           <p className="text-sm text-gray-500 dark:text-gray-400">
-                            {instructor.role}
+                            Instructor, Lead Developer
                           </p>
                         </div>
                       </div>
-                      {!subscribed ? (
+                      {!subscriptions.includes(id) ? (
                         <button
                           onClick={() => handleSubscribe(id)}
                           className="inline-block text-md mt-4 font-semibold leading-6 text-gray-700 bg-gray-100 rounded-lg py-2 px-4 hover:bg-gray-500 hover:text-white"

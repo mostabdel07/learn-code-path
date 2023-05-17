@@ -6,7 +6,9 @@ use App\Http\Controllers\AuthApiController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\CourseApiController;
 use App\Http\Controllers\OnlineCourseController;
+use App\Http\Controllers\BootcampController;
 use App\Http\Controllers\PurchaseController;
+use App\Http\Controllers\SubscriptionController;
 use App\Http\Controllers\InstructorController;
 
 
@@ -37,5 +39,8 @@ Route::apiResource('courses', OnlineCourseController::class);
 Route::apiResource('instructors', InstructorController::class);
 
 Route::post('check_courses', [OnlineCourseController::class, 'checkCourses']);
+Route::get('bootcamps', [BootcampController::class, 'index']);
+Route::post('subscription_bootcamp', [BootcampController::class, 'subscriptionBootcamp']);
 
 Route::get('user/{userId}/courses', [PurchaseController::class, 'getUserCourses']);
+Route::get('user/{userId}/bootcamps', [SubscriptionController::class, 'getUserBootcamps']);

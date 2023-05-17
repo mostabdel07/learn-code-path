@@ -57,7 +57,23 @@ class DatabaseSeeder extends Seeder
         
         \App\Models\User::factory(10)->create();
 
-        
+        \App\Models\Bootcamp::create([
+            'title'=> 'Iniciación en la programación con Java y MySQL',
+            'date'=> '22/05/2023',
+            'duration'=> '2 semana(s)',
+            'location'=> 'Barcelona',
+            'description'=> 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Iure Lorem ipsum dolor sit, amet consectetur adipisicing elit. Unde tempore aliquid voluptate natus. Odio iste perspiciatis vitae harum! Atque itaque officiis consequatur doloremque, fugit odio est minus voluptates magni beatae! Lorem ipsum dolor sit amet consectetur adipisicing elit. Iure Lorem ipsum dolor sit, amet consectetur adipisicing elit. Unde tempore aliquid voluptate natus. Odio iste perspiciatis vitae harum! Atque itaque officiis consequatur doloremque, fugit odio est minus voluptates magni beatae! odio est minus voluptates magni beatae! Lorem ipsum dolor sit amet consectetur adipisicing elit. Iure Lorem ipsum dolor sit, amet consectetur adipisicing elit.',
+            'image'=> 'https://ts-production.imgix.net/images/088e397f-8949-42ad-a09c-631d611fd773.jpg?auto=compress,format&w=800&h=450',
+        ]);
+
+        \App\Models\Bootcamp::create([
+            'title'=> 'Laravel 9 y Next.js Full-stack',
+            'date'=> '08/06/2023',
+            'duration'=> '4 semana(s)',
+            'location'=> 'Barcelona',
+            'description'=> 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Iure Lorem ipsum dolor sit, amet consectetur adipisicing elit. Unde tempore aliquid voluptate natus. Odio iste perspiciatis vitae harum! Atque itaque officiis consequatur doloremque, fugit odio est minus voluptates magni beatae! Lorem ipsum dolor sit amet consectetur adipisicing elit. Iure Lorem ipsum dolor sit, amet consectetur adipisicing elit. Unde tempore aliquid voluptate natus. Odio iste perspiciatis vitae harum! Atque itaque officiis consequatur doloremque, fugit odio est minus voluptates magni beatae! odio est minus voluptates magni beatae! Lorem ipsum dolor sit amet consectetur adipisicing elit. Iure Lorem ipsum dolor sit, amet consectetur adipisicing elit.',
+            'image'=> 'https://reffect.co.jp/wp-content/uploads/2022/03/Laravel9_-next_js-1024x585.png',
+        ]);
 
 
     }
