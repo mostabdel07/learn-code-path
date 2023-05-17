@@ -12,6 +12,7 @@ interface Course {
   instructor: string;
   price: string;
   img: string;
+  rating: number;
   created_at: string;
   updated_at: string;
 }
@@ -117,15 +118,23 @@ export default function Panel(props: Props) {
           <input
             type="number"
             placeholder="Min price"
-            value={minPrice}
-            onChange={(event) => setMinPrice(parseFloat(event.target.value))}
+            value={minPrice !== 0 ? minPrice : ""}
+            onChange={(event) =>
+              setMinPrice(
+                event.target.value !== "" ? parseFloat(event.target.value) : 0
+              )
+            }
           />
           <label>Precio máximo:</label>
           <input
             type="number"
             placeholder="Max price"
-            value={maxPrice}
-            onChange={(event) => setMaxPrice(parseFloat(event.target.value))}
+            value={maxPrice !== 100 ? maxPrice : ""}
+            onChange={(event) =>
+              setMaxPrice(
+                event.target.value !== "" ? parseFloat(event.target.value) : 100
+              )
+            }
           />
         </div>
 
@@ -165,17 +174,20 @@ export default function Panel(props: Props) {
       )}
       <div className="grid gap-4 p-8 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
         {data &&
-          filteredCourses.map(({ id, title, img, headline, price }: Course) => (
-            <div key={id}>
-              <ProductCard
-                id={id}
-                title={title}
-                img={img}
-                headline={headline}
-                price={price}
-              />
-            </div>
-          ))}
+          filteredCourses.map(
+            ({ id, title, img, headline, price, rating }: Course) => (
+              <div key={id}>
+                <ProductCard
+                  id={id}
+                  title={title}
+                  img={img}
+                  headline={headline}
+                  price={price}
+                  rating={rating}
+                />
+              </div>
+            )
+          )}
       </div>
     </div>
   );
