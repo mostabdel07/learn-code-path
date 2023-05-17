@@ -9,10 +9,10 @@ use Illuminate\Http\Request;
 class OnlineCourseController extends Controller
 {
 
-    public function __construct()
-    {
-        $this->middleware('auth:api');
-    }
+    // public function __construct()
+    // {
+    //     $this->middleware('auth:api');
+    // }
     
     /**
      * Display a listing of the resource.
@@ -38,7 +38,7 @@ class OnlineCourseController extends Controller
             'price' => 'required|numeric|min:0|max:1000',
             'img' => 'required|string',
             'headline' => 'required|string|max:150',
-            'instructor' => 'required|string|max:30',
+            'instructor_id' => 'required|numeric',
         ],[
             'title.required' => 'El campo título es requerido.',
             'title.string' => 'El campo título debe ser una cadena de caracteres.',
@@ -54,8 +54,7 @@ class OnlineCourseController extends Controller
             'headline.string' => 'El campo titular debe ser una cadena de caracteres.',
             'headline.max' => 'El campo titular no debe exceder los 150 caracteres.',
             'instructor.required' => 'El campo instructor es requerido.',
-            'instructor.string' => 'El campo instructor debe ser una cadena de caracteres.',
-            'instructor.max' => 'El campo instructor no debe exceder los 30 caracteres.'
+            'instructor.numeric' => 'El campo instructor debe ser un valor numérico.',
         ]);
 
 

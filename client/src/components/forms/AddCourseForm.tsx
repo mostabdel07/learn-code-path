@@ -6,6 +6,7 @@ import axios from "axios";
 import { useAuth } from "@/contexts/auth";
 import useInstructors from "@/hooks/useInstructors";
 import SelectMenu from "../SelectMenu";
+import router from "next/router";
 
 function AddCourseForm() {
   const { token } = useAuth();
@@ -18,7 +19,7 @@ function AddCourseForm() {
     price: number;
     img: string;
     headline: string;
-    instructor: string;
+    instructor_id: any;
   };
 
   const schema = yup.object().shape({
@@ -43,12 +44,14 @@ function AddCourseForm() {
       .string()
       .required("El titular es obligatorio")
       .max(150, "El titular debe tener como máximo 150 caracteres"),
+    instructor_id: yup.number().required("El instructor es obligatorio"),
   });
 
   const {
     register,
     handleSubmit,
     formState: { errors, isValid },
+    reset,
   } = useForm<FormValues>({
     resolver: yupResolver(schema),
     mode: "onChange",
@@ -64,6 +67,7 @@ function AddCourseForm() {
     try {
       console.log(data);
       console.log(token);
+      data.instructor_id = parseInt(data.instructor_id);
       const response = await axios.post(
         "http://127.0.0.1:8000/api/courses",
         data,
@@ -74,8 +78,11 @@ function AddCourseForm() {
         }
       );
       console.log(response.data);
-      //reset(); // Limpiar los campos del formulario después de una respuesta exitosa
+      console.log("AÑADIDO");
+      reset(); // Limpiar los campos del formulario después de una respuesta exitosa
+      router.reload();
     } catch (error: any) {
+      console.log("NO AÑADIDO");
       if (error.response.status === 422) {
         const errors = error.response.data.errors;
         console.log(errors);
@@ -133,18 +140,18 @@ function AddCourseForm() {
       </div>
       <div className="mb-4">
         <label className="block font-medium text-gray-700">Instructor</label>
-        {/* <select
-          {...register("instructor")}
+        <select
+          {...register("instructor_id")}
           className="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-300 rounded-md shadow-sm focus:outline-none focus:border-blue-500 focus:ring-blue-500"
         >
           {sortedInstructors && // Aseguramos que la lista de instructores exista
             sortedInstructors.map((instructor) => (
-              <option key={instructor.id} value={instructor.name}>
+              <option key={instructor.id} value={instructor.id}>
                 {instructor.name}
               </option>
             ))}
-        </select> */}
-        <SelectMenu instructors={sortedInstructors} />
+        </select>
+        {/* <SelectMenu instructors={sortedInstructors} /> */}
       </div>
       {errorList.length > 0 && (
         <div className="text-red-600">

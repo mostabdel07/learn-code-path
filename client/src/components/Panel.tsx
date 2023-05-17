@@ -28,7 +28,7 @@ export default function Panel(props: Props) {
   // Filters
   const [searchTerm, setSearchTerm] = useState<string>("");
   const [minPrice, setMinPrice] = useState<number>(0);
-  const [maxPrice, setMaxPrice] = useState<number>(0);
+  const [maxPrice, setMaxPrice] = useState<number>(100);
 
   const [openSlideOver, setOpenSlideOver] = useState(false);
 
@@ -41,7 +41,7 @@ export default function Panel(props: Props) {
   }
 
   if (!data || loading) {
-    console.log(data);
+    console.log("data" + data);
     console.log(loading);
     return <div>Loading...</div>;
   }

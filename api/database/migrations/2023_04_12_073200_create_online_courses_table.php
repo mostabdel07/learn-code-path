@@ -16,7 +16,7 @@ return new class extends Migration
             $table->string('title');
             $table->string('headline');
             $table->decimal('price', 8, 2);
-            $table->integer('rating');            
+            $table->integer('rating')->nullable();         
             $table->string('img');
             $table->foreignId('instructor_id')
             ->nullable()
