@@ -19,7 +19,7 @@ interface User {
   username: string;
   email: string;
   role_id: number;
-  personal_data: any;
+  personal_data?: any;
   role: any;
   created_at: string;
   updated_at: string;
@@ -230,12 +230,14 @@ const DashboardPage = () => {
             <ul className="mt-2 text-gray-700">
               <li className="flex border-y py-2">
                 <span className="font-bold w-24">Nombre:</span>
-                <span className="text-gray-700">{user.personal_data.name}</span>
+                <span className="text-gray-700">
+                  {user.personal_data?.name}
+                </span>
               </li>
               <li className="flex border-b py-2">
                 <span className="font-bold w-24">Apellido:</span>
                 <span className="text-gray-700">
-                  {user.personal_data.surname}
+                  {user.personal_data?.surname}
                 </span>
               </li>
               <li className="flex border-b py-2">
