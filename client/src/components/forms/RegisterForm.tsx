@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
@@ -15,16 +15,26 @@ function RegisterForm() {
     acceptedTerms: boolean;
   };
 
+  const [errorList, setErrorList] = useState<any>([]);
+
   const schema = yup.object().shape({
-    username: yup.string().required("El nombre es obligatorio"),
+    username: yup
+      .string()
+      .required("El nombre es obligatorio")
+      .max(30, "El nombre no debe exceder los 30 caracteres"),
     email: yup
       .string()
       .email("Correo electrónico inválido")
-      .required("El correo electrónico es obligatorio"),
+      .required("El correo electrónico es obligatorio")
+      .max(50, "El correo electrónico no debe exceder los 50 caracteres"),
     password: yup
       .string()
       .required("La contraseña es obligatoria")
-      .min(6, "La contraseña debe tener al menos 6 caracteres"),
+      .min(6, "La contraseña debe tener al menos 6 caracteres")
+      .matches(
+        /^(?=.*[a-zA-Z])(?=.*\d).+$/,
+        "La contraseña debe contener al menos una letra y un número"
+      ),
     confirmPassword: yup
       .string()
       .required("Confirmar contraseña es obligatorio")
@@ -55,8 +65,15 @@ function RegisterForm() {
       console.log(response.data);
       reset();
       router.push("/login");
-    } catch (error) {
-      console.error(error);
+    } catch (error: any) {
+      if (error.response.status === 422) {
+        const errors = error.response.data.errors;
+        console.log(errors);
+        setErrorList(Object.values(errors).flat());
+        console.log(errorList);
+      } else {
+        console.error(error);
+      }
     }
   };
 
@@ -170,6 +187,15 @@ function RegisterForm() {
                   <span className="text-red-600">
                     {errors.acceptedTerms.message}
                   </span>
+                )}
+                {errorList.length > 0 && (
+                  <div className="text-red-600">
+                    <ul>
+                      {errorList.map((error: any) => (
+                        <li key={error}>{error}</li>
+                      ))}
+                    </ul>
+                  </div>
                 )}
                 <button
                   type="submit"

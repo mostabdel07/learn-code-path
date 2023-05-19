@@ -5,8 +5,8 @@ interface Props {
     id?: number;
     title?: string;
     headline?: string;
-    instructor?: string;
-    price?: string;
+    instructor_id?: any;
+    price?: number;
   };
   handleInputChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
   handleSave: (id: number) => void;
@@ -42,7 +42,7 @@ const EditCourseForm: React.FC<Props> = ({
           htmlFor="headline"
           className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
         >
-          Headline
+          Descripcion
         </label>
         <input
           type="text"
@@ -62,11 +62,11 @@ const EditCourseForm: React.FC<Props> = ({
           Instructor
         </label>
         <input
-          type="text"
-          id="instructor"
-          name="instructor"
+          type="number"
+          id="instructor_id"
+          name="instructor_id"
           className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-          value={editCourse.instructor}
+          value={editCourse.instructor_id}
           onChange={handleInputChange}
         />
       </div>
@@ -79,7 +79,7 @@ const EditCourseForm: React.FC<Props> = ({
           Price
         </label>
         <input
-          type="text"
+          type="number"
           id="price"
           name="price"
           className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"

@@ -9,10 +9,10 @@ use Illuminate\Validation\Rules;
 
 class UserController extends Controller
 {
-    // public function __construct()
-    // {
-    //     $this->middleware('auth:api');
-    // }
+    public function __construct()
+    {
+        $this->middleware('auth:api');
+    }
 
     /**
      * Display a listing of the resource.
@@ -48,18 +48,6 @@ class UserController extends Controller
     public function store(Request $request)
     {
         
-        $validatedData = $request->validate([
-            'username' => 'required|string|max:255',
-            'email' => 'required|string|email|max:255|unique:users,email',
-            'password' => ['required', 'string', 'min:8', 'regex:/^(?=.*[a-zA-Z])(?=.*\d).+$/'],
-        ]);
-
-        $validatedData['password'] = Hash::make($validatedData['password']);
-        $validatedData['role_id'] = 3;
-
-        $user = User::create($validatedData);
-
-        return response()->json($user, 201);
     }
 
     /**

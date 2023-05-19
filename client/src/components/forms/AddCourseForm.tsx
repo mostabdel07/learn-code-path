@@ -26,7 +26,7 @@ function AddCourseForm() {
     title: yup
       .string()
       .required("El título es obligatorio")
-      .max(30, "El título debe tener como máximo 30 caracteres"),
+      .max(100, "El título debe tener como máximo 100 caracteres"),
     price: yup
       .number()
       .typeError("El precio debe ser un número")
@@ -38,7 +38,7 @@ function AddCourseForm() {
       .required("La imagen es obligatoria")
       .matches(
         /^https:\/\/.*/,
-        "La URL de la imagen debe empezar con 'https://'"
+        "La URL de la imagen debe empezar con https://"
       ),
     headline: yup
       .string()

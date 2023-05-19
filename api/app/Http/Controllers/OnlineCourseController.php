@@ -9,10 +9,10 @@ use Illuminate\Http\Request;
 class OnlineCourseController extends Controller
 {
 
-    // public function __construct()
-    // {
-    //     $this->middleware('auth:api');
-    // }
+    public function __construct()
+    {
+        $this->middleware('auth:api');
+    }
     
     /**
      * Display a listing of the resource.
@@ -34,7 +34,7 @@ class OnlineCourseController extends Controller
     public function store(Request $request)
     {
         $validatedData = $request->validate([
-            'title' => 'required|string|max:30|unique:online_courses',
+            'title' => 'required|string|max:100|unique:online_courses',
             'price' => 'required|numeric|min:0|max:1000',
             'img' => 'required|string',
             'headline' => 'required|string|max:150',
@@ -42,8 +42,8 @@ class OnlineCourseController extends Controller
         ],[
             'title.required' => 'El campo título es requerido.',
             'title.string' => 'El campo título debe ser una cadena de caracteres.',
-            'title.max' => 'El campo título no debe exceder los 30 caracteres.',
-            'title.unique' => 'El campo título debe ser único.',
+            'title.max' => 'El campo título no debe exceder los 100 caracteres.',
+            'title.unique' => 'El título de ese curso ya existe.',
             'price.required' => 'El campo precio es requerido.',
             'price.numeric' => 'El campo precio debe ser un valor numérico.',
             'price.min' => 'El campo precio debe ser mayor o igual a cero.',
@@ -89,11 +89,23 @@ class OnlineCourseController extends Controller
     public function update(Request $request, $id)
     {
         $validatedData = $request->validate([
-            'title' => 'string|max:255',
-            'price' => 'numeric|min:0',
-            'img' => 'string',
-            'headline' => 'string',
-            'instructor' => 'string',
+            'title' => 'string|max:100|unique:online_courses',
+            'price' => 'numeric|min:0|max:1000',
+            'img' => 'string|regex:/^https:\/\/.*/',
+            'headline' => 'string|max:150',
+            'instructor_id' => 'numeric',
+        ],[
+            'title.string' => 'El campo título debe ser una cadena de caracteres.',
+            'title.max' => 'El campo título no debe exceder los 100 caracteres.',
+            'title.unique' => 'El campo título debe ser único.',
+            'price.numeric' => 'El campo precio debe ser un valor numérico.',
+            'price.min' => 'El campo precio debe ser mayor o igual a cero.',
+            'price.max' => 'El campo precio no debe exceder los 1000.',
+            'img.string' => 'El campo imagen debe ser una cadena de caracteres.',
+            'imagen_url.regex' => 'La URL de la imagen debe empezar con https://',
+            'headline.string' => 'El campo titular debe ser una cadena de caracteres.',
+            'headline.max' => 'El campo titular no debe exceder los 150 caracteres.',
+            'instructor.numeric' => 'El campo instructor debe ser un valor numérico.',
         ]);
         
         $onlineCourse = OnlineCourse::find($id);

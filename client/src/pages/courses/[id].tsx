@@ -14,8 +14,8 @@ interface Course {
   id: number;
   title: string;
   headline: string;
-  instructor: string;
-  price: string;
+  instructor_id: string;
+  price: number;
   img: string;
   created_at: string;
   updated_at: string;
@@ -78,7 +78,7 @@ const CoursePage = ({ course }: CoursePageProps) => {
     id: course.id,
     title: course.title,
     headline: course.headline,
-    instructor: course.instructor,
+    instructor_id: course.instructor_id,
     price: course.price,
     img: course.img,
     created_at: course.created_at,
@@ -130,8 +130,8 @@ const CoursePage = ({ course }: CoursePageProps) => {
     if (editCourse.headline !== course.headline) {
       changedProperties.headline = editCourse.headline;
     }
-    if (editCourse.instructor !== course.instructor) {
-      changedProperties.instructor = editCourse.instructor;
+    if (editCourse.instructor_id !== course.instructor_id) {
+      changedProperties.instructor_id = editCourse.instructor_id;
     }
     if (editCourse.price !== course.price) {
       changedProperties.price = editCourse.price;
@@ -152,7 +152,9 @@ const CoursePage = ({ course }: CoursePageProps) => {
         }
       );
       console.log(response);
-      if (response.status === 204) router.reload();
+      if (response.status === 204) {
+        router.reload();
+      }
     } catch (error) {
       console.log(error);
     }
@@ -296,7 +298,7 @@ const CoursePage = ({ course }: CoursePageProps) => {
 
               <div className="flex justify-center mt-4">
                 <span className="title-font font-medium text-2xl text-gray-900">
-                  {parseFloat(course.price) == 0.0 ? "Free" : course.price}
+                  {course.price == 0.0 ? "Free" : course.price}
                 </span>
                 <button
                   className="inline-flex text-white bg-blue-500 border-0 py-2 px-6 focus:outline-none hover:bg-blue-600 rounded text-lg"

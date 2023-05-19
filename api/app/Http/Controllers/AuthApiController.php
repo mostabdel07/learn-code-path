@@ -45,9 +45,22 @@ class AuthApiController extends Controller
     public function register(Request $request)
     {
         $request->validate([
-            'username' => 'required|string|max:255',
-            'email' => 'required|string|email|max:255|unique:users',
-            'password' => 'required|string|min:6',
+            'username' => 'required|string|max:30',
+            'email' => 'required|string|email|max:50|unique:users,email',
+            'password' => 'required|string|min:6|regex:/^(?=.*[a-zA-Z])(?=.*\d).+$/',
+        ], [
+            'username.required' => 'El campo nombre de usuario es requerido.',
+            'username.string' => 'El campo nombre de usuario debe ser una cadena de caracteres.',
+            'username.max' => 'El campo nombre de usuario no debe exceder los 30 caracteres.',
+            'email.required' => 'El campo correo electrónico es requerido.',
+            'email.string' => 'El campo correo electrónico debe ser una cadena de caracteres.',
+            'email.email' => 'El campo correo electrónico debe ser una dirección de correo válida.',
+            'email.max' => 'El campo correo electrónico no debe exceder los 50 caracteres.',
+            'email.unique' => 'El correo electrónico ingresado ya está registrado.',
+            'password.required' => 'El campo contraseña es requerido.',
+            'password.string' => 'El campo contraseña debe ser una cadena de caracteres.',
+            'password.min' => 'El campo contraseña debe tener al menos 6 caracteres.',
+            'password.regex' => 'El campo contraseña debe contener al menos una letra y un número.',
         ]);
 
         $user = User::create([

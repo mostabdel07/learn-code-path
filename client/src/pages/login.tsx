@@ -24,10 +24,7 @@ export default function LoginPage() {
       .string()
       .email("Correo electrónico inválido")
       .required("El correo electrónico es obligatorio"),
-    password: yup
-      .string()
-      .required("La contraseña es obligatoria")
-      .min(6, "La contraseña debe tener al menos 6 caracteres"),
+    password: yup.string().required("La contraseña es obligatoria"),
   });
 
   const {
