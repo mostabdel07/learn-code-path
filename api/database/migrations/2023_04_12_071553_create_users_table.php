@@ -20,9 +20,9 @@ return new class extends Migration
             ->nullable()
             ->constrained()
             ->nullOnDelete();
-            $table->foreignId('role_id')
-            ->constrained()
-            ->cascadeOnDelete();
+            // $table->foreignId('role_id')
+            // ->constrained()
+            // ->cascadeOnDelete();
             $table->rememberToken();
             $table->timestamps();
         });

@@ -33,6 +33,12 @@ class OnlineCourseController extends Controller
      */
     public function store(Request $request)
     {
+
+        if (!$request->user()->hasRole('admin')) {
+            return response()->json(['message' => 'Acceso denegado'], 403);
+        }
+
+        
         $validatedData = $request->validate([
             'title' => 'required|string|max:100|unique:online_courses',
             'price' => 'required|numeric|min:0|max:1000',

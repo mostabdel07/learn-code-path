@@ -13,15 +13,7 @@ class DatabaseSeeder extends Seeder
     public function run(): void
     {
 
-        
-        
-        \App\Models\Role::factory()->create([
-            'role_name' => 'admin',
-        ]);
-        
-        \App\Models\Role::factory()->create([
-            'role_name' => 'user',
-        ]);
+        $this->call(RoleSeeder::class);
 
         \App\Models\PersonalDatas::factory()->create([
             'name' => 'Víctor',
@@ -44,18 +36,18 @@ class DatabaseSeeder extends Seeder
             'email' => 'victor@gmail.com',
             'password' => bcrypt('victor1234'),
             'personal_data_id' => '1',
-            'role_id' => '1',
-        ]);
+        ])->assignRole('admin');
 
         \App\Models\User::factory()->create([
             'username' => 'mosta',
             'email' => 'mosta@gmail.com',
             'password' => bcrypt('mosta1234'),
             'personal_data_id' => '2',
-            'role_id' => '1',
-        ]);
+        ])->assignRole('admin');
         
-        \App\Models\User::factory(10)->create();
+        \App\Models\User::factory(10)->create()->each(function($user){
+            $user->assignRole('user');
+        });
 
         \App\Models\Bootcamp::create([
             'title'=> 'Iniciación en la programación con Java y MySQL',
@@ -74,7 +66,5 @@ class DatabaseSeeder extends Seeder
             'description'=> 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Iure Lorem ipsum dolor sit, amet consectetur adipisicing elit. Unde tempore aliquid voluptate natus. Odio iste perspiciatis vitae harum! Atque itaque officiis consequatur doloremque, fugit odio est minus voluptates magni beatae! Lorem ipsum dolor sit amet consectetur adipisicing elit. Iure Lorem ipsum dolor sit, amet consectetur adipisicing elit. Unde tempore aliquid voluptate natus. Odio iste perspiciatis vitae harum! Atque itaque officiis consequatur doloremque, fugit odio est minus voluptates magni beatae! odio est minus voluptates magni beatae! Lorem ipsum dolor sit amet consectetur adipisicing elit. Iure Lorem ipsum dolor sit, amet consectetur adipisicing elit.',
             'image'=> 'https://reffect.co.jp/wp-content/uploads/2022/03/Laravel9_-next_js-1024x585.png',
         ]);
-
-
     }
 }
