@@ -6,6 +6,8 @@ use App\Models\User;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Auth;
 
+
+
 class AuthApiController extends Controller
 {
     public function __construct()
@@ -31,10 +33,14 @@ class AuthApiController extends Controller
             ], 401);
         }
 
-        $user = Auth::user();
+        $user = User::find(Auth::user()->id);
+        $role = $user->getRoleNames()->first();
+
+        
         return response()->json([
             'status' => 'success',
             'user' => $user,
+            'role' => $role,
             'authorisation' => [
                 'token' => $token,
                 'type' => 'bearer',

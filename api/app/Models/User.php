@@ -11,6 +11,9 @@ use PHPOpenSourceSaver\JWTAuth\Contracts\JWTSubject;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Spatie\Permission\Traits\HasRoles;
+use Spatie\Permission\Models\Role;
+
+
 
 
 class User extends Authenticatable implements JWTSubject
