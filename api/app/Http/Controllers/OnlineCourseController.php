@@ -42,7 +42,7 @@ class OnlineCourseController extends Controller
         $validatedData = $request->validate([
             'title' => 'required|string|max:100|unique:online_courses',
             'price' => 'required|numeric|min:0|max:1000',
-            'img' => 'required|string',
+            'img' => 'required|image',
             'headline' => 'required|string|max:150',
             'instructor_id' => 'required|numeric',
         ],[
@@ -55,7 +55,7 @@ class OnlineCourseController extends Controller
             'price.min' => 'El campo precio debe ser mayor o igual a cero.',
             'price.max' => 'El campo precio no debe exceder los 1000.',
             'img.required' => 'El campo imagen es requerido.',
-            'img.string' => 'El campo imagen debe ser una cadena de caracteres.',
+            'img.image' => 'El campo imagen debe ser una imagen válida.',
             'headline.required' => 'El campo titular es requerido.',
             'headline.string' => 'El campo titular debe ser una cadena de caracteres.',
             'headline.max' => 'El campo titular no debe exceder los 150 caracteres.',
@@ -63,6 +63,12 @@ class OnlineCourseController extends Controller
             'instructor.numeric' => 'El campo instructor debe ser un valor numérico.',
         ]);
 
+
+        $imagePath = $request->file('img')->store('public/images');
+        $imageName = basename($imagePath);
+        $imageUrl = asset('storage/images/' . $imageName);
+        
+        $validatedData['img'] = $imageUrl;
 
         $onlineCourse = OnlineCourse::create($validatedData);
 
