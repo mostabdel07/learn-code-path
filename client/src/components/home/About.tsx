@@ -3,10 +3,10 @@ import Image from "next/image";
 
 export default function About() {
   return (
-    <section id="about" className="bg-ctm-light dark:bg-ctm-black">
+    <section id="about" className="bg-ctm-black ">
       <div className="container gap-16 items-center py-8 px-4 mx-auto lg:grid lg:grid-cols-2 lg:py-16 lg:px-6">
-        <div className="font-light text-gray-500 sm:text-lg dark:text-gray-400">
-          <h2 className="mb-4 text-4xl tracking-tight font-extrabold text-gray-900 dark:text-white">
+        <div className="font-light text-white sm:text-lg">
+          <h2 className="mb-4 text-4xl tracking-tight font-extrabold text-white">
             Sobre Nosotros
           </h2>
           <p className="mb-4">
@@ -49,23 +49,20 @@ export default function About() {
                 height={"288"}
               />
 
-              <h1 className="mt-4 text-2xl font-semibold text-gray-700 capitalize dark:text-white">
+              <h1 className="mt-4 text-2xl font-semibold capitalize text-white">
                 Mostafa Abdel-illah
               </h1>
 
               <div className="flex justify-between items-center">
                 <div>
-                  <p className="mt-2 text-gray-500 capitalize dark:text-gray-300">
+                  <p className="mt-2 capitalize text-white">
                     Full stack developer
                   </p>
                 </div>
                 <div>
                   <ul className="flex space-x-4 sm:mt-0">
                     <li>
-                      <a
-                        href="#"
-                        className="text-gray-500 hover:text-gray-900 dark:hover:text-white"
-                      >
+                      <a href="#" className="text-gray-500 hover:text-white">
                         <svg
                           className="w-5 h-5"
                           fill="currentColor"
@@ -81,10 +78,7 @@ export default function About() {
                       </a>
                     </li>
                     <li>
-                      <a
-                        href="#"
-                        className="text-gray-500 hover:text-gray-900 dark:hover:text-white"
-                      >
+                      <a href="#" className="text-gray-500 hover:text-white">
                         <svg
                           className="w-5 h-5"
                           fill="currentColor"
@@ -96,10 +90,7 @@ export default function About() {
                       </a>
                     </li>
                     <li>
-                      <a
-                        href="#"
-                        className="text-gray-500 hover:text-gray-900 dark:hover:text-white"
-                      >
+                      <a href="#" className="text-gray-500 hover:text-white">
                         <svg
                           className="w-5 h-5"
                           fill="currentColor"
@@ -115,10 +106,7 @@ export default function About() {
                       </a>
                     </li>
                     <li>
-                      <a
-                        href="#"
-                        className="text-gray-500 hover:text-gray-900 dark:hover:text-white"
-                      >
+                      <a href="#" className="text-gray-500 hover:text-white">
                         <svg
                           className="w-5 h-5"
                           fill="currentColor"
@@ -147,23 +135,20 @@ export default function About() {
                 height={"385"}
               />
 
-              <h1 className="mt-4 text-2xl font-semibold text-gray-700 capitalize dark:text-white">
+              <h1 className="mt-4 text-2xl font-semibold capitalize text-white">
                 Victor Muñoz
               </h1>
 
               <div className="flex justify-between items-center">
                 <div>
-                  <p className="mt-2 text-gray-500 capitalize dark:text-gray-300">
+                  <p className="mt-2  capitalize text-white">
                     Full stack developer
                   </p>
                 </div>
                 <div>
                   <ul className="flex space-x-4 sm:mt-0">
                     <li>
-                      <a
-                        href="#"
-                        className="text-gray-500 hover:text-gray-900 dark:hover:text-white"
-                      >
+                      <a href="#" className="text-gray-500 hover:text-white">
                         <svg
                           className="w-5 h-5"
                           fill="currentColor"
@@ -179,10 +164,7 @@ export default function About() {
                       </a>
                     </li>
                     <li>
-                      <a
-                        href="#"
-                        className="text-gray-500 hover:text-gray-900 dark:hover:text-white"
-                      >
+                      <a href="#" className="text-gray-500 hover:text-white">
                         <svg
                           className="w-5 h-5"
                           fill="currentColor"
@@ -194,10 +176,7 @@ export default function About() {
                       </a>
                     </li>
                     <li>
-                      <a
-                        href="#"
-                        className="text-gray-500 hover:text-gray-900 dark:hover:text-white"
-                      >
+                      <a href="#" className="text-gray-500 hover:text-white">
                         <svg
                           className="w-5 h-5"
                           fill="currentColor"
@@ -213,10 +192,7 @@ export default function About() {
                       </a>
                     </li>
                     <li>
-                      <a
-                        href="#"
-                        className="text-gray-500 hover:text-gray-900 dark:hover:text-white"
-                      >
+                      <a href="#" className="text-gray-500 hover:text-white">
                         <svg
                           className="w-5 h-5"
                           fill="currentColor"
@@ -237,11 +213,11 @@ export default function About() {
             </div>
           </div>
           <div className="xl:w-1/2 xl:mx-4">
-            <h1 className="text-3xl font-semibold text-gray-800 capitalize lg:text-4xl dark:text-white">
+            <h1 className="text-3xl font-semibold capitalize lg:text-4xl text-white">
               Nuestro Equipo
             </h1>
 
-            <p className="max-w-2xl mt-4 text-gray-500 dark:text-gray-300">
+            <p className="max-w-2xl mt-4 text-white">
               Somos dos desarrolladores web que hemos visto una necesidad y
               hemos pensado en la idea de facilitar a los nuevos programadores
               encontrar cursos para facilitar su aprendizaje.

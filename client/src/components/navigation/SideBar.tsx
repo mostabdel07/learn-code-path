@@ -133,7 +133,7 @@ function SideBar({ children, title }: any) {
 
   return (
     <div>
-      <nav className="fixed top-0 z-50 w-full bg-gray-200 dark:bg-ctm-dark shadow">
+      <nav className="fixed top-0 z-50 w-full bg-ctm-dark shadow">
         <div className="px-6 py-4 lg:px-8 lg:pl-3">
           <div className="flex items-center justify-between">
             <div className="flex items-center justify-start">
@@ -166,7 +166,7 @@ function SideBar({ children, title }: any) {
                   className="h-8 mr-3"
                   alt="FlowBite Logo"
                 /> */}
-                <span className="self-center text-xl font-semibold sm:text-2xl whitespace-nowrap text-black dark:text-white">
+                <span className="self-center text-xl font-semibold sm:text-2xl whitespace-nowrap text-white">
                   LearnCodePath
                 </span>
               </a>
@@ -175,22 +175,25 @@ function SideBar({ children, title }: any) {
               <div className="flex items-center ml-3">
                 <button
                   type="button"
-                  className="p-1 mr-4 text-black dark:text-white hover:text-gray-600 dark:hover:text-gray-300"
+                  className="p-1 mr-4 text-white  hover:text-gray-300"
                   onClick={openCart}
                 >
                   <MdLocalGroceryStore className="h-6 w-6" aria-hidden="true" />
                   {cartItems.length > 0 && (
                     <span className="flex absolute -mt-5 ml-4">
-                      <span className="animate-ping absolute inline-flex h-3 w-3 rounded-full bg-pink-400 bottom-2 opacity-75"></span>
-                      <span className="relative inline-flex rounded-full h-3 w-3 bg-pink-500 bottom-2"></span>
+                      <span className="animate-ping absolute inline-flex h-3 w-3 rounded-full bg-red-400 bottom-2 opacity-75"></span>
+                      <span className="relative inline-flex rounded-full h-3 w-3 bg-red-500 bottom-2"></span>
                     </span>
                   )}
                 </button>
                 {/* Profile dropdown */}
                 <Menu as="div" className="relative mr-4">
                   <div>
-                    <Menu.Button className="flex rounded-full  text-sm focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800">
+                    <Menu.Button className="flex rounded-full p-1 ring-gray-600 ring-2 text-sm focus:outline-none focus:ring-ctm-accent">
                       <span className="sr-only">Open user menu</span>
+                      <h4 className="pl-1 pr-1.5 text-lg font-bold text-gray-200">
+                        {user?.username}
+                      </h4>
                       <Image
                         className="h-8 w-8 rounded-full"
                         src="https://cdn2.iconfinder.com/data/icons/flatfaces-everyday-people-square/128/beard_male_man_face_avatar-512.png"
@@ -242,7 +245,6 @@ function SideBar({ children, title }: any) {
                     </Menu.Items>
                   </Transition>
                 </Menu>
-                <DarkModeSwitch />
               </div>
             </div>
           </div>
@@ -251,49 +253,20 @@ function SideBar({ children, title }: any) {
 
       <aside
         id="logo-sidebar"
-        className={`fixed top-0 left-0 z-40 w-64 h-screen pt-20 transition-transform shadow bg-gray-200 dark:bg-ctm-dark lg:translate-x-0   ${
+        className={`fixed top-0 left-0 z-40 w-64 h-screen pt-20 transition-transform shadow bg-ctm-dark lg:translate-x-0   ${
           isOpen ? "" : "-translate-x-full"
         }`}
         aria-label="Sidebar"
       >
-        <div className=" flex flex-col justify-between space-y-6 h-full px-3 pb-4 overflow-y-auto bg-gray-200 dark:bg-ctm-dark">
-          <div className="relative flex flex-col items-center rounded-3xl w-56 h-56 mx-auto p-4 bg-white bg-clip-border shadow-3xl shadow-shadow-500 dark:!bg-navy-800 dark:text-white dark:!shadow-none">
-            <div className="relative flex h-20 w-full justify-center rounded-xl bg-cover">
-              <img
-                src="https://horizon-tailwind-react-git-tailwind-components-horizon-ui.vercel.app/static/media/banner.ef572d78f29b0fee0a09.png"
-                className="absolute flex h-20 w-full justify-center rounded-xl bg-cover"
-              />
-              <div className="absolute -bottom-12 flex h-[87px] w-[87px] items-center justify-center rounded-full border-[4px] border-white bg-pink-400 dark:!border-navy-700">
-                <Image
-                  src="https://cdn2.iconfinder.com/data/icons/flatfaces-everyday-people-square/128/beard_male_man_face_avatar-512.png"
-                  alt="user"
-                  width="0"
-                  height="0"
-                  sizes="100vw"
-                  className="h-full w-full rounded-full"
-                />
-              </div>
-            </div>
-            <div className="mt-12 flex flex-col items-center">
-              <h4 className="text-xl font-bold text-teal-700">
-                {user?.username}
-              </h4>
-              <p className="text-base font-normal text-gray-600 capitalize">
-                {user?.role.role_name}
-              </p>
-            </div>
-          </div>
-          <ul className=" pb-40 space-y-2 font-medium">
-            <p className="p-2 font-medium text-lg text-black dark:text-white">
-              Navegación
-            </p>
+        <div className=" flex flex-col justify-between space-y-6 h-full px-3 pb-4 overflow-y-auto bg-ctm-dark">
+          <ul className=" pb-40 space-y-4 font-medium">
             {links.map((item, index) => (
               <li key={index}>
                 <Link
                   href={item.path}
-                  className="flex items-center p-2 text-black dark:text-white rounded-lg  hover:bg-teal-200 dark:hover:text-black  dark:hover:bg-gray-200"
+                  className="flex items-center p-2 text-white rounded-lg  hover:text-ctm-accent hover:bg-gray-200"
                 >
-                  <item.icon className="w-6 h-6 text-teal-500 transition duration-75 dark:text-teal-400 group-hover:text-gray-900 dark:group-hover:text-white" />
+                  <item.icon className="w-6 h-6 text-ctm-accent transition duration-75 group-hover:text-white" />
                   <span className="ml-3">{item.title}</span>
                 </Link>
               </li>
@@ -302,10 +275,7 @@ function SideBar({ children, title }: any) {
 
           <div className="pb-4 text-center">
             <div className="flex mb-4 space-x-6 justify-center">
-              <a
-                href="#"
-                className="text-gray-500 hover:text-gray-900 dark:hover:text-white"
-              >
+              <a href="#" className="text-gray-500 hover:text-white">
                 <svg
                   className="w-5 h-5"
                   fill="currentColor"
@@ -319,10 +289,7 @@ function SideBar({ children, title }: any) {
                   ></path>
                 </svg>
               </a>
-              <a
-                href="#"
-                className="text-gray-500 hover:text-gray-900 dark:hover:text-white"
-              >
+              <a href="#" className="text-gray-500 hover:text-white">
                 <svg
                   className="w-5 h-5"
                   fill="currentColor"
@@ -336,10 +303,7 @@ function SideBar({ children, title }: any) {
                   ></path>
                 </svg>
               </a>
-              <a
-                href="#"
-                className="text-gray-500 hover:text-gray-900 dark:hover:text-white"
-              >
+              <a href="#" className="text-gray-500 hover:text-white">
                 <svg
                   className="w-5 h-5"
                   fill="currentColor"
@@ -349,10 +313,7 @@ function SideBar({ children, title }: any) {
                   <path d="M8.29 20.251c7.547 0 11.675-6.253 11.675-11.675 0-.178 0-.355-.012-.53A8.348 8.348 0 0022 5.92a8.19 8.19 0 01-2.357.646 4.118 4.118 0 001.804-2.27 8.224 8.224 0 01-2.605.996 4.107 4.107 0 00-6.993 3.743 11.65 11.65 0 01-8.457-4.287 4.106 4.106 0 001.27 5.477A4.072 4.072 0 012.8 9.713v.052a4.105 4.105 0 003.292 4.022 4.095 4.095 0 01-1.853.07 4.108 4.108 0 003.834 2.85A8.233 8.233 0 012 18.407a11.616 11.616 0 006.29 1.84"></path>
                 </svg>
               </a>
-              <a
-                href="#"
-                className="text-gray-500 hover:text-gray-900 dark:hover:text-white"
-              >
+              <a href="#" className="text-gray-500 hover:text-white">
                 <svg
                   className="w-5 h-5"
                   fill="currentColor"
@@ -366,10 +327,7 @@ function SideBar({ children, title }: any) {
                   ></path>
                 </svg>
               </a>
-              <a
-                href="#"
-                className="text-gray-500 hover:text-gray-900 dark:hover:text-white"
-              >
+              <a href="#" className="text-gray-500 hover:text-white">
                 <svg
                   className="w-5 h-5"
                   fill="currentColor"
@@ -384,7 +342,7 @@ function SideBar({ children, title }: any) {
                 </svg>
               </a>
             </div>
-            <span className="text-sm text-gray-500 dark:text-gray-400">
+            <span className="text-sm text-gray-400">
               © 2023
               <a href="#" className="ml-1 hover:underline">
                 LearnCodePath
@@ -395,8 +353,8 @@ function SideBar({ children, title }: any) {
         </div>
       </aside>
 
-      <div className="mt-14 lg:ml-64 text-gray-900 dark:text-white bg-white dark:bg-gray-900">
-        <header className="shadow bg-teal-300 dark:bg-ctm-black">
+      <div className="mt-16 pt-2 lg:pt-0 lg:ml-64 text-black bg-ctm-light">
+        <header className="shadow bg-ctm-accent text-white">
           <div className="mx-auto max-w-7xl px-4 py-2 sm:px-6 lg:px-8 sm:py-4 lg:py-6">
             <h1 className="text-center text-3xl font-bold tracking-tight ">
               {title}

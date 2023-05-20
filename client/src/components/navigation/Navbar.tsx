@@ -17,7 +17,7 @@ import {
   PlayCircleIcon,
 } from "@heroicons/react/20/solid";
 import Link from "next/link";
-import DarkModeSwitch from "../utilities/DarkModeSwitch";
+import { ArrowRightOnRectangleIcon, UserIcon } from "@heroicons/react/24/solid";
 
 const items = [
   {
@@ -68,7 +68,7 @@ export default function Navbar() {
   // const isLoggedIn = authToken !== null && authToken !== "";
 
   return (
-    <div className="bg-white dark:bg-ctm-dark sticky top-0 z-10">
+    <div className="bg-ctm-dark sticky top-0 z-10">
       <nav
         className="flex w-full items-center justify-between p-4 lg:px-8"
         aria-label="Global"
@@ -81,7 +81,7 @@ export default function Navbar() {
               src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=600"
               alt=""
             /> */}
-            <span className="self-center text-xl font-semibold whitespace-nowrap text-ctm-dark dark:text-white">
+            <span className="self-center text-xl font-semibold whitespace-nowrap text-white">
               Learn Code Path
             </span>
           </a>
@@ -96,7 +96,7 @@ export default function Navbar() {
             <Bars3Icon className="h-6 w-6" aria-hidden="true" />
           </button>
         </div>
-        <Popover.Group className="hidden lg:flex lg:gap-x-10 text-ctm-dark dark:text-white">
+        <Popover.Group className="hidden lg:flex lg:gap-x-10 text-white">
           {items.map((item, index) => (
             <a
               key={index}
@@ -114,26 +114,30 @@ export default function Navbar() {
               className="px-4 py-1.5 relative rounded-lg group text-white font-medium inline-block mr-6"
               onClick={handleLogout}
             >
-              <span className="absolute top-0 left-0 w-full h-full rounded-lg opacity-50 filter blur-sm bg-gradient-to-br from-orange-600 to-yellow-500 dark:from-purple-600 dark:to-blue-500"></span>
-              <span className="h-full w-full inset-0 absolute mt-0.5 ml-0.5 bg-gradient-to-br filter group-active:opacity-0 rounded-lg opacity-50 from-orange-600 to-yellow-500 dark:from-purple-600 dark:to-blue-500"></span>
-              <span className="absolute inset-0 w-full h-full transition-all duration-200 ease-out rounded-lg shadow-xl bg-gradient-to-br filter group-active:opacity-0 group-hover:blur-sm from-orange-600 to-yellow-500 dark:from-purple-600 dark:to-blue-500"></span>
-              <span className="absolute inset-0 w-full h-full transition duration-200 ease-out rounded-lg bg-gradient-to-br from-orange-600 to-yellow-500 dark:from-purple-600 dark:to-blue-500"></span>
-              <span className="relative">Log out</span>
+              <span className="absolute top-0 left-0 w-full h-full rounded-lg opacity-50 filter blur-sm bg-gradient-to-br from-ctm-accent-dark to-ctm-accent"></span>
+              <span className="h-full w-full inset-0 absolute mt-0.5 ml-0.5 bg-gradient-to-br filter group-active:opacity-0 rounded-lg opacity-50 from-ctm-accent-dark to-ctm-accent"></span>
+              <span className="absolute inset-0 w-full h-full transition-all duration-200 ease-out rounded-lg shadow-xl bg-gradient-to-br filter group-active:opacity-0 group-hover:blur-sm from-ctm-accent-dark to-ctm-accent"></span>
+              <span className="absolute inset-0 w-full h-full transition duration-200 ease-out rounded-lg bg-gradient-to-br from-ctm-accent-dark to-ctm-accent"></span>
+              <span className="relative">
+                <ArrowRightOnRectangleIcon className="inline-block h-4 w-4 mr-1" />
+                Cerrar sessión
+              </span>
             </Link>
           ) : (
             <Link
               href="/login"
               className="px-4 py-1.5 relative rounded-lg group text-white font-medium inline-block mr-6"
             >
-              <span className="absolute top-0 left-0 w-full h-full rounded-lg opacity-50 filter blur-sm bg-gradient-to-br from-orange-600 to-yellow-500 dark:from-purple-600 dark:to-blue-500"></span>
-              <span className="h-full w-full inset-0 absolute mt-0.5 ml-0.5 bg-gradient-to-br filter group-active:opacity-0 rounded-lg opacity-50 from-orange-600 to-yellow-500 dark:from-purple-600 dark:to-blue-500"></span>
-              <span className="absolute inset-0 w-full h-full transition-all duration-200 ease-out rounded-lg shadow-xl bg-gradient-to-br filter group-active:opacity-0 group-hover:blur-sm from-orange-600 to-yellow-500 dark:from-purple-600 dark:to-blue-500"></span>
-              <span className="absolute inset-0 w-full h-full transition duration-200 ease-out rounded-lg bg-gradient-to-br from-orange-600 to-yellow-500 dark:from-purple-600 dark:to-blue-500"></span>
-              <span className="relative">Log in</span>
+              <span className="absolute top-0 left-0 w-full h-full rounded-lg opacity-50 filter blur-sm bg-gradient-to-br from-ctm-accent-dark to-ctm-accent"></span>
+              <span className="h-full w-full inset-0 absolute mt-0.5 ml-0.5 bg-gradient-to-br filter group-active:opacity-0 rounded-lg opacity-50 from-ctm-accent-dark to-ctm-accent"></span>
+              <span className="absolute inset-0 w-full h-full transition-all duration-200 ease-out rounded-lg shadow-xl bg-gradient-to-br filter group-active:opacity-0 group-hover:blur-sm from-ctm-accent-dark to-ctm-accent"></span>
+              <span className="absolute inset-0 w-full h-full transition duration-200 ease-out rounded-lg bg-gradient-to-br from-ctm-accent-dark to-ctm-accent"></span>
+              <span className="relative">
+                <UserIcon className="inline-block h-4 w-4 mr-1" />
+                Iniciar sessión
+              </span>
             </Link>
           )}
-
-          <DarkModeSwitch />
         </div>
       </nav>
       <Dialog
@@ -143,19 +147,20 @@ export default function Navbar() {
         onClose={setMobileMenuOpen}
       >
         <div className="fixed inset-0 z-10" />
-        <Dialog.Panel className="fixed inset-y-0 right-0 z-10 w-full overflow-y-auto bg-white px-6 py-6 sm:max-w-sm sm:ring-1 sm:ring-gray-900/10">
+        <Dialog.Panel className="fixed inset-y-0 right-0 z-10 w-full overflow-y-auto bg-ctm-dark px-6 py-6 sm:max-w-sm sm:ring-1 sm:ring-gray-900/10">
           <div className="flex items-center justify-between">
-            <a href="#" className="-m-1.5 p-1.5">
-              <span className="sr-only">Your Company</span>
+            <a href="#" className="-m-1.5 p-1.5 text-white text-xl font-medium">
+              {/* <span className="sr-only">Your Company</span>
               <img
                 className="h-8 w-auto"
                 src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=600"
                 alt=""
-              />
+              /> */}
+              LearnCodePath
             </a>
             <button
               type="button"
-              className="-m-2.5 rounded-md p-2.5 text-gray-700"
+              className="-m-2.5 rounded-md p-2.5 text-white"
               onClick={() => setMobileMenuOpen(false)}
             >
               <span className="sr-only">Close menu</span>
@@ -169,7 +174,7 @@ export default function Navbar() {
                   <a
                     key={index}
                     href={item.href}
-                    className="-mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50"
+                    className="-mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 text-white hover:bg-gray-200 hover:text-black"
                   >
                     {item.name}
                   </a>
@@ -205,12 +210,30 @@ export default function Navbar() {
                 </Disclosure> */}
               </div>
               <div className="py-6">
-                <Link
-                  href="/login"
-                  className="-mx-3 block rounded-lg px-3 py-2.5 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50"
-                >
-                  Log in
-                </Link>
+                {isAuthenticated ? (
+                  <Link
+                    href="#"
+                    className="px-4 py-1.5 relative rounded-lg group text-white font-medium inline-block mr-6"
+                    onClick={handleLogout}
+                  >
+                    <span className="absolute top-0 left-0 w-full h-full rounded-lg opacity-50 filter blur-sm bg-gradient-to-br from-[#005555] to-ctm-accent"></span>
+                    <span className="h-full w-full inset-0 absolute mt-0.5 ml-0.5 bg-gradient-to-br filter group-active:opacity-0 rounded-lg opacity-50 from-[#005555] to-ctm-accent"></span>
+                    <span className="absolute inset-0 w-full h-full transition-all duration-200 ease-out rounded-lg shadow-xl bg-gradient-to-br filter group-active:opacity-0 group-hover:blur-sm from-[#005555] to-ctm-accent"></span>
+                    <span className="absolute inset-0 w-full h-full transition duration-200 ease-out rounded-lg bg-gradient-to-br from-[#005555] to-ctm-accent"></span>
+                    <span className="relative">Log out</span>
+                  </Link>
+                ) : (
+                  <Link
+                    href="/login"
+                    className="px-4 py-1.5 relative rounded-lg group text-white font-medium inline-block mr-6"
+                  >
+                    <span className="absolute top-0 left-0 w-full h-full rounded-lg opacity-50 filter blur-sm bg-gradient-to-br from-[#005555] to-ctm-accent"></span>
+                    <span className="h-full w-full inset-0 absolute mt-0.5 ml-0.5 bg-gradient-to-br filter group-active:opacity-0 rounded-lg opacity-50 from-[#005555] to-ctm-accent"></span>
+                    <span className="absolute inset-0 w-full h-full transition-all duration-200 ease-out rounded-lg shadow-xl bg-gradient-to-br filter group-active:opacity-0 group-hover:blur-sm from-[#005555] to-ctm-accent"></span>
+                    <span className="absolute inset-0 w-full h-full transition duration-200 ease-out rounded-lg bg-gradient-to-br from-[#005555] to-ctm-accent"></span>
+                    <span className="relative">Log in</span>
+                  </Link>
+                )}
               </div>
             </div>
           </div>

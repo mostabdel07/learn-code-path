@@ -200,7 +200,7 @@ const DashboardPage = () => {
           </div>
           <p className="text-gray-700">{user.email}</p>
           <p className="text-sm text-gray-500 capitalize">
-            {user.role.role_name}
+            {/* {user.role.role_name} */}
           </p>
         </div>
         <div className="flex-1 flex flex-col items-center lg:items-end justify-end px-8 mt-2">
@@ -500,7 +500,7 @@ const DashboardPage = () => {
               type="text"
               id="subject"
               className="disabled:text-gray-500 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-              value={user.role_id}
+              // value={user.role_id}
               disabled
             />
           </div>

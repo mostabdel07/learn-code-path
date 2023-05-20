@@ -1,65 +1,80 @@
 import React, { useState } from "react";
-import { BsChevronCompactLeft, BsChevronCompactRight } from "react-icons/bs";
-import { RxDotFilled } from "react-icons/rx";
+import { useSwipeable } from "react-swipeable";
 
-function Caroussel() {
+const Caroussel = () => {
   const slides = [
     {
-      url: "dashboard-view.png",
+      title: "Slide 1",
+      description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
+      image: "https://example.com/slide1.jpg",
     },
     {
-      url: "courses-view.png",
+      title: "Slide 2",
+      description:
+        "Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
+      image: "https://example.com/slide2.jpg",
     },
-    {
-      url: "users-view.png",
-    },
+    // Add more slides as needed
   ];
 
   const [currentIndex, setCurrentIndex] = useState(0);
 
-  const prevSlide = () => {
-    const isFirstSlide = currentIndex === 0;
-    const newIndex = isFirstSlide ? slides.length - 1 : currentIndex - 1;
-    setCurrentIndex(newIndex);
+  const handleSwipe = (delta) => {
+    if (delta < 0) {
+      // Swiped to the left (next slide)
+      const nextIndex = (currentIndex + 1) % slides.length;
+      setCurrentIndex(nextIndex);
+    } else if (delta > 0) {
+      // Swiped to the right (previous slide)
+      const prevIndex =
+        currentIndex === 0 ? slides.length - 1 : currentIndex - 1;
+      setCurrentIndex(prevIndex);
+    }
   };
 
-  const nextSlide = () => {
-    const isLastSlide = currentIndex === slides.length - 1;
-    const newIndex = isLastSlide ? 0 : currentIndex + 1;
-    setCurrentIndex(newIndex);
-  };
-
-  const goToSlide = (slideIndex: any) => {
-    setCurrentIndex(slideIndex);
-  };
+  const swipeHandlers = useSwipeable({
+    onSwipedLeft: () => handleSwipe(-1),
+    onSwipedRight: () => handleSwipe(1),
+    preventDefaultTouchmoveEvent: true,
+    trackMouse: true,
+  });
 
   return (
-    <div className="max-w-[1400px] h-[780px] w-full m-auto py-16 px-4 relative group">
-      <div
-        style={{ backgroundImage: `url(/images/${slides[currentIndex].url})` }}
-        className="w-full h-full rounded-2xl bg-center bg-cover duration-500"
-      ></div>
-      {/* Left Arrow */}
-      <div className="hidden group-hover:block absolute top-[50%] translate-x-5 translate-y-[-50%] left-5 text-2xl rounded-full p-2 bg-black/50 text-white cursor-pointer">
-        <BsChevronCompactLeft onClick={prevSlide} size={30} />
-      </div>
-      {/* Right Arrow */}
-      <div className="hidden group-hover:block absolute top-[50%] -translate-x-5 translate-y-[-50%] right-5 text-2xl rounded-full p-2 bg-black/50 text-white cursor-pointer">
-        <BsChevronCompactRight onClick={nextSlide} size={30} />
-      </div>
-      <div className="flex top-4 justify-center py-2">
-        {slides.map((slide, slideIndex) => (
+    <div className="relative" {...swipeHandlers}>
+      <div className="flex items-center justify-center">
+        {slides.map((slide, index) => (
           <div
-            key={slideIndex}
-            onClick={() => goToSlide(slideIndex)}
-            className="text-2xl cursor-pointer"
+            key={index}
+            className={`${
+              index === currentIndex ? "z-10 opacity-100" : "z-0 opacity-0"
+            } absolute transition-opacity duration-500 ease-in-out`}
           >
-            <RxDotFilled />
+            <img
+              src={slide.image}
+              alt={slide.title}
+              className="h-screen w-full object-cover"
+            />
+          </div>
+        ))}
+      </div>
+
+      <div className="absolute bottom-0 left-0 right-0 bg-gray-900 bg-opacity-75 p-6">
+        {slides.map((slide, index) => (
+          <div
+            key={index}
+            className={`${
+              index === currentIndex ? "opacity-100" : "opacity-0"
+            } transition-opacity duration-500 ease-in-out`}
+          >
+            <h2 className="text-4xl font-bold text-white mb-4">
+              {slide.title}
+            </h2>
+            <p className="text-white">{slide.description}</p>
           </div>
         ))}
       </div>
     </div>
   );
-}
+};
 
 export default Caroussel;
