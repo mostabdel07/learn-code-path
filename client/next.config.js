@@ -7,6 +7,7 @@ module.exports = nextConfig;
 
 module.exports = {
   images: {
+    domains: ["127.0.0.1", "learncodepath.tech"],
     remotePatterns: [
       {
         protocol: "https",

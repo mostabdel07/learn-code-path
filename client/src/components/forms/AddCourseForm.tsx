@@ -13,6 +13,7 @@ function AddCourseForm() {
   const { data } = useInstructors();
 
   const [errorList, setErrorList] = useState<any>([]);
+  const [selectedFile, setSelectedFile] = useState<File | null>(null);
 
   type FormValues = {
     title: string;
@@ -33,13 +34,7 @@ function AddCourseForm() {
       .required("El precio es obligatorio")
       .min(0, "El precio debe ser mayor o igual a cero")
       .max(1000, "El precio debe ser menor o igual a 1000"),
-    img: yup
-      .string()
-      .required("La imagen es obligatoria")
-      .matches(
-        /^https:\/\/.*/,
-        "La URL de la imagen debe empezar con https://"
-      ),
+    img: yup.string().required("La imagen es obligatoria"),
     headline: yup
       .string()
       .required("El titular es obligatorio")
@@ -47,8 +42,11 @@ function AddCourseForm() {
     instructor_id: yup.number().required("El instructor es obligatorio"),
   });
 
+  const defaultImageUrl = "https://example.com/default-image.jpg";
+
   const {
     register,
+    watch,
     handleSubmit,
     formState: { errors, isValid },
     reset,
@@ -63,23 +61,42 @@ function AddCourseForm() {
       )
     : [];
 
+  const onFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (file) {
+      setSelectedFile(file);
+    }
+  };
+
   const onSubmit = async (data: FormValues) => {
     try {
+      const formData = new FormData();
+      if (selectedFile) {
+        formData.append("img", selectedFile);
+      }
+
+      formData.append("title", data.title);
+      formData.append("price", data.price.toString());
+      formData.append("headline", data.headline);
+      formData.append("instructor_id", data.instructor_id);
+
       console.log(data);
       console.log(token);
-      data.instructor_id = parseInt(data.instructor_id);
+
       const response = await axios.post(
         "http://127.0.0.1:8000/api/courses",
-        data,
+        formData,
         {
           headers: {
             Authorization: `Bearer ${token}`,
+            "Content-Type": "multipart/form-data",
           },
         }
       );
+
       console.log(response.data);
       console.log("AÑADIDO");
-      reset(); // Limpiar los campos del formulario después de una respuesta exitosa
+      reset();
       router.reload();
     } catch (error: any) {
       console.log("NO AÑADIDO");
@@ -88,8 +105,6 @@ function AddCourseForm() {
         console.log(errors);
         setErrorList(Object.values(errors).flat());
         console.log(errorList);
-        // Manejar el error de validación de la forma que desees
-        // Por ejemplo, mostrar los mensajes de error en el formulario
       } else {
         console.error(error);
       }
@@ -97,7 +112,11 @@ function AddCourseForm() {
   };
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)} className="max-w-lg mx-auto">
+    <form
+      onSubmit={handleSubmit(onSubmit)}
+      className="max-w-lg mx-auto"
+      encType="multipart/form-data"
+    >
       <div className="mb-4">
         <label className="block font-medium text-gray-700">Título</label>
         <input
@@ -123,6 +142,10 @@ function AddCourseForm() {
         <input
           {...register("img")}
           className="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-300 rounded-md shadow-sm focus:outline-none focus:border-blue-500 focus:ring-blue-500"
+          aria-describedby="file_input_help"
+          id="file_input"
+          type="file"
+          onChange={onFileChange}
         />
         {errors.img && (
           <span className="text-red-600">{errors.img.message}</span>
@@ -144,14 +167,13 @@ function AddCourseForm() {
           {...register("instructor_id")}
           className="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-300 rounded-md shadow-sm focus:outline-none focus:border-blue-500 focus:ring-blue-500"
         >
-          {sortedInstructors && // Aseguramos que la lista de instructores exista
+          {sortedInstructors &&
             sortedInstructors.map((instructor) => (
               <option key={instructor.id} value={instructor.id}>
                 {instructor.name}
               </option>
             ))}
         </select>
-        {/* <SelectMenu instructors={sortedInstructors} /> */}
       </div>
       {errorList.length > 0 && (
         <div className="text-red-600">
@@ -165,9 +187,9 @@ function AddCourseForm() {
       <button
         type="submit"
         disabled={!isValid}
-        className="inline-flex justify-center px-4 py-2 text-sm font-medium text-white bg-blue-500 border border-transparent rounded-md shadow-sm hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 disabled:opacity-50 disabled:cursor-not-allowed"
+        className="inline-flex items-center justify-center w-full px-4 py-2 mt-4 font-medium text-white bg-blue-600 border border-transparent rounded-md shadow-sm hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
       >
-        Add course
+        Añadir curso
       </button>
     </form>
   );
