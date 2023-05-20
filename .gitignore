@@ -4,8 +4,6 @@ api/.phpunit.cache
 api/node_modules
 api/public/build
 api/public/hot
-api/public/storage
-api/storage/*.key
 api/vendor
 api/.env
 api/.env.backup
