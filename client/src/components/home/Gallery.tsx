@@ -13,7 +13,7 @@ export default function Gallery() {
       id="gallery"
       className="py-8 lg:py-16 bg-ctm-light dark:bg-ctm-black"
     >
-      <Caroussel images={images} />
+      <Caroussel />
     </section>
   );
 }
