@@ -5,6 +5,10 @@ namespace App\Http\Controllers;
 use App\Models\OnlineCourse;
 use App\Models\Purchase;
 use Illuminate\Http\Request;
+use App\Models\User;
+use Illuminate\Support\Facades\Auth;
+
+
 
 class OnlineCourseController extends Controller
 {
@@ -134,10 +138,22 @@ class OnlineCourseController extends Controller
      */
     public function destroy($id)
     {
+        $user = User::find(Auth::user()->id);
+        
+    // Comprobar si el usuario tiene el rol de administrador
+    if ($user->hasRole('admin')) {
+        // Realizar la lógica para eliminar el recurso, ya que el usuario tiene el rol de administrador
         $onlineCourse = OnlineCourse::find($id);
         $onlineCourse->delete();
         return response()->json(null, 204);
+
+    // Si el usuario no tiene el rol de administrador, devolver una respuesta de error o redireccionar a una página no autorizada
+    return response()->json([
+        'status' => 'error',
+        'message' => 'No tienes permiso para realizar esta acción.'
+    ], 403);
     }
+}
 
     public function checkCourses(Request $request)
     {

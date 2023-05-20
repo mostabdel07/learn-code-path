@@ -169,7 +169,6 @@ const CoursePage = ({ course }: CoursePageProps) => {
           Authorization: `Bearer ${token}`,
         },
       });
-      console.log(response);
       if (response.status === 204) router.push("/courses");
     } catch (error) {
       console.log(error);

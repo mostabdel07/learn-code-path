@@ -6,6 +6,8 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\Rules;
+use Illuminate\Support\Facades\Auth;
+
 
 class UserController extends Controller
 {
@@ -103,9 +105,18 @@ class UserController extends Controller
     public function destroy($id)
     {
 
+        $user = User::find(Auth::user()->id);
+        
+        // Comprobar si el usuario tiene el rol de administrador
+        if ($user->hasRole('admin')) {
+        // Realizar la lógica para eliminar el recurso, ya que el usuario tiene el rol de administrador
         $user = User::find($id);
         $user->delete();
-        return response()->json(null, 204);
-        
+        return response()->json(null, 204); 
     }
-}
+        // Si el usuario no tiene el rol de administrador, devolver una respuesta de error o redireccionar a una página no autorizada
+        return response()->json([
+            'status' => 'error',
+            'message' => 'No tienes permiso para realizar esta acción.'
+        ], 403);
+}}
