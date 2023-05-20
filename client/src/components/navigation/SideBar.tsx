@@ -189,9 +189,9 @@ function SideBar({ children, title }: any) {
                 {/* Profile dropdown */}
                 <Menu as="div" className="relative mr-4">
                   <div>
-                    <Menu.Button className="flex rounded-full p-1 ring-gray-600 ring-2 text-sm focus:outline-none focus:ring-ctm-accent">
+                    <Menu.Button className="flex rounded-full text-gray-200 p-1.5 ring-gray-600 ring-2 text-sm focus:outline-none focus:ring-ctm-accent focus:text-ctm-accent">
                       <span className="sr-only">Open user menu</span>
-                      <h4 className="pl-1 pr-1.5 text-lg font-bold text-gray-200">
+                      <h4 className="pl-1 pr-3 text-lg font-bold">
                         {user?.username}
                       </h4>
                       <Image

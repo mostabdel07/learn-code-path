@@ -13,7 +13,7 @@ export default function TopBar({ title, path }: Props) {
   return (
     <div className="flex items-center justify-between bg-ctm-dark p-4 px-8">
       <div className="">
-        <a href="/" className="-m-1.5 p-1.5">
+        <Link href="/" className="-m-1.5 p-1.5">
           <span className="sr-only">Your Company</span>
           {/* <img
               className="h-8 w-auto"
@@ -23,7 +23,7 @@ export default function TopBar({ title, path }: Props) {
           <span className="self-center text-xl font-semibold whitespace-nowrap text-white">
             Learn Code Path
           </span>
-        </a>
+        </Link>
       </div>
       <div className="text-lg font-bold text-ctm-dark dark:text-white">
         {title}
