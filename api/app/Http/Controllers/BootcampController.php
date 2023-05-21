@@ -73,22 +73,19 @@ class BootcampController extends Controller
 
     public function subscriptionBootcamp(Request $request)
     {
-        $bootcampId = $request->input('bootcamp_id'); // Obtén los IDs de los cursos enviados en el cuerpo de la solicitud
+        $bootcampId = $request->input('bootcamp_id'); 
     
-        // Verifica la existencia de cada curso individualmente
-        $existingCourses = true;
+        $existingBootcamp = true;
    
             if (!Bootcamp::where('id', $bootcampId)->exists()) {
-                $existingCourses = false;
+                $existingBootcamp = false;
             }
         
     
-        // Si todos los cursos existen, guarda la compra en la tabla "purchases"
-        if ($existingCourses) {
-            $userId = $request->input('user_id'); // Obtén el ID del usuario enviado en la solicitud
-            $subscriptionDate = now(); // Obtén la fecha actual
+        if ($existingBootcamp) {
+            $userId = $request->input('user_id'); 
+            $subscriptionDate = now(); 
     
-            // Crea el registro de compra en la tabla "purchases"
           
             Subscription::create([
                     'user_id' => $userId,
@@ -98,7 +95,6 @@ class BootcampController extends Controller
             
         }
     
-        // Devuelve true si todos los cursos existen, false en caso contrario
-        return $existingCourses ? 'true' : 'false';
+        return $existingBootcamp ? 'true' : 'false';
     }
 }

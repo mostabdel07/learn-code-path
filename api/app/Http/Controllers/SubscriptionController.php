@@ -12,16 +12,18 @@ class SubscriptionController extends Controller
 {
 
     // Obtén todas las compras del usuario
-    $Subscriptions = Subscription::where('user_id', $userId)->get();
+    $subscriptions = Subscription::where('user_id', $userId)->get();
 
     // Obtén los IDs de los cursos comprados
-    $bootcampId = $Subscriptions->pluck('bootcamp_id')->toArray();
+    $bootcampId = $subscriptions->pluck('bootcamp_id')->toArray();
 
     // Obtén los cursos correspondientes a los IDs
     $bootcamps = Bootcamp::whereIn('id', $bootcampId)->get();
 
     return response()->json($bootcamps);
 }
+
+  
     /**
      * Display a listing of the resource.
      */

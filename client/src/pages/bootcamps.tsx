@@ -48,7 +48,7 @@ const BootcampsPage = () => {
   const { token } = useAuth();
   const apiURL = process.env.API_ENDPOINT;
   const [bootcamps, setBootcamps] = useState<object[]>([]);
-  const [subscriptions, setSubscriptios] = useState<number[]>([]);
+  const [subscriptions, setSubscriptions] = useState<number[]>([]);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -82,7 +82,7 @@ const BootcampsPage = () => {
     // For example, you can show a success message or redirect to a subscription page
     console.log("Subscribed!");
     if (!subscriptions.includes(id)) {
-      setSubscriptios([...subscriptions, id]);
+      setSubscriptions([...subscriptions, id]);
     }
 
     try {
@@ -90,7 +90,7 @@ const BootcampsPage = () => {
       console.log("session" + userId);
 
       const response = await axios.post(
-        `${apiURL}/check_courses`,
+        `${apiURL}/subscription_bootcamp`,
         {
           bootcamp_id: id,
           user_id: userId,
