@@ -186,7 +186,7 @@ const UserPage = ({ user }: UserPageProps) => {
               {user.email}
             </p>
             <p className="mb-4">
-              <span className="font-bold">Rol: </span>
+              <span className="font-bold">ID: </span>
               {user.id}
             </p>
             <p className="mb-4">

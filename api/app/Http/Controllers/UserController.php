@@ -11,10 +11,10 @@ use Illuminate\Support\Facades\Auth;
 
 class UserController extends Controller
 {
-    public function __construct()
-    {
-        $this->middleware('auth:api');
-    }
+    // public function __construct()
+    // {
+    //     $this->middleware('auth:api');
+    // }
 
     /**
      * Display a listing of the resource.
@@ -24,19 +24,22 @@ class UserController extends Controller
     public function index()
     {
         
-    $users = User::with('role')->get();
+    // $users = User::with('role')->get();
 
-    return response()->json(
+    // return response()->json(
 
-        $users->map(function ($user) {
-            return [
-                'id' => $user->id,
-                'username' => $user->username,
-                'email' => $user->email,
-                'role_name' => $user->role->role_name
-            ];
-        })
-    );
+    //     $users->map(function ($user) {
+    //         return [
+    //             'id' => $user->id,
+    //             'username' => $user->username,
+    //             'email' => $user->email,
+    //             'role_name' => $user->role->role_name
+    //         ];
+    //     })
+    // );
+
+        $users = User::all();
+        return response()->json($users);
 
     }
 
