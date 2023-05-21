@@ -86,12 +86,15 @@ class OnlineCourseController extends Controller
      */
     public function show($id)
     {
+
         $onlineCourse = OnlineCourse::find($id);
 
         if (!$onlineCourse) {
             return response()->json(['error' => 'Course not found'], 404);
         }
-
+    
+        $onlineCourse->append('instructor_name'); // Agregar el atributo "instructor_name" al objeto $onlineCourse
+    
         return response()->json($onlineCourse);
     }
 

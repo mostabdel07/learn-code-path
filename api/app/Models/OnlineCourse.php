@@ -19,6 +19,15 @@ class OnlineCourse extends Model
         'rating',
     ];
 
+    public function getInstructorNameAttribute()
+{
+    if ($this->instructor) {
+        return $this->instructor->name;
+    }
+
+    return null;
+}
+
     public function instructor()
     {
         return $this->belongsTo(Instructor::class);
