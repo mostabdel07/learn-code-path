@@ -1,4 +1,5 @@
-import React from "react";
+import React, { useState } from "react";
+import useInstructors from "@/hooks/useInstructors";
 
 interface Props {
   editCourse: {
@@ -8,15 +9,27 @@ interface Props {
     instructor_id?: any;
     price?: number;
   };
-  handleInputChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
+  handleInputChange: (
+    event: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
+  ) => void;
   handleSave: (id: number) => void;
+  errorList?: any;
 }
 
 const EditCourseForm: React.FC<Props> = ({
   editCourse,
   handleInputChange,
   handleSave,
+  errorList,
 }) => {
+  const { data } = useInstructors();
+
+  const sortedInstructors = data
+    ? data.sort((a, b) =>
+        a.name.localeCompare(b.name, "es", { sensitivity: "base" })
+      )
+    : [];
+
   return (
     <form className="mb-6">
       <div className="mb-6">
@@ -61,14 +74,19 @@ const EditCourseForm: React.FC<Props> = ({
         >
           Instructor
         </label>
-        <input
-          type="number"
+        <select
           id="instructor_id"
           name="instructor_id"
           className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
           value={editCourse.instructor_id}
           onChange={handleInputChange}
-        />
+        >
+          {sortedInstructors.map((instructor) => (
+            <option key={instructor.id} value={instructor.id}>
+              {instructor.name}
+            </option>
+          ))}
+        </select>
       </div>
 
       <div className="mb-6">
@@ -87,7 +105,15 @@ const EditCourseForm: React.FC<Props> = ({
           onChange={handleInputChange}
         />
       </div>
-
+      {errorList.length > 0 && (
+        <div className="text-red-600">
+          <ul>
+            {errorList.map((error: any) => (
+              <li key={error}>{error}</li>
+            ))}
+          </ul>
+        </div>
+      )}
       <div className="flex justify-end">
         <button
           className="text-white bg-green-700 hover:bg-green-800 w-full focus:ring-4 focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2"

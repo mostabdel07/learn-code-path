@@ -84,6 +84,8 @@ const CoursePage = ({ course }: CoursePageProps) => {
 
   const apiURL = process.env.API_ENDPOINT;
 
+  const [errorList, setErrorList] = useState<any>([]);
+
   const { addToCart } = useShoppingCart();
 
   const [editCourse, setEditCourse] = useState<Partial<Course>>({
@@ -141,7 +143,9 @@ const CoursePage = ({ course }: CoursePageProps) => {
     return stars;
   };
 
-  function handleInputChange(event: React.ChangeEvent<HTMLInputElement>) {
+  function handleInputChange(
+    event: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
+  ) {
     const { name, value } = event.target;
     console.log(name);
     console.log(value);
@@ -149,9 +153,6 @@ const CoursePage = ({ course }: CoursePageProps) => {
   }
 
   async function handleSave(id: number) {
-    setOpenSlideOver(false);
-    setOpenModalEdit(true);
-
     console.log(token);
 
     // Identify the changed properties
@@ -185,9 +186,16 @@ const CoursePage = ({ course }: CoursePageProps) => {
       );
       console.log(response);
       if (response.status === 204) {
+        setOpenSlideOver(false);
         router.reload();
       }
-    } catch (error) {
+    } catch (error: any) {
+      if (error.response.status === 422) {
+        const errors = error.response.data.errors;
+        console.log(errors);
+        setErrorList(Object.values(errors).flat());
+        console.log(errorList);
+      }
       console.log(error);
     }
   }
@@ -264,6 +272,7 @@ const CoursePage = ({ course }: CoursePageProps) => {
                     editCourse={editCourse}
                     handleInputChange={handleInputChange}
                     handleSave={handleSave}
+                    errorList={errorList}
                   />
                 </SlideOver>
                 {/* Modal aviso guardar */}
