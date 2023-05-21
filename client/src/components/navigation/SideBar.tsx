@@ -37,9 +37,7 @@ interface User {
   id: number;
   username: string;
   email: string;
-  role_id: number;
   personal_data: any;
-  role: any;
   created_at: string;
   updated_at: string;
 }
@@ -78,6 +76,7 @@ function classNames(...classes: any) {
 
 function SideBar({ children, title }: any) {
   const { logout } = useAuth();
+  const [userRole, setUserRole] = useState<string | null>(null);
   const router = useRouter();
 
   const { token, userId } = useAuth();
@@ -103,6 +102,8 @@ function SideBar({ children, title }: any) {
   };
 
   useEffect(() => {
+    const role = localStorage.getItem("userRole");
+    setUserRole(role);
     const fetchData = async () => {
       try {
         const res = await axios.get(`${apiURL}/users/${userId}`, {
@@ -260,17 +261,22 @@ function SideBar({ children, title }: any) {
       >
         <div className=" flex flex-col justify-between space-y-6 h-full px-3 pb-4 overflow-y-auto bg-ctm-dark">
           <ul className=" pb-40 space-y-4 font-medium">
-            {links.map((item, index) => (
-              <li key={index}>
-                <Link
-                  href={item.path}
-                  className="flex items-center p-2 text-white rounded-lg  hover:text-ctm-accent hover:bg-gray-200"
-                >
-                  <item.icon className="w-6 h-6 text-ctm-accent transition duration-75 group-hover:text-white" />
-                  <span className="ml-3">{item.title}</span>
-                </Link>
-              </li>
-            ))}
+            {links.map((item, index) => {
+              if (item.title === "Usuarios" && userRole !== "admin") {
+                return null;
+              }
+              return (
+                <li key={index}>
+                  <Link
+                    href={item.path}
+                    className="flex items-center p-2 text-white rounded-lg  hover:text-ctm-accent hover:bg-gray-200"
+                  >
+                    <item.icon className="w-6 h-6 text-ctm-accent transition duration-75 group-hover:text-white" />
+                    <span className="ml-3">{item.title}</span>
+                  </Link>
+                </li>
+              );
+            })}
           </ul>
 
           <div className="pb-4 text-center">

@@ -2,7 +2,7 @@ import DefaultLayout from "@/layouts/DefaultLayout";
 import Image from "next/image";
 import { useRouter } from "next/router";
 import { GetServerSideProps } from "next";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import axios from "axios";
 import SlideOver from "@/components/utilities/SlideOver";
 import Modal from "@/components/utilities/Modal";
@@ -72,6 +72,12 @@ const UserPage = ({ user }: UserPageProps) => {
   const router = useRouter();
   const { token } = useAuth();
   const apiURL = process.env.API_ENDPOINT;
+  const [userRole, setUserRole] = useState<string | null>(null);
+
+  useEffect(() => {
+    const role = localStorage.getItem("userRole");
+    setUserRole(role);
+  }, []);
 
   const [editUser, setEditUser] = useState<Partial<User>>({
     username: user.username,
@@ -192,18 +198,22 @@ const UserPage = ({ user }: UserPageProps) => {
               {user.updated_at}
             </p>
             <div className="flex justify-center mt-4">
-              <button
-                className="inline-flex text-white bg-blue-500 border-0 py-2 px-6 focus:outline-none hover:bg-blue-600 rounded text-lg"
-                onClick={handleOpenSlideOver}
-              >
-                Editar
-              </button>
-              <button
-                className="ml-4 inline-flex text-white bg-red-500 border-0 py-2 px-6 focus:outline-none hover:bg-red-600 rounded text-lg"
-                onClick={() => setOpenModalDelete(true)}
-              >
-                Eliminar
-              </button>
+              {userRole === "admin" && (
+                <>
+                  <button
+                    className="inline-flex text-white bg-blue-500 border-0 py-2 px-6 focus:outline-none hover:bg-blue-600 rounded text-lg"
+                    onClick={handleOpenSlideOver}
+                  >
+                    Editar
+                  </button>
+                  <button
+                    className="ml-4 inline-flex text-white bg-red-500 border-0 py-2 px-6 focus:outline-none hover:bg-red-600 rounded text-lg"
+                    onClick={() => setOpenModalDelete(true)}
+                  >
+                    Eliminar
+                  </button>
+                </>
+              )}
 
               <SlideOver
                 title="Editar usuario"

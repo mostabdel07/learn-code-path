@@ -3,7 +3,7 @@ import Image from "next/image";
 import { useRouter } from "next/router";
 import { GetServerSideProps } from "next";
 import axios from "axios";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import SlideOver from "@/components/utilities/SlideOver";
 import Modal from "@/components/utilities/Modal";
 import { useAuth } from "@/contexts/auth";
@@ -71,6 +71,12 @@ export const getServerSideProps: GetServerSideProps<CoursePageProps> = async (
 const CoursePage = ({ course }: CoursePageProps) => {
   const router = useRouter();
   const { token } = useAuth();
+  const [userRole, setUserRole] = useState<string | null>(null);
+
+  useEffect(() => {
+    const role = localStorage.getItem("userRole");
+    setUserRole(role);
+  }, []);
 
   const apiURL = process.env.API_ENDPOINT;
 
@@ -299,18 +305,22 @@ const CoursePage = ({ course }: CoursePageProps) => {
                 <span className="title-font font-medium text-2xl text-gray-900">
                   {course.price == 0.0 ? "Free" : course.price}
                 </span>
-                <button
-                  className="inline-flex text-white bg-blue-500 border-0 py-2 px-6 focus:outline-none hover:bg-blue-600 rounded text-lg"
-                  onClick={handleOpenSlideOver}
-                >
-                  Editar
-                </button>
-                <button
-                  className="ml-4 inline-flex text-white bg-red-500 border-0 py-2 px-6 focus:outline-none hover:bg-red-600 rounded text-lg"
-                  onClick={() => setOpenModalDelete(true)}
-                >
-                  Eliminar
-                </button>
+                {userRole === "admin" && (
+                  <>
+                    <button
+                      className="inline-flex text-white bg-blue-500 border-0 py-2 px-6 focus:outline-none hover:bg-blue-600 rounded text-lg"
+                      onClick={handleOpenSlideOver}
+                    >
+                      Editar
+                    </button>
+                    <button
+                      className="ml-4 inline-flex text-white bg-red-500 border-0 py-2 px-6 focus:outline-none hover:bg-red-600 rounded text-lg"
+                      onClick={() => setOpenModalDelete(true)}
+                    >
+                      Eliminar
+                    </button>
+                  </>
+                )}
                 <button className="flex ml-auto text-white bg-indigo-500 border-0 py-2 px-6 focus:outline-none hover:bg-indigo-600 rounded">
                   Añadir
                 </button>

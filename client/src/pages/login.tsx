@@ -61,6 +61,8 @@ export default function LoginPage() {
       const fetchedToken = await fetchToken(data);
       const token = fetchedToken.authorisation.token;
       const userID = fetchedToken.user.id;
+      const userRole = fetchedToken.role;
+      localStorage.setItem("userRole", userRole);
       login(token, userID);
 
       // Redirect to the '/dashboard' page
