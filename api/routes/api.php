@@ -23,7 +23,7 @@ use App\Http\Controllers\InstructorController;
 |
 */
 
-Route::get('udemy', [CourseApiController::class, 'getCourses']);
+Route::get('udemy', [CourseApiController::class, 'getCourses'])->withoutMiddleware(['csrf']);
 
 Route::middleware(['cors'])->group(function () {
 
