@@ -23,24 +23,18 @@ class UserController extends Controller
      */
     public function index()
     {
-        
-    // $users = User::with('role')->get();
-
-    // return response()->json(
-
-    //     $users->map(function ($user) {
-    //         return [
-    //             'id' => $user->id,
-    //             'username' => $user->username,
-    //             'email' => $user->email,
-    //             'role_name' => $user->role->role_name
-    //         ];
-    //     })
-    // );
-
-        $users = User::all();
-        return response()->json($users);
-
+        $users = User::with('roles')->get();
+    
+        return response()->json(
+            $users->map(function ($user) {
+                return [
+                    'id' => $user->id,
+                    'username' => $user->username,
+                    'email' => $user->email,
+                    'role_name' => $user->roles->first()->name ?? null
+                ];
+            })
+        );
     }
 
 

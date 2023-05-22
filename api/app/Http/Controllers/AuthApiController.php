@@ -5,6 +5,7 @@ use Illuminate\Http\Request;
 use App\Models\User;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Auth;
+use App\Events\AssignUserRole;
 
 
 
@@ -75,6 +76,8 @@ class AuthApiController extends Controller
             'password' => Hash::make($request->password),
             'role_id' => 2,
         ]);
+
+        event(new AssignUserRole($user)); 
 
         $token = Auth::login($user);
         return response()->json([
