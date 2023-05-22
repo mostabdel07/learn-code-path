@@ -19,7 +19,7 @@ interface Course {
   instructor_id: number;
   instructor_name: string;
   price: number;
-  img: string;
+  img: any;
   created_at: string;
   updated_at: string;
 }
@@ -154,7 +154,6 @@ const CoursePage = ({ course }: CoursePageProps) => {
 
   async function handleSave(id: number) {
     console.log(token);
-
     // Identify the changed properties
     let changedProperties: Partial<Course> = {};
     if (editCourse.title !== course.title) {
@@ -172,18 +171,19 @@ const CoursePage = ({ course }: CoursePageProps) => {
     if (editCourse.img !== course.img) {
       changedProperties.img = editCourse.img;
     }
-    console.log(changedProperties);
+    console.log("changed" + changedProperties.img);
 
     try {
-      const response = await axios.put(
-        `${apiURL}/courses/${id}`,
-        changedProperties,
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      );
+      const formData = new FormData();
+      formData.append("img", changedProperties.img);
+
+      const response = await axios.put(`${apiURL}/courses/${id}`, formData, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+          "Content-Type": "multipart/form-data",
+        },
+      });
+
       console.log(response);
       if (response.status === 204) {
         setOpenSlideOver(false);

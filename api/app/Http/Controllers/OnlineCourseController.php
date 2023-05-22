@@ -107,13 +107,19 @@ class OnlineCourseController extends Controller
      */
     public function update(Request $request, $id)
     {
+        if (!$request->user()->hasRole('admin')) {
+            return response()->json(['message' => 'Acceso denegado'], 403);
+        }
+    
+        $onlineCourse = OnlineCourse::find($id);
+    
         $validatedData = $request->validate([
-            'title' => 'string|max:100|unique:online_courses',
+            'title' => 'string|max:100|unique:online_courses,title,'.$onlineCourse->id,
             'price' => 'numeric|min:0|max:1000',
             'img' => 'image',
             'headline' => 'string|max:150',
             'instructor_id' => 'numeric',
-        ],[
+        ], [
             'title.string' => 'El campo título debe ser una cadena de caracteres.',
             'title.max' => 'El campo título no debe exceder los 100 caracteres.',
             'title.unique' => 'El título de ese curso ya existe.',
@@ -123,14 +129,23 @@ class OnlineCourseController extends Controller
             'img.image' => 'El campo imagen debe ser una imagen válida.',
             'headline.string' => 'El campo titular debe ser una cadena de caracteres.',
             'headline.max' => 'El campo titular no debe exceder los 150 caracteres.',
-            'instructor.numeric' => 'El campo instructor debe ser un valor numérico.',
+            'instructor_id.numeric' => 'El campo instructor debe ser un valor numérico.',
         ]);
-        
-        $onlineCourse = OnlineCourse::find($id);
+    
+        if ($request->hasFile('img')) {
+            // Si se proporciona una nueva imagen, almacenarla y actualizar la ruta de la imagen
+            $imagePath = $request->file('img')->store('public/images');
+            $imageName = basename($imagePath);
+            $imageUrl = asset('storage/images/' . $imageName);
+            $validatedData['img'] = $imageUrl;
+
+        }
+    
         $onlineCourse->update($validatedData);
     
         return response()->json($onlineCourse, 204);
     }
+    
 
     /**
      * Remove the specified resource from storage.
