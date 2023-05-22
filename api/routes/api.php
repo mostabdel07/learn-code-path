@@ -25,6 +25,8 @@ use App\Http\Controllers\InstructorController;
 
 Route::get('udemy', [CourseApiController::class, 'getCourses']);
 
+Route::middleware(['cors'])->group(function () {
+
 Route::controller(AuthApiController::class)->group(function () {
     Route::post('login', 'login'); 
     Route::post('register', 'register'); 
@@ -44,3 +46,10 @@ Route::post('subscription_bootcamp', [BootcampController::class, 'subscriptionBo
 
 Route::get('user/{userId}/courses', [PurchaseController::class, 'getUserCourses']);
 Route::get('user/{userId}/bootcamps', [SubscriptionController::class, 'getUserBootcamps']);
+
+
+});
+
+Route::get('/greeting', function () {
+    return 'Hello World';
+});
