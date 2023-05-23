@@ -159,289 +159,292 @@ const DashboardPage = () => {
 
   return (
     <DefaultLayout title="Mi panel">
-      <div className="bg-white rounded-lg shadow-xl pb-8">
-        <div className="w-full h-[250px]">
-          <img
-            src="https://horizon-tailwind-react-git-tailwind-components-horizon-ui.vercel.app/static/media/banner.ef572d78f29b0fee0a09.png"
-            className="w-full h-full rounded-tl-lg rounded-tr-lg"
-          />
-        </div>
-        <div className="flex flex-col items-center -mt-20">
-          {/* <img
+      <div className="px-6 py-8 md:px-10 md:py-14">
+        <div className="bg-white rounded-lg shadow-xl pb-8">
+          <div className="w-full h-[250px]">
+            <img
+              src="/images/bg-profile.jpg"
+              className="w-full h-full object-cover rounded-tl-lg rounded-tr-lg"
+            />
+          </div>
+          <div className="flex flex-col items-center -mt-20">
+            {/* <img
               src="https://vojislavd.com/ta-template-demo/assets/img/profile.jpg"
               className="w-40 border-4 border-white rounded-full"
             /> */}
-          <Image
-            src="https://cdn2.iconfinder.com/data/icons/flatfaces-everyday-people-square/128/beard_male_man_face_avatar-512.png"
-            alt="user"
-            width="0"
-            height="0"
-            sizes="100vw"
-            className="w-40 border-4 border-white rounded-full"
-          />
-          <div className="flex items-center space-x-2 mt-2">
-            <p className="text-2xl text-black">{user.username}</p>
-            <span className="bg-blue-500 rounded-full p-1" title="Verified">
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                className="text-gray-100 h-2.5 w-2.5"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
+
+            <Image
+              src="/images/avatar-img.png"
+              alt="user"
+              width="0"
+              height="0"
+              sizes="100vw"
+              className="w-40 border-4 border-white rounded-full"
+            />
+            <div className="flex items-center space-x-2 mt-2">
+              <p className="text-2xl text-black">{user.username}</p>
+              <span className="bg-blue-500 rounded-full p-1" title="Verified">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  className="text-gray-100 h-2.5 w-2.5"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth="4"
+                    d="M5 13l4 4L19 7"
+                  ></path>
+                </svg>
+              </span>
+            </div>
+            <p className="text-gray-700">{user.email}</p>
+            <p className="text-sm text-gray-500 capitalize">
+              {/* {user.role.role_name} */}
+            </p>
+          </div>
+          <div className="flex-1 flex flex-col items-center lg:items-end justify-end px-8 mt-2">
+            <div className="flex items-center space-x-4 mt-2">
+              <button
+                className="flex items-center bg-blue-600 hover:bg-blue-700 text-gray-100 px-4 py-2 rounded text-sm space-x-2 transition duration-100"
+                onClick={handleOpenSlideOver}
               >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth="4"
-                  d="M5 13l4 4L19 7"
-                ></path>
-              </svg>
-            </span>
-          </div>
-          <p className="text-gray-700">{user.email}</p>
-          <p className="text-sm text-gray-500 capitalize">
-            {/* {user.role.role_name} */}
-          </p>
-        </div>
-        <div className="flex-1 flex flex-col items-center lg:items-end justify-end px-8 mt-2">
-          <div className="flex items-center space-x-4 mt-2">
-            <button
-              className="flex items-center bg-blue-600 hover:bg-blue-700 text-gray-100 px-4 py-2 rounded text-sm space-x-2 transition duration-100"
-              onClick={handleOpenSlideOver}
-            >
-              <span>Editar perfil</span>
-            </button>
-            <button
-              className="flex items-center bg-red-600 hover:bg-red-700 text-gray-100 px-4 py-2 rounded text-sm space-x-2 transition duration-100"
-              onClick={() => setOpenModalDelete(true)}
-            >
-              <span>Eliminar cuenta</span>
-            </button>
-          </div>
-        </div>
-      </div>
-
-      <div className="my-4 flex flex-col 2xl:flex-row space-y-4 2xl:space-y-0 2xl:space-x-4">
-        <div className="w-full flex flex-col 2xl:w-1/3">
-          <div className="flex-1 bg-white rounded-lg shadow-xl p-8">
-            <h4 className="text-xl text-gray-900 font-bold">
-              Información Personal
-            </h4>
-            <ul className="mt-2 text-gray-700">
-              <li className="flex border-y py-2">
-                <span className="font-bold w-24">Nombre:</span>
-                <span className="text-gray-700">
-                  {user.personal_data?.name}
-                </span>
-              </li>
-              <li className="flex border-b py-2">
-                <span className="font-bold w-24">Apellido:</span>
-                <span className="text-gray-700">
-                  {user.personal_data?.surname}
-                </span>
-              </li>
-              <li className="flex border-b py-2">
-                <span className="font-bold w-24">Registro:</span>
-                <span className="text-gray-700">{user.created_at}</span>
-              </li>
-              <li className="flex border-b py-2">
-                <span className="font-bold w-24">Modificación:</span>
-                <span className="text-gray-700">{user.updated_at}</span>
-              </li>
-              <li className="flex border-b py-2">
-                <span className="font-bold w-24">Móvil:</span>
-                <span className="text-gray-700">(123) 123-1234</span>
-              </li>
-              <li className="flex border-b py-2">
-                <span className="font-bold w-24">Email:</span>
-                <span className="text-gray-700">{user.email}</span>
-              </li>
-              <li className="flex border-b py-2">
-                <span className="font-bold w-24">Localización:</span>
-                <span className="text-gray-700">Barcelona, ESP</span>
-              </li>
-            </ul>
-          </div>
-          <div className="flex-1 bg-white rounded-lg shadow-xl mt-4 p-8">
-            <h4 className="text-xl text-gray-900 font-bold">Estadísticas</h4>
-            <div className="grid gap-8 mt-4">
-              <div className="px-6 py-6 bg-gray-100 border border-gray-300 rounded-lg shadow-xl">
-                <div className="flex items-center justify-between">
-                  <span className="font-bold text-sm text-indigo-600">
-                    Total Revenue
-                  </span>
-                  <span className="text-xs bg-gray-200 hover:bg-gray-500 text-gray-500 hover:text-gray-200 px-2 py-1 rounded-lg transition duration-200 cursor-default">
-                    7 days
-                  </span>
-                </div>
-                <div className="flex items-center justify-between mt-6">
-                  <div>
-                    <svg
-                      className="w-12 h-12 p-2.5 bg-indigo-400 bg-opacity-20 rounded-full text-indigo-600 border border-indigo-600"
-                      fill="none"
-                      stroke="currentColor"
-                      viewBox="0 0 24 24"
-                      xmlns="http://www.w3.org/2000/svg"
-                    >
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeWidth="1"
-                        d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
-                      ></path>
-                    </svg>
-                  </div>
-                  <div className="flex flex-col">
-                    <div className="flex items-end">
-                      <span className="text-2xl 2xl:text-3xl font-bold">
-                        $8,141
-                      </span>
-                      <div className="flex items-center ml-2 mb-1">
-                        <svg
-                          className="w-5 h-5 text-green-500"
-                          fill="none"
-                          stroke="currentColor"
-                          viewBox="0 0 24 24"
-                          xmlns="http://www.w3.org/2000/svg"
-                        >
-                          <path
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                            strokeWidth="2"
-                            d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"
-                          ></path>
-                        </svg>
-                        <span className="font-bold text-sm text-gray-500 ml-0.5">
-                          3%
-                        </span>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div className="px-6 py-6 bg-gray-100 border border-gray-300 rounded-lg shadow-xl">
-                <div className="flex items-center justify-between">
-                  <span className="font-bold text-sm text-green-600">
-                    New Orders
-                  </span>
-                  <span className="text-xs bg-gray-200 hover:bg-gray-500 text-gray-500 hover:text-gray-200 px-2 py-1 rounded-lg transition duration-200 cursor-default">
-                    7 days
-                  </span>
-                </div>
-                <div className="flex items-center justify-between mt-6">
-                  <div>
-                    <svg
-                      className="w-12 h-12 p-2.5 bg-green-400 bg-opacity-20 rounded-full text-green-600 border border-green-600"
-                      fill="none"
-                      stroke="currentColor"
-                      viewBox="0 0 24 24"
-                      xmlns="http://www.w3.org/2000/svg"
-                    >
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeWidth="1"
-                        d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"
-                      ></path>
-                    </svg>
-                  </div>
-                  <div className="flex flex-col">
-                    <div className="flex items-end">
-                      <span className="text-2xl 2xl:text-3xl font-bold">
-                        217
-                      </span>
-                      <div className="flex items-center ml-2 mb-1">
-                        <svg
-                          className="w-5 h-5 text-green-500"
-                          fill="none"
-                          stroke="currentColor"
-                          viewBox="0 0 24 24"
-                          xmlns="http://www.w3.org/2000/svg"
-                        >
-                          <path
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                            strokeWidth="2"
-                            d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"
-                          ></path>
-                        </svg>
-                        <span className="font-bold text-sm text-gray-500 ml-0.5">
-                          5%
-                        </span>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div className="px-6 py-6 bg-gray-100 border border-gray-300 rounded-lg shadow-xl">
-                <div className="flex items-center justify-between">
-                  <span className="font-bold text-sm text-blue-600">
-                    New Connections
-                  </span>
-                  <span className="text-xs bg-gray-200 hover:bg-gray-500 text-gray-500 hover:text-gray-200 px-2 py-1 rounded-lg transition duration-200 cursor-default">
-                    7 days
-                  </span>
-                </div>
-                <div className="flex items-center justify-between mt-6">
-                  <div>
-                    <svg
-                      className="w-12 h-12 p-2.5 bg-blue-400 bg-opacity-20 rounded-full text-blue-600 border border-blue-600"
-                      fill="none"
-                      stroke="currentColor"
-                      viewBox="0 0 24 24"
-                      xmlns="http://www.w3.org/2000/svg"
-                    >
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeWidth="1"
-                        d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"
-                      ></path>
-                    </svg>
-                  </div>
-                  <div className="flex flex-col">
-                    <div className="flex items-end">
-                      <span className="text-2xl 2xl:text-3xl font-bold">
-                        54
-                      </span>
-                      <div className="flex items-center ml-2 mb-1">
-                        <svg
-                          className="w-5 h-5 text-green-500"
-                          fill="none"
-                          stroke="currentColor"
-                          viewBox="0 0 24 24"
-                          xmlns="http://www.w3.org/2000/svg"
-                        >
-                          <path
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                            strokeWidth="2"
-                            d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"
-                          ></path>
-                        </svg>
-                        <span className="font-bold text-sm text-gray-500 ml-0.5">
-                          7%
-                        </span>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
+                <span>Editar perfil</span>
+              </button>
+              <button
+                className="flex items-center bg-red-600 hover:bg-red-700 text-gray-100 px-4 py-2 rounded text-sm space-x-2 transition duration-100"
+                onClick={() => setOpenModalDelete(true)}
+              >
+                <span>Eliminar cuenta</span>
+              </button>
             </div>
           </div>
         </div>
-        <div className="flex flex-col w-full 2xl:w-2/3">
-          <div className="flex-1 bg-white rounded-lg shadow-xl p-8">
-            <div className="text-black">
-              <h4 className="text-xl text-gray-900 font-bold">Mis cursos</h4>
-              <MyCourses />
-            </div>
 
-            <div className="mt-8 text-black">
+        <div className="my-4 flex flex-col 2xl:flex-row space-y-4 2xl:space-y-0 2xl:space-x-4">
+          <div className="w-full flex flex-col 2xl:w-1/3">
+            <div className="flex-1 bg-white rounded-lg shadow-xl p-8">
               <h4 className="text-xl text-gray-900 font-bold">
-                Calendario de formaciones
+                Información Personal
               </h4>
-              <Calendar />
+              <ul className="mt-2 text-gray-700">
+                <li className="flex border-y py-2">
+                  <span className="font-bold w-24">Nombre:</span>
+                  <span className="text-gray-700">
+                    {user.personal_data?.name}
+                  </span>
+                </li>
+                <li className="flex border-b py-2">
+                  <span className="font-bold w-24">Apellido:</span>
+                  <span className="text-gray-700">
+                    {user.personal_data?.surname}
+                  </span>
+                </li>
+                <li className="flex border-b py-2">
+                  <span className="font-bold w-24">Registro:</span>
+                  <span className="text-gray-700">{user.created_at}</span>
+                </li>
+                <li className="flex border-b py-2">
+                  <span className="font-bold w-24">Modificación:</span>
+                  <span className="text-gray-700">{user.updated_at}</span>
+                </li>
+                <li className="flex border-b py-2">
+                  <span className="font-bold w-24">Móvil:</span>
+                  <span className="text-gray-700">(123) 123-1234</span>
+                </li>
+                <li className="flex border-b py-2">
+                  <span className="font-bold w-24">Email:</span>
+                  <span className="text-gray-700">{user.email}</span>
+                </li>
+                <li className="flex border-b py-2">
+                  <span className="font-bold w-24">Localización:</span>
+                  <span className="text-gray-700">Barcelona, ESP</span>
+                </li>
+              </ul>
+            </div>
+            <div className="flex-1 bg-white rounded-lg shadow-xl mt-4 p-8">
+              <h4 className="text-xl text-gray-900 font-bold">Estadísticas</h4>
+              <div className="grid gap-8 mt-4">
+                <div className="px-6 py-6 bg-gray-100 border border-gray-300 rounded-lg shadow-xl">
+                  <div className="flex items-center justify-between">
+                    <span className="font-bold text-sm text-indigo-600">
+                      Total Revenue
+                    </span>
+                    <span className="text-xs bg-gray-200 hover:bg-gray-500 text-gray-500 hover:text-gray-200 px-2 py-1 rounded-lg transition duration-200 cursor-default">
+                      7 days
+                    </span>
+                  </div>
+                  <div className="flex items-center justify-between mt-6">
+                    <div>
+                      <svg
+                        className="w-12 h-12 p-2.5 bg-indigo-400 bg-opacity-20 rounded-full text-indigo-600 border border-indigo-600"
+                        fill="none"
+                        stroke="currentColor"
+                        viewBox="0 0 24 24"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <path
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          strokeWidth="1"
+                          d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
+                        ></path>
+                      </svg>
+                    </div>
+                    <div className="flex flex-col">
+                      <div className="flex items-end">
+                        <span className="text-2xl 2xl:text-3xl font-bold">
+                          $8,141
+                        </span>
+                        <div className="flex items-center ml-2 mb-1">
+                          <svg
+                            className="w-5 h-5 text-green-500"
+                            fill="none"
+                            stroke="currentColor"
+                            viewBox="0 0 24 24"
+                            xmlns="http://www.w3.org/2000/svg"
+                          >
+                            <path
+                              strokeLinecap="round"
+                              strokeLinejoin="round"
+                              strokeWidth="2"
+                              d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"
+                            ></path>
+                          </svg>
+                          <span className="font-bold text-sm text-gray-500 ml-0.5">
+                            3%
+                          </span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div className="px-6 py-6 bg-gray-100 border border-gray-300 rounded-lg shadow-xl">
+                  <div className="flex items-center justify-between">
+                    <span className="font-bold text-sm text-green-600">
+                      New Orders
+                    </span>
+                    <span className="text-xs bg-gray-200 hover:bg-gray-500 text-gray-500 hover:text-gray-200 px-2 py-1 rounded-lg transition duration-200 cursor-default">
+                      7 days
+                    </span>
+                  </div>
+                  <div className="flex items-center justify-between mt-6">
+                    <div>
+                      <svg
+                        className="w-12 h-12 p-2.5 bg-green-400 bg-opacity-20 rounded-full text-green-600 border border-green-600"
+                        fill="none"
+                        stroke="currentColor"
+                        viewBox="0 0 24 24"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <path
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          strokeWidth="1"
+                          d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"
+                        ></path>
+                      </svg>
+                    </div>
+                    <div className="flex flex-col">
+                      <div className="flex items-end">
+                        <span className="text-2xl 2xl:text-3xl font-bold">
+                          217
+                        </span>
+                        <div className="flex items-center ml-2 mb-1">
+                          <svg
+                            className="w-5 h-5 text-green-500"
+                            fill="none"
+                            stroke="currentColor"
+                            viewBox="0 0 24 24"
+                            xmlns="http://www.w3.org/2000/svg"
+                          >
+                            <path
+                              strokeLinecap="round"
+                              strokeLinejoin="round"
+                              strokeWidth="2"
+                              d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"
+                            ></path>
+                          </svg>
+                          <span className="font-bold text-sm text-gray-500 ml-0.5">
+                            5%
+                          </span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div className="px-6 py-6 bg-gray-100 border border-gray-300 rounded-lg shadow-xl">
+                  <div className="flex items-center justify-between">
+                    <span className="font-bold text-sm text-blue-600">
+                      New Connections
+                    </span>
+                    <span className="text-xs bg-gray-200 hover:bg-gray-500 text-gray-500 hover:text-gray-200 px-2 py-1 rounded-lg transition duration-200 cursor-default">
+                      7 days
+                    </span>
+                  </div>
+                  <div className="flex items-center justify-between mt-6">
+                    <div>
+                      <svg
+                        className="w-12 h-12 p-2.5 bg-blue-400 bg-opacity-20 rounded-full text-blue-600 border border-blue-600"
+                        fill="none"
+                        stroke="currentColor"
+                        viewBox="0 0 24 24"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <path
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          strokeWidth="1"
+                          d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"
+                        ></path>
+                      </svg>
+                    </div>
+                    <div className="flex flex-col">
+                      <div className="flex items-end">
+                        <span className="text-2xl 2xl:text-3xl font-bold">
+                          54
+                        </span>
+                        <div className="flex items-center ml-2 mb-1">
+                          <svg
+                            className="w-5 h-5 text-green-500"
+                            fill="none"
+                            stroke="currentColor"
+                            viewBox="0 0 24 24"
+                            xmlns="http://www.w3.org/2000/svg"
+                          >
+                            <path
+                              strokeLinecap="round"
+                              strokeLinejoin="round"
+                              strokeWidth="2"
+                              d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"
+                            ></path>
+                          </svg>
+                          <span className="font-bold text-sm text-gray-500 ml-0.5">
+                            7%
+                          </span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div className="flex flex-col w-full 2xl:w-2/3">
+            <div className="flex-1 bg-white rounded-lg shadow-xl p-8">
+              <div className="text-black">
+                <h4 className="text-xl text-gray-900 font-bold">Mis cursos</h4>
+                <MyCourses />
+              </div>
+
+              <div className="mt-8 text-black">
+                <h4 className="text-xl text-gray-900 font-bold">
+                  Calendario de formaciones
+                </h4>
+                <Calendar />
+              </div>
             </div>
           </div>
         </div>

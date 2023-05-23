@@ -90,7 +90,7 @@ class BootcampController extends Controller
             Subscription::create([
                     'user_id' => $userId,
                     'bootcamp_id' => $bootcampId,
-                    'purchase_date' => $subscriptionDate
+                    'subscription_date' => $subscriptionDate
                 ]);
             
         }

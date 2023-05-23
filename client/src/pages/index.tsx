@@ -6,16 +6,16 @@ import Gallery from "@/components/home/Gallery";
 import Features from "@/components/home/Features";
 import { useAuth } from "@/contexts/auth";
 import Header from "@/components/home/Header";
+import DefaultLayout from "@/layouts/DefaultLayout";
 
 export default function HomePage() {
-  const { isAuthenticated } = useAuth();
   return (
-    <HomeLayout isAuthenticated={isAuthenticated}>
+    <DefaultLayout>
       <Header />
       <About />
       <Features />
       {/* <Gallery /> */}
       <Contact />
-    </HomeLayout>
+    </DefaultLayout>
   );
 }

@@ -44,7 +44,9 @@ const UsersPage = () => {
 
   return (
     <DefaultLayout title="Usuarios">
-      <Table data={data} loading={loading} error={error} />
+      <div className="px-6 py-8 md:px-10 md:py-14">
+        <Table data={data} loading={loading} error={error} />
+      </div>
     </DefaultLayout>
   );
 };

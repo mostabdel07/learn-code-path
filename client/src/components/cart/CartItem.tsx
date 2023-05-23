@@ -18,22 +18,6 @@ const CartItem = ({ id }: CartItemProps) => {
   if (item == null) return null;
 
   return (
-    // <div className="flex items-center justify-between">
-    //   <img
-    //     src={item.img}
-    //     style={{ width: "125px", height: "75px", objectFit: "cover" }}
-    //   />
-    //   <div className="ml-4">
-    //     <div className="font-bold">{item.title}</div>
-    //     <div>{item.price}</div>
-    //     <button
-    //       onClick={() => removeFromCart(id)}
-    //       className="px-1 py-1 text-sm font-medium text-white bg-red-500 rounded-md hover:bg-red-600 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2"
-    //     >
-    //       Eliminar
-    //     </button>
-    //   </div>
-    // </div>
     <li key={item.id} className="flex py-6">
       <div className="h-24 w-34 flex-shrink-0 overflow-hidden rounded-md border border-gray-200">
         <img
@@ -63,7 +47,7 @@ const CartItem = ({ id }: CartItemProps) => {
               className="font-medium text-red-600 hover:text-red-500"
               onClick={() => removeFromCart(id)}
             >
-              Quitar
+              Remove
             </button>
           </div>
         </div>

@@ -59,8 +59,10 @@ class SubscriptionController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Subscription $Subscription)
+    public function destroy($id)
     {
-        //
+        $onlineCourse = Subscription::find($id);
+        $onlineCourse->delete();
+        return response()->json(null, 204);
     }
 }

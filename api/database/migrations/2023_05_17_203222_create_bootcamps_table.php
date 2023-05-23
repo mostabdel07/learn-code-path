@@ -14,7 +14,8 @@ return new class extends Migration
         Schema::create('bootcamps', function (Blueprint $table) {
             $table->id();
             $table->string('title');
-            $table->string('date');
+            $table->string('startDatetime');
+            $table->string('endDatetime');
             $table->string('duration');
             $table->string('location');
             $table->longText('description');

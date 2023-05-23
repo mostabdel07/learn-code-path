@@ -7,6 +7,7 @@ import TopBar from "@/components/navigation/TopBar";
 import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useForm } from "react-hook-form";
+import DefaultLayout from "@/layouts/DefaultLayout";
 
 export default function LoginPage() {
   type FormValues = {
@@ -66,7 +67,7 @@ export default function LoginPage() {
       login(token, userID);
 
       // Redirect to the '/dashboard' page
-      router.push("/dashboard");
+      router.push("/courses");
     } catch (error) {
       setError(
         "Error al iniciar sesión. Por favor, verifica tus credenciales."
@@ -75,8 +76,7 @@ export default function LoginPage() {
   };
 
   return (
-    <>
-      <TopBar title="Login" path="/" />
+    <DefaultLayout>
       <section className="bg-ctm-light dark:bg-ctm-black">
         <div className="flex flex-col items-center justify-center px-6 py-8 mx-auto md:h-screen lg:py-0">
           <div className="w-full bg-white rounded-lg shadow dark:border md:mt-0 sm:max-w-md xl:p-0 dark:bg-ctm-dark dark:border-gray-700">
@@ -149,6 +149,6 @@ export default function LoginPage() {
           </div>
         </div>
       </section>
-    </>
+    </DefaultLayout>
   );
 }

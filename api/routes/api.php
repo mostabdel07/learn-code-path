@@ -46,6 +46,7 @@ Route::post('subscription_bootcamp', [BootcampController::class, 'subscriptionBo
 
 Route::get('user/{userId}/courses', [PurchaseController::class, 'getUserCourses']);
 Route::get('user/{userId}/bootcamps', [SubscriptionController::class, 'getUserBootcamps']);
+Route::apiResource('bootcamps/subscriptions', SubscriptionController::class);
 
 
 });

@@ -51,7 +51,8 @@ class DatabaseSeeder extends Seeder
 
         \App\Models\Bootcamp::create([
             'title'=> 'Iniciación en la programación con Java y MySQL',
-            'date'=> '22/05/2023',
+            'startDatetime' => '2023-06-09T13:00',
+            'endDatetime' => '2023-06-09T14:30',
             'duration'=> '2 semana(s)',
             'location'=> 'Barcelona',
             'description'=> 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Iure Lorem ipsum dolor sit, amet consectetur adipisicing elit. Unde tempore aliquid voluptate natus. Odio iste perspiciatis vitae harum! Atque itaque officiis consequatur doloremque, fugit odio est minus voluptates magni beatae! Lorem ipsum dolor sit amet consectetur adipisicing elit. Iure Lorem ipsum dolor sit, amet consectetur adipisicing elit. Unde tempore aliquid voluptate natus. Odio iste perspiciatis vitae harum! Atque itaque officiis consequatur doloremque, fugit odio est minus voluptates magni beatae! odio est minus voluptates magni beatae! Lorem ipsum dolor sit amet consectetur adipisicing elit. Iure Lorem ipsum dolor sit, amet consectetur adipisicing elit.',
@@ -60,7 +61,8 @@ class DatabaseSeeder extends Seeder
 
         \App\Models\Bootcamp::create([
             'title'=> 'Laravel 9 y Next.js Full-stack',
-            'date'=> '08/06/2023',
+            'startDatetime' => '2023-05-28T13:00',
+            'endDatetime' => '2023-05-28T14:30',
             'duration'=> '4 semana(s)',
             'location'=> 'Barcelona',
             'description'=> 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Iure Lorem ipsum dolor sit, amet consectetur adipisicing elit. Unde tempore aliquid voluptate natus. Odio iste perspiciatis vitae harum! Atque itaque officiis consequatur doloremque, fugit odio est minus voluptates magni beatae! Lorem ipsum dolor sit amet consectetur adipisicing elit. Iure Lorem ipsum dolor sit, amet consectetur adipisicing elit. Unde tempore aliquid voluptate natus. Odio iste perspiciatis vitae harum! Atque itaque officiis consequatur doloremque, fugit odio est minus voluptates magni beatae! odio est minus voluptates magni beatae! Lorem ipsum dolor sit amet consectetur adipisicing elit. Iure Lorem ipsum dolor sit, amet consectetur adipisicing elit.',

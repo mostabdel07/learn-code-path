@@ -110,32 +110,25 @@ export default function Navbar() {
         <div className="hidden lg:flex lg:flex-1 lg:justify-end lg:items-center text-white">
           {isAuthenticated ? (
             <Link
-              href="#"
+              href="/dashboard"
               className="px-4 py-1.5 relative rounded-lg group text-white font-medium inline-block mr-6"
-              onClick={handleLogout}
             >
-              <span className="absolute top-0 left-0 w-full h-full rounded-lg opacity-50 filter blur-sm bg-gradient-to-br from-ctm-accent-dark to-ctm-accent"></span>
-              <span className="h-full w-full inset-0 absolute mt-0.5 ml-0.5 bg-gradient-to-br filter group-active:opacity-0 rounded-lg opacity-50 from-ctm-accent-dark to-ctm-accent"></span>
-              <span className="absolute inset-0 w-full h-full transition-all duration-200 ease-out rounded-lg shadow-xl bg-gradient-to-br filter group-active:opacity-0 group-hover:blur-sm from-ctm-accent-dark to-ctm-accent"></span>
-              <span className="absolute inset-0 w-full h-full transition duration-200 ease-out rounded-lg bg-gradient-to-br from-ctm-accent-dark to-ctm-accent"></span>
-              <span className="relative">
-                <ArrowRightOnRectangleIcon className="inline-block h-4 w-4 mr-1" />
-                Cerrar sessión
-              </span>
+              <span className="absolute top-0 left-0 w-full h-full rounded-lg opacity-50 filter blur-sm bg-gradient-to-br from-[#005555] to-ctm-accent"></span>
+              <span className="h-full w-full inset-0 absolute mt-0.5 ml-0.5 bg-gradient-to-br filter group-active:opacity-0 rounded-lg opacity-50 from-[#005555] to-ctm-accent"></span>
+              <span className="absolute inset-0 w-full h-full transition-all duration-200 ease-out rounded-lg shadow-xl bg-gradient-to-br filter group-active:opacity-0 group-hover:blur-sm from-[#005555] to-ctm-accent"></span>
+              <span className="absolute inset-0 w-full h-full transition duration-200 ease-out rounded-lg bg-gradient-to-br from-[#005555] to-ctm-accent"></span>
+              <span className="relative">Dashboard</span>
             </Link>
           ) : (
             <Link
               href="/login"
               className="px-4 py-1.5 relative rounded-lg group text-white font-medium inline-block mr-6"
             >
-              <span className="absolute top-0 left-0 w-full h-full rounded-lg opacity-50 filter blur-sm bg-gradient-to-br from-ctm-accent-dark to-ctm-accent"></span>
-              <span className="h-full w-full inset-0 absolute mt-0.5 ml-0.5 bg-gradient-to-br filter group-active:opacity-0 rounded-lg opacity-50 from-ctm-accent-dark to-ctm-accent"></span>
-              <span className="absolute inset-0 w-full h-full transition-all duration-200 ease-out rounded-lg shadow-xl bg-gradient-to-br filter group-active:opacity-0 group-hover:blur-sm from-ctm-accent-dark to-ctm-accent"></span>
-              <span className="absolute inset-0 w-full h-full transition duration-200 ease-out rounded-lg bg-gradient-to-br from-ctm-accent-dark to-ctm-accent"></span>
-              <span className="relative">
-                <UserIcon className="inline-block h-4 w-4 mr-1" />
-                Iniciar sessión
-              </span>
+              <span className="absolute top-0 left-0 w-full h-full rounded-lg opacity-50 filter blur-sm bg-gradient-to-br from-[#005555] to-ctm-accent"></span>
+              <span className="h-full w-full inset-0 absolute mt-0.5 ml-0.5 bg-gradient-to-br filter group-active:opacity-0 rounded-lg opacity-50 from-[#005555] to-ctm-accent"></span>
+              <span className="absolute inset-0 w-full h-full transition-all duration-200 ease-out rounded-lg shadow-xl bg-gradient-to-br filter group-active:opacity-0 group-hover:blur-sm from-[#005555] to-ctm-accent"></span>
+              <span className="absolute inset-0 w-full h-full transition duration-200 ease-out rounded-lg bg-gradient-to-br from-[#005555] to-ctm-accent"></span>
+              <span className="relative">Log in</span>
             </Link>
           )}
         </div>
@@ -212,15 +205,14 @@ export default function Navbar() {
               <div className="py-6">
                 {isAuthenticated ? (
                   <Link
-                    href="#"
+                    href="/dashboard"
                     className="px-4 py-1.5 relative rounded-lg group text-white font-medium inline-block mr-6"
-                    onClick={handleLogout}
                   >
                     <span className="absolute top-0 left-0 w-full h-full rounded-lg opacity-50 filter blur-sm bg-gradient-to-br from-[#005555] to-ctm-accent"></span>
                     <span className="h-full w-full inset-0 absolute mt-0.5 ml-0.5 bg-gradient-to-br filter group-active:opacity-0 rounded-lg opacity-50 from-[#005555] to-ctm-accent"></span>
                     <span className="absolute inset-0 w-full h-full transition-all duration-200 ease-out rounded-lg shadow-xl bg-gradient-to-br filter group-active:opacity-0 group-hover:blur-sm from-[#005555] to-ctm-accent"></span>
                     <span className="absolute inset-0 w-full h-full transition duration-200 ease-out rounded-lg bg-gradient-to-br from-[#005555] to-ctm-accent"></span>
-                    <span className="relative">Log out</span>
+                    <span className="relative">Dashboard</span>
                   </Link>
                 ) : (
                   <Link

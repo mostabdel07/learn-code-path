@@ -7,48 +7,40 @@ import router from "next/router";
 import { useAuth } from "@/contexts/auth";
 
 // Data for bootcamps
-const bootcampsData = [
-  {
-    id: 1,
-    title: "Iniciación en la programación con Java y MySQL",
-    date: "22/05/2023",
-    duration: "2 semana(s)",
-    location: "Barcelona",
-    description:
-      "Lorem ipsum dolor sit amet consectetur adipisicing elit. Iure Lorem ipsum dolor sit, amet consectetur adipisicing elit. Unde tempore aliquid voluptate natus. Odio iste perspiciatis vitae harum! Atque itaque officiis consequatur doloremque, fugit odio est minus voluptates magni beatae! Lorem ipsum dolor sit amet consectetur adipisicing elit. Iure Lorem ipsum dolor sit, amet consectetur adipisicing elit. Unde tempore aliquid voluptate natus. Odio iste perspiciatis vitae harum! Atque itaque officiis consequatur doloremque, fugit odio est minus voluptates magni beatae! odio est minus voluptates magni beatae! Lorem ipsum dolor sit amet consectetur adipisicing elit. Iure Lorem ipsum dolor sit, amet consectetur adipisicing elit.",
-    image:
-      "https://ts-production.imgix.net/images/088e397f-8949-42ad-a09c-631d611fd773.jpg?auto=compress,format&w=800&h=450",
-    instructor: {
-      name: "Amelia Anderson",
-      role: "Instructor, Lead Developer",
-      profileImage:
-        "https://images.unsplash.com/photo-1531590878845-12627191e687?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=764&q=80",
-    },
-  },
-  {
-    id: 2,
-    title: "Laravel 9 y Next.js Full-stack",
-    date: "08/06/2023",
-    duration: "4 semana(s)",
-    location: "Barcelona",
-    description:
-      "Lorem ipsum dolor sit amet consectetur adipisicing elit. Iure Lorem ipsum dolor sit, amet consectetur adipisicing elit. Unde tempore aliquid voluptate natus. Odio iste perspiciatis vitae harum! Atque itaque officiis consequatur doloremque, fugit odio est minus voluptates magni beatae! Lorem ipsum dolor sit amet consectetur adipisicing elit. Iure Lorem ipsum dolor sit, amet consectetur adipisicing elit. Unde tempore aliquid voluptate natus. Odio iste perspiciatis vitae harum! Atque itaque officiis consequatur doloremque, fugit odio est minus voluptates magni beatae! odio est minus voluptates magni beatae! Lorem ipsum dolor sit amet consectetur adipisicing elit. Iure Lorem ipsum dolor sit, amet consectetur adipisicing elit.",
-    image:
-      "https://reffect.co.jp/wp-content/uploads/2022/03/Laravel9_-next_js-1024x585.png",
-    instructor: {
-      name: "Amelia Anderson",
-      role: "Instructor, Lead Developer",
-      profileImage:
-        "https://images.unsplash.com/photo-1531590878845-12627191e687?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=764&q=80",
-    },
-  },
-];
 
 const BootcampsPage = () => {
-  const { token } = useAuth();
+  const { token, userId } = useAuth();
   const apiURL = process.env.API_ENDPOINT;
   const [bootcamps, setBootcamps] = useState<object[]>([]);
   const [subscriptions, setSubscriptions] = useState<number[]>([]);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const res = await axios.get(`${apiURL}/user/${userId}/bootcamps`, {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        });
+
+        const data: any = res.data;
+        console.log("suscriptions");
+        console.log(data);
+
+        if (res.status === 404) {
+          return {
+            notFound: true,
+          }; // set the state to null if the request returns a 404
+        } else {
+          // setMyCourses({ data: res.data }); // update the state with the fetched data
+          setSubscriptions(data);
+        }
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    fetchData();
+  }, [apiURL, token, userId]);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -66,7 +58,6 @@ const BootcampsPage = () => {
         }
 
         const data: any = res.data;
-        console.log(data);
         if (data) {
           setBootcamps(data);
         }
@@ -112,6 +103,7 @@ const BootcampsPage = () => {
     }
   };
 
+  console.log(subscriptions);
   return (
     <DefaultLayout title="Bootcamps">
       <section className="bg-white dark:bg-gray-900">
@@ -121,7 +113,8 @@ const BootcampsPage = () => {
               ({
                 id,
                 title,
-                date,
+                startDatetime,
+                endDatetime,
                 duration,
                 location,
                 description,
@@ -150,13 +143,13 @@ const BootcampsPage = () => {
                         <span className="font-medium text-blue-500">
                           Fecha inicio:{" "}
                         </span>
-                        {date}
+                        {startDatetime}
                       </p>
-                      <p className="text-sm">
+                      <p className="text-sm text-white-500">
                         <span className="font-medium text-blue-500">
-                          Duración:{" "}
+                          Fecha finalización:{" "}
                         </span>
-                        {duration}
+                        {endDatetime}
                       </p>
                       <p className="text-sm">
                         <span className="font-medium text-blue-500">

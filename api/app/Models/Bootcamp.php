@@ -13,7 +13,8 @@ class Bootcamp extends Model
 
     protected $fillable = [
         'title',
-        'date',
+        'startDatetime',
+        'endDatetime',
         'duration',
         'location',
         'description',

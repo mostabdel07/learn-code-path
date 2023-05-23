@@ -8,6 +8,7 @@ import { useAuth } from "@/contexts/auth";
 import TopBar from "@/components/navigation/TopBar";
 import router from "next/router";
 import Cookies from "js-cookie";
+import DefaultLayout from "@/layouts/DefaultLayout";
 
 const CheckoutPage = () => {
   const { token } = useAuth();
@@ -65,17 +66,27 @@ const CheckoutPage = () => {
   };
 
   return (
-    <div>
-      <TopBar title="Carrito de compra" path="/courses" />
-      <ProgressBar />
-      {cartItems.map((item) => (
-        <CartItem key={item.id} {...item} />
-      ))}
-      <div className="mt-4 font-medium text-lg text-gray-900">
-        Total: {totalPrice}
+    <DefaultLayout>
+      <div className="px-6 py-8 md:px-10 md:py-14">
+        <ProgressBar />
+        <div className="container mx-auto bg-gray-200 p-8 rounded-xl shadow-xl mt-12">
+          {cartItems.map((item) => (
+            <CartItem key={item.id} {...item} />
+          ))}
+          <div className="mt-4 font-medium text-lg text-gray-900">
+            Total: {totalPrice} &euro;
+          </div>
+          <div className="mt-6">
+            <button
+              className="flex items-center justify-center mx-auto rounded-md border border-transparent bg-ctm-action px-12 py-3 text-base font-medium text-white shadow-sm hover:bg-gray-700"
+              onClick={handlePayment}
+            >
+              Checkout
+            </button>
+          </div>
+        </div>
       </div>
-      <button onClick={handlePayment}>Pagar</button>
-    </div>
+    </DefaultLayout>
   );
 };
 

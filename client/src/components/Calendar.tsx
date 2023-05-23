@@ -17,6 +17,7 @@ import {
   parseISO,
   startOfToday,
 } from "date-fns";
+import { useRouter } from "next/router";
 import { Fragment, useEffect, useState } from "react";
 
 const meetings = [
@@ -69,6 +70,7 @@ function classNames(...classes: (string | boolean)[]) {
 export default function Calendar() {
   const { token, userId } = useAuth();
   const apiURL = process.env.API_ENDPOINT;
+  const [bootcamps, setbootcamps] = useState<any[]>([]);
 
   let today = startOfToday();
   let [selectedDay, setSelectedDay] = useState(today);
@@ -90,8 +92,8 @@ export default function Calendar() {
     setCurrentMonth(format(firstDayNextMonth, "MMM-yyyy"));
   }
 
-  let selectedDayMeetings = meetings.filter((meeting) =>
-    isSameDay(parseISO(meeting.startDatetime), selectedDay)
+  let selectedDayBootcamps = bootcamps.filter((bootcamp) =>
+    isSameDay(parseISO(bootcamp.startDatetime), selectedDay)
   );
 
   useEffect(() => {
@@ -103,9 +105,10 @@ export default function Calendar() {
           },
         });
         console.log("calendar");
-        console.log(res.data);
+
         const data: any = res.data;
         console.log(data);
+        setbootcamps(data);
 
         if (res.status === 404) {
           return {
@@ -198,8 +201,8 @@ export default function Calendar() {
                   </button>
 
                   <div className="w-1 h-1 mx-auto mt-1">
-                    {meetings.some((meeting) =>
-                      isSameDay(parseISO(meeting.startDatetime), day)
+                    {bootcamps.some((bootcamp) =>
+                      isSameDay(parseISO(bootcamp.startDatetime), day)
                     ) && (
                       <div className="w-1 h-1 rounded-full bg-sky-500"></div>
                     )}
@@ -216,9 +219,9 @@ export default function Calendar() {
               </time>
             </h2>
             <ol className="mt-4 space-y-1 text-sm leading-6 text-gray-500">
-              {selectedDayMeetings.length > 0 ? (
-                selectedDayMeetings.map((meeting) => (
-                  <Meeting meeting={meeting} key={meeting.id} />
+              {selectedDayBootcamps.length > 0 ? (
+                selectedDayBootcamps.map((bootcamp) => (
+                  <Meeting bootcamp={bootcamp} key={bootcamp.id} />
                 ))
               ) : (
                 <p>No hay eventos para este día.</p>
@@ -231,25 +234,47 @@ export default function Calendar() {
   );
 }
 
-function Meeting({ meeting }: any) {
-  let startDateTime = parseISO(meeting.startDatetime);
-  let endDateTime = parseISO(meeting.endDatetime);
+function Meeting({ bootcamp }: any) {
+  const router = useRouter();
+  const { token } = useAuth();
+  const apiURL = process.env.API_ENDPOINT;
+
+  let startDateTime = parseISO(bootcamp.startDatetime);
+  let endDateTime = parseISO(bootcamp.endDatetime);
+
+  async function handleUnsubscribe(id: any): Promise<void> {
+    try {
+      const response = await axios.delete(
+        `${apiURL}/bootcamps/subscriptions/${id}`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+      if (response.status === 204) {
+        console.log("succesful");
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  }
 
   return (
     <li className="flex items-center px-4 py-2 space-x-4 group rounded-xl focus-within:bg-gray-100 hover:bg-gray-100">
       <img
-        src={meeting.imageUrl}
+        src={bootcamp.image}
         alt=""
         className="flex-none w-10 h-10 rounded-full"
       />
       <div className="flex-auto">
-        <p className="text-gray-900">{meeting.name}</p>
+        <p className="text-gray-900">{bootcamp.title}</p>
         <p className="mt-0.5">
-          <time dateTime={meeting.startDatetime}>
+          <time dateTime={bootcamp.startDatetime}>
             {format(startDateTime, "h:mm a")}
           </time>{" "}
           -{" "}
-          <time dateTime={meeting.endDatetime}>
+          <time dateTime={bootcamp.endDatetime}>
             {format(endDateTime, "h:mm a")}
           </time>
         </p>
@@ -284,21 +309,9 @@ function Meeting({ meeting }: any) {
                       active ? "bg-gray-100 text-gray-900" : "text-gray-700",
                       "block px-4 py-2 text-sm"
                     )}
+                    onClick={() => handleUnsubscribe(bootcamp.id)}
                   >
-                    Editar
-                  </a>
-                )}
-              </Menu.Item>
-              <Menu.Item>
-                {({ active }) => (
-                  <a
-                    href="#"
-                    className={classNames(
-                      active ? "bg-gray-100 text-gray-900" : "text-gray-700",
-                      "block px-4 py-2 text-sm"
-                    )}
-                  >
-                    Cancelar
+                    Cancelar inscripción
                   </a>
                 )}
               </Menu.Item>
