@@ -15,7 +15,7 @@ export default function HomePage() {
       <About />
       <Features />
       {/* <Gallery /> */}
-      <Contact />
+      {/* <Contact /> */}
     </DefaultLayout>
   );
 }

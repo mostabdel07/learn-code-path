@@ -10,7 +10,7 @@ export default function Hero() {
           href="#about"
           className="w-full md:text-6xl lg:text-7xl font-bold text-center text-white uppercase sm:text-5xl "
         >
-          <ChevronDownIcon className="h-20 w-20 hover:text-ctm-accent" />
+          <ChevronDownIcon className="h-20 w-20 hover:text-blue-500 animate-bounce" />
         </a>
       </div>
     </div>

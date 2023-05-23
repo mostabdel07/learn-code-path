@@ -1,5 +1,6 @@
 import Head from "next/head";
 import SideBar from "@/components/navigation/SideBar";
+import Footer from "@/components/navigation/Footer";
 
 export default function DefaultLayout({ children, title }: any) {
   return (
@@ -10,6 +11,7 @@ export default function DefaultLayout({ children, title }: any) {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <SideBar title={title}>{children}</SideBar>
+      <Footer />
     </>
   );
 }
