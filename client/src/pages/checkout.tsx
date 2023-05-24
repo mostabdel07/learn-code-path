@@ -35,6 +35,7 @@ const CheckoutPage = () => {
   }, 0);
 
   const apiURL = process.env.API_ENDPOINT;
+  const stripePublicToken = process.env.STRIPE_PUBLIC_TOKEN;
 
   const stripePromise = loadStripe(
     "pk_test_51NAsfLHl9Ohy28dNJrBgiZ1oD6451u2cEplB8076BjTq3CBfVOu6bVAUtX8dt9BdcoFOD3AVNHIBBQiyJEtPsr7200LaScvl3J"
@@ -68,9 +69,16 @@ const CheckoutPage = () => {
       );
 
       if (response.data) {
+        router.push("/dashboard");
         clearCart();
         Cookies.remove("shopping-cart");
-        router.push("/dashboard");
+      } else {
+        alert(
+          "El pago no se ha realizado porque algunos cursos no están disponibles."
+        );
+        router.push("/courses");
+        clearCart();
+        Cookies.remove("shopping-cart");
       }
 
       console.log(response.data);

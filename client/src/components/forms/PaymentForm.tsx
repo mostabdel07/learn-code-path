@@ -73,7 +73,7 @@ const PaymentForm: React.FC<PaymentFormProps> = ({ onSuccess }) => {
   };
 
   return (
-    <form onSubmit={handleSubmit} className="mt-4">
+    <form onSubmit={handleSubmit} className="mt-4 m-10">
       <div className="mb-4">
         <label className="block mb-2 text-lg font-medium text-gray-700">
           Tarjeta de crédito

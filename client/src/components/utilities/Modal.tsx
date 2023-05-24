@@ -69,12 +69,12 @@ export default function Modal({
               </div>
               <div className="bg-white px-4 pt-5 pb-4 sm:px-6 sm:pb-0">
                 <div className="sm:flex sm:items-center">
-                  <div className="mx-auto flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-full bg-red-100 sm:mx-0 sm:h-10 sm:w-10">
+                  {/* <div className="mx-auto flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-full bg-red-100 sm:mx-0 sm:h-10 sm:w-10">
                     <ExclamationTriangleIcon
                       className="h-6 w-6 text-red-600"
                       aria-hidden="true"
                     />
-                  </div>
+                  </div> */}
                   <div className="mt-3 sm:ml-4 sm:mt-0">
                     <Dialog.Title
                       as="h3"
