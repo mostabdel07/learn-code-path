@@ -3,27 +3,29 @@ import { useShoppingCart } from "@/contexts/ShoppingCartContext";
 import CartItem from "@/components/cart/CartItem";
 import ProgressBar from "@/components/ProgressBar";
 import useOnlineCourses from "@/hooks/useOnlineCourses";
+import axios from "axios";
+import { useAuth } from "@/contexts/auth";
+import TopBar from "@/components/navigation/TopBar";
+import router from "next/router";
+import Cookies from "js-cookie";
+import DefaultLayout from "@/layouts/DefaultLayout";
+import Modal from "@/components/utilities/Modal";
 import { Elements } from "@stripe/react-stripe-js";
 import { loadStripe } from "@stripe/stripe-js";
 import PaymentForm from "@/components/forms/PaymentForm";
-import Modal from "@/components/utilities/Modal";
 
 const CheckoutPage = () => {
+  const { token } = useAuth();
   const { cartItems, clearCart } = useShoppingCart();
   const { data, loading, error } = useOnlineCourses();
 
-  const [openModalPayment, setOpenModalPayment] = useState(false);
-
-  const handleOpenModalPayment = () => {
-    setOpenModalPayment(true);
-  };
-
-  const totalPrice = cartItems.reduce((total, item) => {
+  const totalPrice = cartItems.reduce((total: any, item) => {
+    //Todo Any
     if (!data || loading) {
-      return total;
+      return <div>Loading...</div>;
     }
 
-    const itemData = data.find((d) => d.id === item.id);
+    const itemData = data.find((d: { id: number }) => d.id === item.id);
 
     if (itemData) {
       const price = parseFloat(itemData.price);
@@ -32,36 +34,82 @@ const CheckoutPage = () => {
     return total;
   }, 0);
 
+  const apiURL = process.env.API_ENDPOINT;
+
   const stripePromise = loadStripe(
     "pk_test_51NAsfLHl9Ohy28dNJrBgiZ1oD6451u2cEplB8076BjTq3CBfVOu6bVAUtX8dt9BdcoFOD3AVNHIBBQiyJEtPsr7200LaScvl3J"
   );
 
-  const handlePaymentSuccess = () => {
-    console.log("pago realizado correctamente");
-    clearCart();
-    // Aquí puedes realizar las acciones necesarias después de que el pago haya sido procesado con éxito
+  const [openModalPayment, setOpenModalPayment] = useState(false);
+
+  const handleOpenModalPayment = () => {
+    setOpenModalPayment(true);
+  };
+
+  const handlePayment = async () => {
+    try {
+      console.log(cartItems);
+      const courseIds = cartItems.map((item) => item.id);
+      console.log(courseIds);
+      const userId = localStorage.getItem("session_id");
+      console.log("session" + userId);
+
+      const response = await axios.post(
+        `${apiURL}/check_courses`,
+        {
+          course_ids: courseIds,
+          user_id: userId,
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+
+      if (response.data) {
+        clearCart();
+        Cookies.remove("shopping-cart");
+        router.push("/dashboard");
+      }
+
+      console.log(response.data);
+    } catch (error) {
+      console.error(error);
+    }
   };
 
   return (
-    <div>
-      <ProgressBar />
-      {cartItems.map((item) => (
-        <CartItem key={item.id} {...item} />
-      ))}
-      <div className="mt-4 font-medium text-lg text-gray-900">
-        Total: {totalPrice}
+    <DefaultLayout>
+      <div className="px-6 py-8 md:px-10 md:py-14">
+        <ProgressBar />
+        <div className="container mx-auto bg-gray-200 p-8 rounded-xl shadow-xl mt-12">
+          {cartItems.map((item) => (
+            <CartItem key={item.id} {...item} />
+          ))}
+          <div className="mt-4 font-medium text-lg text-gray-900">
+            Total: {totalPrice} &euro;
+          </div>
+          <div className="mt-6">
+            <button
+              className="flex items-center justify-center mx-auto rounded-md border border-transparent bg-ctm-action px-12 py-3 text-base font-medium text-white shadow-sm hover:bg-gray-700"
+              onClick={handleOpenModalPayment}
+            >
+              Checkout
+            </button>
+            <Modal
+              title="Realizar pago"
+              openModal={openModalPayment}
+              onClose={() => setOpenModalPayment(false)}
+            >
+              <Elements stripe={stripePromise}>
+                <PaymentForm onSuccess={handlePayment} />
+              </Elements>
+            </Modal>
+          </div>
+        </div>
       </div>
-      <button onClick={handleOpenModalPayment}>Pagar</button>
-      <Modal
-        title="Realizar pago"
-        openModal={openModalPayment}
-        onClose={() => setOpenModalPayment(false)}
-      >
-        <Elements stripe={stripePromise}>
-          <PaymentForm onSuccess={handlePaymentSuccess} />
-        </Elements>
-      </Modal>
-    </div>
+    </DefaultLayout>
   );
 };
 
