@@ -43,7 +43,7 @@ const UsersPage = () => {
   }, [token]);
 
   return (
-    <DefaultLayout title="Usuarios">
+    <DefaultLayout title="Users management">
       <div className="px-6 py-8 md:px-10 md:py-14">
         <Table data={data} loading={loading} error={error} />
       </div>

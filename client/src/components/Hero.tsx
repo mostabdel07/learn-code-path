@@ -8,9 +8,10 @@ export default function Hero() {
       <div className="flex flex-col">
         <a
           href="#about"
-          className="w-full md:text-6xl lg:text-7xl font-bold text-center text-white uppercase sm:text-5xl "
+          className="w-full md:text-4xl lg:text-5xl font-light text-center text-white uppercase sm:text-3xl"
         >
-          <ChevronDownIcon className="h-20 w-20 hover:text-blue-500 animate-bounce" />
+          Discover
+          <ChevronDownIcon className="h-20 w-20 hover:text-blue-500 animate-bounce mx-auto mt-4" />
         </a>
       </div>
     </div>

@@ -8,7 +8,7 @@ import { ArrowSmallUpIcon, ArrowUpCircleIcon } from "@heroicons/react/24/solid";
 const CoursesPage = () => {
   const { data, loading, error } = useOnlineCourses();
   return (
-    <DefaultLayout title="Cursos online">
+    <DefaultLayout title="Online courses">
       <div className="px-6 py-8 md:px-10 md:py-14">
         <Panel data={data} loading={loading} error={error} />
         <div className="fixed bottom-10 right-8 animate-bounce  brightness-100 rounded-full  md flex items-center justify-center hover:brightness-90">

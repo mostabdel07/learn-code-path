@@ -158,7 +158,7 @@ const DashboardPage = () => {
   }
 
   return (
-    <DefaultLayout title="Mi panel">
+    <DefaultLayout title="Dashboard">
       <div className="px-6 py-8 md:px-10 md:py-14">
         <div className="bg-white rounded-lg shadow-xl pb-8">
           <div className="w-full h-[250px]">
