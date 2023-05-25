@@ -32,10 +32,12 @@ export function ShoppingCartProvider({ children }: ShoppingCartProviderProps) {
   const openCart = () => setIsOpen(true);
   const closeCart = () => setIsOpen(false);
 
+  /**
+   * Adds an item to the cart.
+   * @param id The ID of the item to add to the cart
+   */
   function addToCart(id: number) {
-    console.log("Adding item with id:", id);
     setCartItems((cartItems) => {
-      console.log(cartItems);
       const itemExists = cartItems.find((item) => item.id === id);
       if (itemExists) {
         return cartItems;

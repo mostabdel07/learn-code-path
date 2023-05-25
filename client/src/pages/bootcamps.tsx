@@ -24,8 +24,6 @@ const BootcampsPage = () => {
         });
 
         const data: any = res.data;
-        console.log("suscriptions");
-        console.log(data);
 
         if (res.status === 404) {
           return {
@@ -35,9 +33,7 @@ const BootcampsPage = () => {
           // setMyCourses({ data: res.data }); // update the state with the fetched data
           setSubscriptions(data);
         }
-      } catch (error) {
-        console.log(error);
-      }
+      } catch (error) {}
     };
     fetchData();
   }, [apiURL, token, userId]);
@@ -61,24 +57,28 @@ const BootcampsPage = () => {
         if (data) {
           setBootcamps(data);
         }
-      } catch (error) {
-        console.log(error);
-      }
+      } catch (error) {}
     };
     fetchData();
   }, [apiURL, token]);
 
+  /**
+   * Handles the subscription process for a specific bootcamp identified by its ID.
+   * If the bootcamp ID is not already included in the subscriptions list, it adds it.
+   * Sends a POST request to subscribe the user to the bootcamp.
+   * If the response indicates a successful subscription, it reloads the page.
+   * If an error occurs, it logs the error to the console.
+   * @param id The ID of the bootcamp to subscribe to
+   */
   const handleSubscribe = async (id: number) => {
     // Handle the subscription logic here
-    // For example, you can show a success message or redirect to a subscription page
-    console.log("Subscribed!");
+
     if (!subscriptions.includes(id)) {
       setSubscriptions([...subscriptions, id]);
     }
 
     try {
       const userId = localStorage.getItem("session_id");
-      console.log("session" + userId);
 
       const response = await axios.post(
         `${apiURL}/subscription_bootcamp`,
@@ -96,14 +96,11 @@ const BootcampsPage = () => {
       if (response.data) {
         router.reload();
       }
-
-      console.log(response.data);
     } catch (error) {
       console.error(error);
     }
   };
 
-  console.log(subscriptions);
   return (
     <DefaultLayout title="Bootcamps">
       <section className="bg-white dark:bg-gray-900">

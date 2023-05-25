@@ -6,7 +6,7 @@ type CartItemProps = {
 };
 
 const CartItem = ({ id }: CartItemProps) => {
-  const { data, loading, error } = useOnlineCourses();
+  const { data, loading } = useOnlineCourses();
 
   const { removeFromCart } = useShoppingCart();
 

@@ -30,7 +30,6 @@ const DashboardPage = () => {
   const router = useRouter();
   const { token, userId } = useAuth();
   const apiURL = process.env.API_ENDPOINT;
-  console.log(userId);
 
   // States
   const [user, setUser] = useState<User | null>(null);
@@ -58,13 +57,11 @@ const DashboardPage = () => {
         }
 
         const user: User = res.data;
-        console.log("data", user);
+
         if (user) {
           setUser(user);
         }
-      } catch (error) {
-        console.log(error);
-      }
+      } catch (error) {}
     };
     fetchData();
   }, [apiURL, token, userId]);
@@ -91,11 +88,16 @@ const DashboardPage = () => {
     setEditUser((prevUser) => ({ ...prevUser, [name]: value }));
   }
 
+  /**
+   * Handles saving changes to a user with the specified ID.
+   * It sets the open slide over flag to false and the open modal edit flag to true.
+   * Identifies the changed properties and sends a PUT request to update the user.
+   * If the user is successfully updated, it reloads the page using the router.
+   * @param {number} id - The ID of the user to be updated.
+   */
   async function handleSave(id: number) {
     setOpenSlideOver(false);
     setOpenModalEdit(true);
-    // TODO: Fetch
-    console.log(token);
 
     // Identify the changed properties
     let changedProperties: Partial<User> = {};
@@ -105,7 +107,6 @@ const DashboardPage = () => {
     if (editUser.email !== user?.email) {
       changedProperties.email = editUser.email;
     }
-    console.log(changedProperties);
 
     try {
       const response = await axios.put(
@@ -117,28 +118,29 @@ const DashboardPage = () => {
           },
         }
       );
-      console.log(response);
+
       if (response.status === 204) router.reload();
-    } catch (error) {
-      console.log(error);
-    }
+    } catch (error) {}
   }
 
+  /**
+   * Handles the deletion of a user with the specified ID.
+   * It sets the open modal edit flag to true, indicating that the delete modal is open.
+   * If the user is successfully deleted, it redirects to the '/users' page.
+   * @param {number} id - The ID of the user to be deleted.
+   */
   async function handleDelete(id: number) {
     setOpenModalEdit(true);
-    console.log(id);
-    console.log(token);
+
     try {
       const response = await axios.delete(`${apiURL}/users/${id}`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
       });
-      console.log(response);
+
       if (response.status === 204) router.push("/users");
-    } catch (error) {
-      console.log(error);
-    }
+    } catch (error) {}
   }
 
   if (!user) {
@@ -168,11 +170,6 @@ const DashboardPage = () => {
             />
           </div>
           <div className="flex flex-col items-center -mt-20">
-            {/* <img
-              src="https://vojislavd.com/ta-template-demo/assets/img/profile.jpg"
-              className="w-40 border-4 border-white rounded-full"
-            /> */}
-
             <Image
               src="/images/avatar-img.png"
               alt="user"

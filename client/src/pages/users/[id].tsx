@@ -26,8 +26,7 @@ export const getServerSideProps: GetServerSideProps<UserPageProps> = async (
   context
 ) => {
   const { id } = context.params ?? {};
-  console.log("id");
-  console.log(id);
+
   const token = context.req.headers.cookie?.replace(
     /(?:(?:^|.*;\s*)authToken\s*\=\s*([^;]*).*$)|^.*$/,
     "$1"
@@ -54,7 +53,6 @@ export const getServerSideProps: GetServerSideProps<UserPageProps> = async (
     }
 
     const user = res.data;
-    console.log(user);
 
     return {
       props: {
@@ -84,16 +82,27 @@ const UserPage = ({ user }: UserPageProps) => {
     email: user.email,
   });
 
+  /**
+   * Handles the input change event and updates the `editUser` state based on the input's name and value.
+   * @param event The input change event
+   */
   function handleInputChange(event: any) {
     const { name, value } = event.target;
     setEditUser((prevUser) => ({ ...prevUser, [name]: value }));
   }
 
+  /**
+   * Updates the user data identified by the given ID.
+   * Closes the slide over and opens the edit modal.
+   * Identifies the changed properties (username and email) between the editUser and user objects.
+   * Sends a PUT request to update the user data with the changed properties.
+   * If the response status is 204 (No Content), it reloads the page to reflect the updated user data.
+   * If an error occurs, it is caught and ignored.
+   * @param id The ID of the user to update
+   */
   async function handleSave(id: number) {
     setOpenSlideOver(false);
     setOpenModalEdit(true);
-    // TODO: Fetch
-    console.log(token);
 
     // Identify the changed properties
     let changedProperties: Partial<User> = {};
@@ -103,7 +112,6 @@ const UserPage = ({ user }: UserPageProps) => {
     if (editUser.email !== user.email) {
       changedProperties.email = editUser.email;
     }
-    console.log(changedProperties);
 
     try {
       const response = await axios.put(
@@ -115,28 +123,23 @@ const UserPage = ({ user }: UserPageProps) => {
           },
         }
       );
-      console.log(response);
+
       if (response.status === 204) router.reload();
-    } catch (error) {
-      console.log(error);
-    }
+    } catch (error) {}
   }
 
   async function handleDelete(id: number) {
     setOpenModalEdit(true);
-    console.log(id);
-    console.log(token);
+
     try {
       const response = await axios.delete(`${apiURL}/users/${id}`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
       });
-      console.log(response);
+
       if (response.status === 204) router.push("/users");
-    } catch (error) {
-      console.log(error);
-    }
+    } catch (error) {}
   }
 
   const [openSlideOver, setOpenSlideOver] = useState(false);

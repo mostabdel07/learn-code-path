@@ -12,6 +12,11 @@ const UsersPage = () => {
   const { token } = useAuth();
   const apiURL = process.env.API_ENDPOINT;
 
+  /**
+   * Fetches user data from the API endpoint and updates the state accordingly.
+   * If a token is available, the request is made with authorization using the token.
+   * @param {string | null} token - The user authentication token.
+   */
   useEffect(() => {
     if (token) {
       fetch(`${apiURL}/users`, {

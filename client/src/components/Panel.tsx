@@ -48,8 +48,6 @@ export default function Panel(props: Props) {
   }
 
   if (!data || loading) {
-    console.log("data" + data);
-    console.log(loading);
     return <div>Loading...</div>;
   }
 

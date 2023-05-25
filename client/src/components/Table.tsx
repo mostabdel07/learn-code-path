@@ -35,6 +35,14 @@ export default function Table(props: Props) {
 
   const totalUsers = data.length;
 
+  /**
+   * Filters and sorts an array of users based on search criteria.
+   * @param data The array of users to filter and sort
+   * @param searchTerm The search term to match against the usernames
+   * @param selectedRole The selected role to filter by
+   * @param sortOrder The sort order ('asc' for ascending, 'desc' for descending)
+   * @returns The filtered and sorted array of users
+   */
   const filteredUsers = data.filter((user) => {
     const usernameMatch = user.username
       .toLowerCase()

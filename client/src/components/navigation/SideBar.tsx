@@ -17,17 +17,7 @@ import { FaUsers } from "react-icons/fa";
 import { AiFillHome } from "react-icons/ai";
 import Link from "next/link";
 import { useShoppingCart } from "@/contexts/ShoppingCartContext";
-import axios from "axios";
 import { UserContext } from "@/contexts/UserContext";
-
-interface User {
-  id: number;
-  username: string;
-  email: string;
-  personal_data: any;
-  created_at: string;
-  updated_at: string;
-}
 
 const links = [
   {

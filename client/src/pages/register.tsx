@@ -61,20 +61,26 @@ const RegisterPage = () => {
     mode: "onChange",
   });
 
+  /**
+   * Submits the form data to the API for user registration.
+   * If the request is successful, it resets the form and redirects to the login page.
+   * If the request fails with a 422 status code, it extracts the error messages and sets the error list.
+   * If any other error occurs, it logs the error to the console.
+   * @param {FormValues} data - The form data to be submitted.
+   */
   const onSubmit = async (data: FormValues) => {
     try {
       const { confirmPassword, acceptedTerms, ...formData } = data;
-      console.log("formData", formData);
-      const response = await axios.post(`${apiURL}/register`, formData);
-      console.log(response.data);
+
+      await axios.post(`${apiURL}/register`, formData);
+
       reset();
       router.push("/login");
     } catch (error: any) {
       if (error.response.status === 422) {
         const errors = error.response.data.errors;
-        console.log(errors);
+
         setErrorList(Object.values(errors).flat());
-        console.log(errorList);
       } else {
         console.error(error);
       }

@@ -6,7 +6,7 @@ import Caroussel from "@/components/Caroussel";
 
 export default function HomePage() {
   return (
-    <DefaultLayout title="Home page">
+    <DefaultLayout title="Página principal">
       <Header />
       <About />
       <Features />

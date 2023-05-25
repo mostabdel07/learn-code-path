@@ -79,7 +79,6 @@ const CoursePage = ({ course }: CoursePageProps) => {
   useEffect(() => {
     const role = localStorage.getItem("userRole");
     setUserRole(role);
-    console.log("repuesta" + course.instructor_name);
   }, []);
 
   const apiURL = process.env.API_ENDPOINT;
@@ -143,17 +142,23 @@ const CoursePage = ({ course }: CoursePageProps) => {
     return stars;
   };
 
+  /**
+   * Handles the input change event and updates the `editUser` state based on the input's name and value.
+   * @param event The input change event
+   */
   function handleInputChange(
     event: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
   ) {
     const { name, value } = event.target;
-    console.log(name);
-    console.log(value);
+
     setEditCourse((prevCourse) => ({ ...prevCourse, [name]: value }));
   }
 
+  /**
+   * Updates a course with the changed properties.
+   * @param id The ID of the course to update
+   */
   async function handleSave(id: number) {
-    console.log(token);
     // Identify the changed properties
     let changedProperties: Partial<Course> = {};
     if (editCourse.title !== course.title) {
@@ -168,10 +173,6 @@ const CoursePage = ({ course }: CoursePageProps) => {
     if (editCourse.price !== course.price) {
       changedProperties.price = editCourse.price;
     }
-    // if (editCourse.img !== course.img) {
-    //   changedProperties.img = editCourse.img;
-    // }
-    // console.log("changed" + changedProperties.img);
 
     try {
       const response = await axios.put(
@@ -185,7 +186,6 @@ const CoursePage = ({ course }: CoursePageProps) => {
       );
       // formData.append("img", changedProperties.img);
 
-      console.log(response);
       if (response.status === 204) {
         setOpenSlideOver(false);
         router.reload();
@@ -193,17 +193,13 @@ const CoursePage = ({ course }: CoursePageProps) => {
     } catch (error: any) {
       if (error.response.status === 422) {
         const errors = error.response.data.errors;
-        console.log(errors);
+
         setErrorList(Object.values(errors).flat());
-        console.log(errorList);
       }
-      console.log(error);
     }
   }
 
   async function handleDelete(id: number) {
-    console.log(id);
-    console.log(token);
     try {
       const response = await axios.delete(`${apiURL}/courses/${id}`, {
         headers: {
@@ -211,9 +207,7 @@ const CoursePage = ({ course }: CoursePageProps) => {
         },
       });
       if (response.status === 204) router.push("/courses");
-    } catch (error) {
-      console.log(error);
-    }
+    } catch (error) {}
   }
 
   return (

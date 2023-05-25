@@ -18,7 +18,6 @@ interface Props {
 
 export default function SliderScroll(props: Props) {
   const { data } = props;
-  console.log(data);
 
   return (
     <div>

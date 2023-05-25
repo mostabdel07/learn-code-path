@@ -42,7 +42,7 @@ export default function LoginPage() {
 
   async function fetchToken(data: FormValues) {
     const { email, password } = data;
-    console.log("fetcht");
+
     const response = await fetch(`${apiURL}/login`, {
       method: "POST",
       headers: {
@@ -56,11 +56,16 @@ export default function LoginPage() {
 
     const responseData = await response.json();
 
-    console.log(responseData);
-
     return responseData;
   }
 
+  /**
+   * Submits the form data to fetch the token and user information for authentication.
+   * If the token and user information are successfully fetched, it sets the user role in the local storage,
+   * logs in the user using the obtained token and user ID, and redirects to the '/courses' page.
+   * If an error occurs during the authentication process, it sets an error message.
+   * @param {FormValues} data - The form data to be submitted.
+   */
   const onSubmit = async (data: FormValues) => {
     try {
       const fetchedToken = await fetchToken(data);

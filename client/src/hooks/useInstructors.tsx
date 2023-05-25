@@ -36,7 +36,6 @@ const useInstructors = () => {
 
           const responseData = await response.json();
 
-          console.log(responseData);
           setData(responseData);
           setError(null);
         } catch (error: any) {

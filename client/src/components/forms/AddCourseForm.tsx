@@ -42,11 +42,8 @@ function AddCourseForm() {
     instructor_id: yup.number().required("El instructor es obligatorio"),
   });
 
-  const defaultImageUrl = "https://example.com/default-image.jpg";
-
   const {
     register,
-    watch,
     handleSubmit,
     formState: { errors, isValid },
     reset,
@@ -80,29 +77,21 @@ function AddCourseForm() {
       formData.append("headline", data.headline);
       formData.append("instructor_id", data.instructor_id);
 
-      console.log(data);
-      console.log(token);
-
-      const response = await axios.post(`${apiURL}/courses`, formData, {
+      await axios.post(`${apiURL}/courses`, formData, {
         headers: {
           Authorization: `Bearer ${token}`,
           "Content-Type": "multipart/form-data",
         },
       });
 
-      console.log(response.data);
-      console.log("AÑADIDO");
       reset();
       router.reload();
     } catch (error: any) {
-      console.log("NO AÑADIDO");
       if (error.response.status === 422) {
         const errors = error.response.data.errors;
-        console.log(errors);
+
         setErrorList(Object.values(errors).flat());
-        console.log(errorList);
       } else {
-        console.error(error);
       }
     }
   };

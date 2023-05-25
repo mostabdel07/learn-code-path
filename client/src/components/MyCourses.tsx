@@ -34,9 +34,7 @@ const MyCourses = () => {
           },
         });
 
-        console.log(res.data);
         const data: MyCoursesProps = res.data;
-        console.log(data);
 
         if (res.status === 404) {
           return {
@@ -45,9 +43,7 @@ const MyCourses = () => {
         } else {
           setMyCourses({ data: res.data }); // update the state with the fetched data
         }
-      } catch (error) {
-        console.log(error);
-      }
+      } catch (error) {}
     };
     fetchData();
   }, [apiURL, token, userId]);

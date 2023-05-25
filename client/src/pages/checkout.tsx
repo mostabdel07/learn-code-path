@@ -46,13 +46,20 @@ const CheckoutPage = () => {
     setOpenModalPayment(true);
   };
 
+  /**
+   * Handles the payment process.
+   * Retrieves the course IDs from the cart items and the user ID from local storage.
+   * Sends a POST request to check the availability of the courses for the user.
+   * If the response indicates successful payment, it redirects to the dashboard,
+   * clears the cart, and removes the shopping cart cookie.
+   * If some courses are unavailable, it displays an alert and redirects to the courses page,
+   * clears the cart, and removes the shopping cart cookie.
+   */
   const handlePayment = async () => {
     try {
-      console.log(cartItems);
       const courseIds = cartItems.map((item) => item.id);
-      console.log(courseIds);
+
       const userId = localStorage.getItem("session_id");
-      console.log("session" + userId);
 
       const response = await axios.post(
         `${apiURL}/check_courses`,
@@ -79,11 +86,7 @@ const CheckoutPage = () => {
         clearCart();
         Cookies.remove("shopping-cart");
       }
-
-      console.log(response.data);
-    } catch (error) {
-      console.error(error);
-    }
+    } catch (error) {}
   };
 
   return (

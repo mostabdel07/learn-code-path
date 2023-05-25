@@ -1,11 +1,10 @@
 import Image from "next/image";
 import React from "react";
-import axios from "axios";
+
 import { useAuth } from "@/contexts/auth";
 import Link from "next/link";
 import { useShoppingCart } from "@/contexts/ShoppingCartContext";
-import Modal from "react-modal";
-import { useState } from "react";
+
 import { MdLocalGroceryStore } from "react-icons/md";
 import { ArrowLongRightIcon } from "@heroicons/react/24/outline";
 
@@ -19,14 +18,9 @@ interface Course {
 }
 
 const ProductCard = (props: Course) => {
-  const apiURL = process.env.API_ENDPOINT;
-  const { id, title, img, headline, price, rating } = props;
-
-  const { token } = useAuth();
+  const { id, title, img, price, rating } = props;
 
   const { addToCart } = useShoppingCart();
-
-  const [showModal, setShowModal] = useState(false);
 
   const renderStars = () => {
     const stars = [];
@@ -46,20 +40,6 @@ const ProductCard = (props: Course) => {
     }
     return stars;
   };
-
-  async function handleDelete(id: number) {
-    console.log(id);
-    try {
-      const response = await axios.delete(`${apiURL}/onlineCourse/${id}`, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
-      console.log(response);
-    } catch (error) {
-      console.log(error);
-    }
-  }
 
   return (
     <div className="w-full h-full max-w-sm bg-white rounded-lg shadow-xl transition-all duration-300 hover:drop-shadow-lg">
