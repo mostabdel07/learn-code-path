@@ -11,6 +11,7 @@ import router from "next/router";
 function AddCourseForm() {
   const { token } = useAuth();
   const { data } = useInstructors();
+  const apiURL = process.env.API_ENDPOINT;
 
   const [errorList, setErrorList] = useState<any>([]);
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
@@ -83,16 +84,12 @@ function AddCourseForm() {
       console.log(data);
       console.log(token);
 
-      const response = await axios.post(
-        "http://127.0.0.1:8000/api/courses",
-        formData,
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-            "Content-Type": "multipart/form-data",
-          },
-        }
-      );
+      const response = await axios.post(`${apiURL}/courses`, formData, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+          "Content-Type": "multipart/form-data",
+        },
+      });
 
       console.log(response.data);
       console.log("AÑADIDO");

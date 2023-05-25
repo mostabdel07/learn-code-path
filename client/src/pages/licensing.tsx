@@ -1,7 +1,7 @@
-import DefaultLayout from "@/layouts/DefaultLayout";
 import React from "react";
+import DefaultLayout from "@/layouts/DefaultLayout";
 
-export default function licensingPage() {
+export default function LicensingPage() {
   return (
     <DefaultLayout title="Licencia de software">
       <div className="px-6 py-8 md:px-10 md:py-14">

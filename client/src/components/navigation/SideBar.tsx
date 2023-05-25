@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext } from "react";
 import { Fragment } from "react";
 import { Menu, Transition } from "@headlessui/react";
 import { MdLocalGroceryStore } from "react-icons/md";
@@ -18,6 +18,7 @@ import { AiFillHome } from "react-icons/ai";
 import Link from "next/link";
 import { useShoppingCart } from "@/contexts/ShoppingCartContext";
 import axios from "axios";
+import { UserContext } from "@/contexts/UserContext";
 
 interface User {
   id: number;
@@ -60,18 +61,15 @@ function classNames(...classes: any) {
   return classes.filter(Boolean).join(" ");
 }
 
-function SideBar({ children, title }: any) {
-  const { isAuthenticated, logout, token, userId } = useAuth();
+function SideBar({ children }: any) {
+  const { isAuthenticated, logout } = useAuth();
+  const { openCart, cartItems } = useShoppingCart();
+  const { user } = useContext(UserContext);
   const router = useRouter();
 
-  const [userRole, setUserRole] = useState<string | null>(null);
-
-  const apiURL = process.env.API_ENDPOINT;
-  console.log(userId);
-
   // States
-  const [user, setUser] = useState<User | null>(null);
-
+  const [username, setUsername] = useState("");
+  const [userRole, setUserRole] = useState<string | null>(null);
   const [isOpen, setIsOpen] = useState(false);
 
   const toggleSidebar = () => {
@@ -84,35 +82,12 @@ function SideBar({ children, title }: any) {
   };
 
   useEffect(() => {
-    const role = localStorage.getItem("userRole");
-    setUserRole(role);
-    const fetchData = async () => {
-      try {
-        const res = await axios.get(`${apiURL}/users/${userId}`, {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        });
+    if (user) {
+      setUsername(user.username);
+    }
 
-        if (res.status === 404) {
-          return {
-            notFound: true,
-          };
-        }
-
-        const user: User = res.data;
-        console.log(user);
-        if (user) {
-          setUser(user);
-        }
-      } catch (error) {
-        console.log(error);
-      }
-    };
-    fetchData();
-  }, [apiURL, token, userId]);
-
-  const { openCart, cartItems } = useShoppingCart();
+    setUserRole(localStorage.getItem("userRole"));
+  }, [user]);
 
   return (
     <div>
@@ -143,7 +118,6 @@ function SideBar({ children, title }: any) {
                   sizes="100vw"
                 />
               </Link>
-              {/** TODO: Center */}
             </div>
             <div className="flex flex-grow items-center justify-end">
               <div className="flex items-center ml-3">
@@ -175,10 +149,10 @@ function SideBar({ children, title }: any) {
                 ) : (
                   <Menu as="div" className="relative mr-4">
                     <div>
-                      <Menu.Button className="flex rounded-full text-gray-200 p-1.5 ring-gray-600 ring-2 text-sm focus:outline-none hover:text-ctm-accent focus:text-ctm-accent focus:ring-ctm-accent">
+                      <Menu.Button className="flex rounded-full text-white p-1.5 ring-gray-600 ring-2 text-sm focus:outline-none focus:ring-white">
                         <span className="sr-only">Open user menu</span>
                         <span className="pl-1 pr-3 text-md font-bold m-0">
-                          {user?.username}
+                          {username}
                         </span>
                         <Image
                           className="h-6 w-6 rounded-full"
@@ -248,7 +222,10 @@ function SideBar({ children, title }: any) {
         <div className="flex flex-col justify-between lg:py-8 lg:justify-center space-y-6 lg:space-y-0 h-full px-3 pb-4 overflow-y-auto lg:overflow-y-hidden bg-ctm-dark">
           <ul className="flex-grow lg:flex lg:justify-between pt-14 lg:pt-0 space-y-4 lg:space-y-0 font-orbitron">
             {links.map((item, index) => {
-              if (item.title === "Usuarios" && userRole !== "admin") {
+              if (
+                item.title === "Gestión de usuarios" &&
+                userRole !== "admin"
+              ) {
                 return null;
               }
               return (

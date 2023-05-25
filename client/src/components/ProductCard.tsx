@@ -19,6 +19,7 @@ interface Course {
 }
 
 const ProductCard = (props: Course) => {
+  const apiURL = process.env.API_ENDPOINT;
   const { id, title, img, headline, price, rating } = props;
 
   const { token } = useAuth();
@@ -49,14 +50,11 @@ const ProductCard = (props: Course) => {
   async function handleDelete(id: number) {
     console.log(id);
     try {
-      const response = await axios.delete(
-        `http://127.0.0.1:8000/api/onlineCourse/${id}`,
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      );
+      const response = await axios.delete(`${apiURL}/onlineCourse/${id}`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
       console.log(response);
     } catch (error) {
       console.log(error);

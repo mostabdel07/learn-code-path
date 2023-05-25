@@ -5,7 +5,7 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build",
-    "deploy": "next build && pm2 restart nextjs",
+    "deploy": "next build && pm2 restart client",
     "start": "next start",
     "lint": "next lint"
   },
