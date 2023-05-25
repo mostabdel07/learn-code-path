@@ -16,19 +16,20 @@ export default function licensingPage() {
         </div>
         <h3 className="text-lg font-medium">Acuerdo de Licencia de Software</h3>
         <p>
-          Este Acuerdo de Licencia de Software ("Acuerdo") se celebra entre{" "}
-          <strong>LearnCodePath</strong> ("Licenciante") y la persona o entidad
-          que accede o utiliza el software ("Licenciatario"). Al acceder o
-          utilizar el software, el Licenciatario acepta quedar vinculado por los
-          términos y condiciones establecidos en este Acuerdo.
+          Este Acuerdo de Licencia de Software (&quot;Acuerdo&quot;) se celebra
+          entre <strong>LearnCodePath</strong> (&quot;Licenciante&quot;) y la
+          persona o entidad que accede o utiliza el software
+          (&quot;Licenciatario&quot;). Al acceder o utilizar el software, el
+          Licenciatario acepta quedar vinculado por los términos y condiciones
+          establecidos en este Acuerdo.
         </p>
         <br />
         <h3 className="text-lg font-medium">Concesión de Licencia</h3>
         <p>
           1.1 Licencia: Sujeto a los términos y condiciones de este Acuerdo, el
           Licenciante otorga al Licenciatario una licencia no exclusiva, no
-          transferible para utilizar el software ("Software") únicamente para
-          sus propósitos internos.
+          transferible para utilizar el software (&quot;Software&quot;)
+          únicamente para sus propósitos internos.
           <br /> 1.2 Restricciones: El Licenciatario no deberá, directa o
           indirectamente:
           <br /> a) Modificar, adaptar, traducir, descompilar, desensamblar o

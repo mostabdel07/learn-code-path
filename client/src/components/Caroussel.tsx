@@ -38,7 +38,7 @@ const Slider = () => {
     );
   };
 
-  const goToSlide = (index) => {
+  const goToSlide = (index: number) => {
     setActiveIndex(index);
   };
 

@@ -278,9 +278,9 @@ function SideBar({ children, title }: any) {
             </Link>
             <span className="text-sm text-gray-400">
               © 2023
-              <a href="/" className="ml-1 hover:underline">
+              <Link href="/" className="ml-1 hover:underline">
                 LearnCodePath
-              </a>
+              </Link>
               . Todos Los Derechos Reservados.
             </span>
           </div>
