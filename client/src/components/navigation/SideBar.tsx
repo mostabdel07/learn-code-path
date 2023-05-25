@@ -1,12 +1,11 @@
 import React from "react";
 import { Fragment } from "react";
-import { Disclosure, Menu, Transition } from "@headlessui/react";
-import { MdDashboard, MdLocalGroceryStore } from "react-icons/md";
+import { Menu, Transition } from "@headlessui/react";
+import { MdLocalGroceryStore } from "react-icons/md";
 import Image from "next/image";
 import { useAuth } from "@/contexts/auth";
 import { useRouter } from "next/router";
 import { useState, useEffect } from "react";
-import { BsPeopleFill, BsTerminalFill } from "react-icons/bs";
 import {
   PresentationChartBarIcon,
   Squares2X2Icon,
@@ -14,21 +13,9 @@ import {
   AcademicCapIcon,
   PowerIcon,
 } from "@heroicons/react/24/solid";
-
-import { FaUserPlus, FaUserCog, FaUsers } from "react-icons/fa";
-
-import { AiFillFire, AiFillHome } from "react-icons/ai";
-import { ImBook } from "react-icons/im";
-import {
-  MdFeedback,
-  MdArrowBackIosNew,
-  MdArrowForwardIos,
-} from "react-icons/md";
-import { IoIosBookmarks } from "react-icons/io";
-
-import { motion, useAnimation } from "framer-motion";
+import { FaUsers } from "react-icons/fa";
+import { AiFillHome } from "react-icons/ai";
 import Link from "next/link";
-import DarkModeSwitch from "../utilities/DarkModeSwitch";
 import { useShoppingCart } from "@/contexts/ShoppingCartContext";
 import axios from "axios";
 
@@ -43,17 +30,17 @@ interface User {
 
 const links = [
   {
-    title: "Home Page",
+    title: "Página principal",
     icon: AiFillHome,
     path: "/",
   },
   {
-    title: "Dashboard",
+    title: "Mi panel",
     icon: Squares2X2Icon,
     path: "/dashboard",
   },
   {
-    title: "Online Courses",
+    title: "Cursos en línea",
     icon: PresentationChartBarIcon,
     path: "/courses",
   },
@@ -63,7 +50,7 @@ const links = [
     path: "/bootcamps",
   },
   {
-    title: "Users Management",
+    title: "Gestión de usuarios",
     icon: FaUsers,
     path: "/users",
   },
@@ -90,10 +77,6 @@ function SideBar({ children, title }: any) {
   const toggleSidebar = () => {
     setIsOpen(!isOpen);
   };
-
-  const controls = useAnimation();
-  const controlText = useAnimation();
-  const controlTitleText = useAnimation();
 
   const handleLogout = () => {
     logout();
@@ -142,21 +125,25 @@ function SideBar({ children, title }: any) {
                 data-drawer-toggle="logo-sidebar"
                 aria-controls="logo-sidebar"
                 type="button"
-                className="inline-flex items-center p-2 text-sm text-white brightness-125 rounded-lg hover:bg-gray-600 hover:text-ctm-accent focus:text-ctm-accent"
+                className="inline-flex items-center p-2 text-sm text-white rounded-lg hover:bg-gray-200 hover:text-gray-900"
                 onClick={toggleSidebar}
               >
                 <span className="sr-only">Open sidebar</span>
-                <Squares2X2Icon className="w-6 h-6 animate-spin" />
-                <p className="pl-2 font-medium text-md">Navigation</p>
+                <Squares2X2Icon className="w-7 h-7 animate-spin" />
+                <p className="pl-2 font-orbitron text-md">Navegación</p>
               </button>
             </div>
-            <div className="hidden md:flex-grow md:flex md:align-center md:justify-center ">
-              <a
-                href="/"
-                className="inline-block text-xl font-semibold sm:text-2xl whitespace-nowrap text-white"
-              >
-                Learn Code Path
-              </a>
+            <div className="hidden md:flex-grow md:flex md:align-center md:justify-center ml-[62px]">
+              <Link href="/">
+                <Image
+                  src="/images/logo.png"
+                  alt="logo"
+                  width="115"
+                  height="30"
+                  sizes="100vw"
+                />
+              </Link>
+              {/** TODO: Center */}
             </div>
             <div className="flex flex-grow items-center justify-end">
               <div className="flex items-center ml-3">
@@ -176,13 +163,14 @@ function SideBar({ children, title }: any) {
                 {!isAuthenticated ? (
                   <Link
                     href="/login"
-                    className="px-4 py-1 relative rounded-full group text-white font-medium inline-block mr-6"
+                    className="font-orbitron relative inline-flex items-center justify-start px-4 py-2 overflow-hidden rounded-lg group"
                   >
-                    <span className="absolute top-0 left-0 w-full h-full rounded-full opacity-50 filter blur-sm bg-gradient-to-br from-[#005555] to-ctm-accent"></span>
-                    <span className="h-full w-full inset-0 absolute mt-0.5 ml-0.5 bg-gradient-to-br filter group-active:opacity-0 rounded-full opacity-50 from-[#005555] to-ctm-accent"></span>
-                    <span className="absolute inset-0 w-full h-full transition-all duration-200 ease-out rounded-full shadow-xl bg-gradient-to-br filter group-active:opacity-0 group-hover:blur-sm from-[#005555] to-ctm-accent"></span>
-                    <span className="absolute inset-0 w-full h-full transition duration-200 ease-out rounded-full bg-gradient-to-br from-[#005555] to-ctm-accent"></span>
-                    <span className="relative">Log in</span>
+                    <span className="w-32 h-32 rotate-45 translate-x-12 -translate-y-2 absolute left-0 top-0 bg-white opacity-[3%]"></span>
+                    <span className="absolute top-0 left-0 w-48 h-48 -mt-1 transition-all duration-500 ease-in-out rotate-45 -translate-x-56 -translate-y-24 bg-white opacity-100 group-hover:-translate-x-8"></span>
+                    <span className="relative w-full text-left text-white transition-colors duration-200 ease-in-out group-hover:text-gray-900">
+                      Iniciar sesión
+                    </span>
+                    <span className="absolute inset-0 border-2 border-white rounded-lg"></span>
                   </Link>
                 ) : (
                   <Menu as="div" className="relative mr-4">
@@ -221,7 +209,7 @@ function SideBar({ children, title }: any) {
                               )}
                             >
                               <UserCircleIcon className="h-4 w-4 inline-block mr-2" />
-                              Profile
+                              Mi panel
                             </Link>
                           )}
                         </Menu.Item>
@@ -236,7 +224,7 @@ function SideBar({ children, title }: any) {
                               onClick={handleLogout}
                             >
                               <PowerIcon className="h-4 w-4 inline-block mr-2" />
-                              Log out
+                              Cerrar sesión
                             </a>
                           )}
                         </Menu.Item>
@@ -258,7 +246,7 @@ function SideBar({ children, title }: any) {
         aria-label="Sidebar"
       >
         <div className="flex flex-col justify-between lg:py-8 lg:justify-center space-y-6 lg:space-y-0 h-full px-3 pb-4 overflow-y-auto lg:overflow-y-hidden bg-ctm-dark">
-          <ul className="flex-grow lg:flex lg:justify-between pt-14 lg:pt-0 space-y-4 lg:space-y-0 font-medium">
+          <ul className="flex-grow lg:flex lg:justify-between pt-14 lg:pt-0 space-y-4 lg:space-y-0 font-orbitron">
             {links.map((item, index) => {
               if (item.title === "Usuarios" && userRole !== "admin") {
                 return null;
@@ -267,9 +255,9 @@ function SideBar({ children, title }: any) {
                 <li key={index} className="md:flex-grow">
                   <Link
                     href={item.path}
-                    className="flex items-center lg:justify-center px-2 py-4 lg:py-2 text-white rounded-lg hover:hover:bg-gray-600 hover:animate-pulse"
+                    className="flex items-center lg:justify-center px-2 py-4 lg:py-2 text-white rounded-lg hover:hover:bg-gray-200 hover:text-gray-900 hover:animate-pulse"
                   >
-                    <item.icon className="w-6 h-6 text-ctm-accent brightness-125 transition duration-75 group-hover:text-white" />
+                    <item.icon className="w-6 h-6 transition duration-75" />
                     <span className="ml-3">{item.title}</span>
                   </Link>
                 </li>
@@ -278,9 +266,19 @@ function SideBar({ children, title }: any) {
           </ul>
 
           <div className="pb-4 text-center lg:hidden">
+            <Link href="/" className="flex items-center mb-6">
+              <Image
+                src="/images/logo.png"
+                className="block mx-auto"
+                alt="logo"
+                width="115"
+                height="30"
+                sizes="100vw"
+              />
+            </Link>
             <span className="text-sm text-gray-400">
               © 2023
-              <a href="#" className="ml-1 hover:underline">
+              <a href="/" className="ml-1 hover:underline">
                 LearnCodePath
               </a>
               . Todos Los Derechos Reservados.
@@ -289,7 +287,7 @@ function SideBar({ children, title }: any) {
         </div>
       </aside>
 
-      <div className="mt-14 pt-2 lg:pt-0 text-black bg-ctm-light">
+      <div className="mt-14  text-black bg-ctm-light">
         <div className="min-h-screen min-w-screen">{children}</div>
       </div>
     </div>

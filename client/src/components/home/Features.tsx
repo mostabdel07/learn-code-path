@@ -1,5 +1,5 @@
 import React from "react";
-import { AiOutlineArrowRight } from "react-icons/ai";
+import Image from "next/image";
 
 export default function Features() {
   return (
@@ -8,8 +8,8 @@ export default function Features() {
         <div className="lg:flex lg:items-center">
           <div className="w-full space-y-12 lg:w-1/2 ">
             <div>
-              <h2 className="text-3xl font-semibold capitalize lg:text-4xl text-white">
-                Features
+              <h2 className="text-xl md:text-3xl font-semibold capitalize lg:text-4xl text-white">
+                Características que nos hacen destacar de la competencia
               </h2>
 
               <div className="mt-2">
@@ -38,51 +38,26 @@ export default function Features() {
               </span>
 
               <div className="mt-4 md:mx-4 md:mt-0">
-                <h3 className="text-2xl font-semibold  capitalize text-white">
-                  Get online courses
+                <h3 className="text-lg md:text-2xl font-semibold  capitalize text-white">
+                  Consigue cursos online
                 </h3>
-
-                <p className="mt-3 text-gray-300">
-                  Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                  Provident ab nulla quod dignissimos vel non corrupti doloribus
-                  voluptatum eveniet
+                <p className="text-gray-200 font-semibold italic">
+                  &#10077; Amplia tus conocimientos con nuestros cursos en línea
+                  &#10078;
+                </p>
+                <p className="text-gray-300">
+                  <span className="text-gray-200 font-semibold"></span> <br />
+                  &#10687; Elija entre una amplia gama de cursos impartidos por
+                  expertos del sector.
+                  <br /> &#10687; Explore diversos temas, incluyendo tecnología,
+                  informática, desarrollo personal y más. <br />
                 </p>
               </div>
             </div>
 
             <div className="md:flex md:items-start md:-mx-4">
               <span className="inline-block p-2 text-blue-500 bg-blue-100 rounded-xl md:mx-4 dark:text-white dark:bg-blue-500">
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  className="w-6 h-6"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke="currentColor"
-                >
-                  <path
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    stroke-width="2"
-                    d="M12 6V4m0 2a2 2 0 100 4m0-4a2 2 0 110 4m-6 8a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4m6 6v10m6-2a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4"
-                  />
-                </svg>
-              </span>
-
-              <div className="mt-4 md:mx-4 md:mt-0">
-                <h3 className="text-2xl font-semibold  capitalize text-white">
-                  Suscription to bootcamps
-                </h3>
-
-                <p className="mt-3 text-gray-300">
-                  Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                  Provident ab nulla quod dignissimos vel non corrupti doloribus
-                  voluptatum eveniet
-                </p>
-              </div>
-            </div>
-
-            <div className="md:flex md:items-start md:-mx-4">
-              <span className="inline-block p-2 text-blue-500 bg-blue-100 rounded-xl md:mx-4 dark:text-white dark:bg-blue-500">
+                {" "}
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   className="w-6 h-6"
@@ -106,24 +81,78 @@ export default function Features() {
               </span>
 
               <div className="mt-4 md:mx-4 md:mt-0">
-                <h1 className="text-2xl font-semibold capitalize text-white">
-                  Friendly to use interface
-                </h1>
+                <h3 className="text-lg md:text-2xl font-semibold  capitalize text-white">
+                  Suscripción a los bootcamps
+                </h3>
+                <p className="text-gray-200 font-semibold italic">
+                  &#10077; Acelera tu aprendizaje con nuestros bootcamps
+                  &#10078;
+                </p>
+                <p className="text-gray-300">
+                  <br />
+                  &#10687; Sumérgete en programas intensivos y prácticos de
+                  bootcamps.
+                  <br />
+                  &#10687; Aprenda de instructores experimentados con
+                  conocimientos del mundo real. <br />
+                  &#10687; Domine los conocimientos más demandados en sólo unas
+                  semanas.
+                  <br />
+                  &#10687; Únase a una comunidad de estudiantes y profesionales
+                  del sector. <br />
+                  &#10687; Benefíciese de oportunidades exclusivas para
+                  establecer conexiones con el sector.
+                </p>
+              </div>
+            </div>
 
-                <p className="mt-3 text-gray-300">
-                  Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                  Provident ab nulla quod dignissimos vel non corrupti doloribus
-                  voluptatum eveniet
+            <div className="md:flex md:items-start md:-mx-4">
+              <span className="inline-block p-2 text-blue-500 bg-blue-100 rounded-xl md:mx-4 dark:text-white dark:bg-blue-500">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  className="w-6 h-6"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    d="M12 6V4m0 2a2 2 0 100 4m0-4a2 2 0 110 4m-6 8a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4m6 6v10m6-2a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4"
+                  />
+                </svg>
+              </span>
+
+              <div className="mt-4 md:mx-4 md:mt-0">
+                <h1 className="text-lg md:text-2xl font-semibold capitalize text-white">
+                  Interfaz fácil de usar
+                </h1>
+                <p className="text-gray-200 font-semibold italic">
+                  &#10077; Experiencia de aprendizaje sin fisuras, en cualquier
+                  momento y en cualquier lugar &#10078;
+                </p>
+                <p className="text-gray-300">
+                  <br />
+                  &#10687; Disfrute de una interfaz fácil de usar diseñada para
+                  facilitar la navegación. <br />
+                  &#10687; Acceda a su panel de control para seguir su progreso
+                  y gestionar los cursos. <br />
+                  &#10687; El diseño adaptable garantiza una experiencia fluida
+                  en todos los dispositivos.
                 </p>
               </div>
             </div>
           </div>
 
           <div className="hidden lg:flex lg:items-center lg:w-1/2 lg:justify-center">
-            <img
+            <Image
               className="w-[28rem] h-[28rem] object-cover xl:w-[34rem] xl:h-[34rem] rounded-full"
-              src="https://images.unsplash.com/photo-1507238691740-187a5b1d37b8?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=755&q=80"
-              alt=""
+              src="/images/learning.jpg"
+              alt="learning"
+              width="0"
+              height="0"
+              sizes="100vw"
             />
           </div>
         </div>

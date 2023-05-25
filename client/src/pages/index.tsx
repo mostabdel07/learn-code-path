@@ -1,12 +1,8 @@
-import Hero from "@/components/Hero";
-import HomeLayout from "@/layouts/HomeLayout";
-import Contact from "@/components/home/Contact";
 import About from "@/components/home/About";
-import Gallery from "@/components/home/Gallery";
 import Features from "@/components/home/Features";
-import { useAuth } from "@/contexts/auth";
 import Header from "@/components/home/Header";
 import DefaultLayout from "@/layouts/DefaultLayout";
+import Caroussel from "@/components/Caroussel";
 
 export default function HomePage() {
   return (
@@ -14,8 +10,7 @@ export default function HomePage() {
       <Header />
       <About />
       <Features />
-      {/* <Gallery /> */}
-      {/* <Contact /> */}
+      <Caroussel />
     </DefaultLayout>
   );
 }
