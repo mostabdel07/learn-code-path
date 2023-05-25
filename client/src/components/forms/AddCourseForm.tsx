@@ -5,7 +5,6 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import axios from "axios";
 import { useAuth } from "@/contexts/auth";
 import useInstructors from "@/hooks/useInstructors";
-import SelectMenu from "../SelectMenu";
 import router from "next/router";
 
 function AddCourseForm() {

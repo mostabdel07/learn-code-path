@@ -5,7 +5,6 @@ import ProgressBar from "@/components/ProgressBar";
 import useOnlineCourses from "@/hooks/useOnlineCourses";
 import axios from "axios";
 import { useAuth } from "@/contexts/auth";
-import TopBar from "@/components/navigation/TopBar";
 import router from "next/router";
 import Cookies from "js-cookie";
 import DefaultLayout from "@/layouts/DefaultLayout";
