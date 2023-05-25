@@ -110,13 +110,12 @@ class OnlineCourseController extends Controller
         if (!$request->user()->hasRole('admin')) {
             return response()->json(['message' => 'Acceso denegado'], 403);
         }
-    
-        $onlineCourse = OnlineCourse::find($id);
+
     
         $validatedData = $request->validate([
-            'title' => 'string|max:100|unique:online_courses,title,'.$onlineCourse->id,
+            'title' => 'string|max:100|unique:online_courses',
             'price' => 'numeric|min:0|max:1000',
-            'img' => 'image',
+            // 'img' => 'image',
             'headline' => 'string|max:150',
             'instructor_id' => 'numeric',
         ], [
@@ -126,20 +125,21 @@ class OnlineCourseController extends Controller
             'price.numeric' => 'El campo precio debe ser un valor numérico.',
             'price.min' => 'El campo precio debe ser mayor o igual a cero.',
             'price.max' => 'El campo precio no debe exceder los 1000.',
-            'img.image' => 'El campo imagen debe ser una imagen válida.',
+            // 'img.image' => 'El campo imagen debe ser una imagen válida.',
             'headline.string' => 'El campo titular debe ser una cadena de caracteres.',
             'headline.max' => 'El campo titular no debe exceder los 150 caracteres.',
             'instructor_id.numeric' => 'El campo instructor debe ser un valor numérico.',
         ]);
     
-        if ($request->hasFile('img')) {
-            // Si se proporciona una nueva imagen, almacenarla y actualizar la ruta de la imagen
-            $imagePath = $request->file('img')->store('public/images');
-            $imageName = basename($imagePath);
-            $imageUrl = asset('storage/images/' . $imageName);
-            $validatedData['img'] = $imageUrl;
+        // if ($request->hasFile('img')) {
+        //     // Si se proporciona una nueva imagen, almacenarla y actualizar la ruta de la imagen
+        //     $imagePath = $request->file('img')->store('public/images');
+        //     $imageName = basename($imagePath);
+        //     $imageUrl = asset('storage/images/' . $imageName);
+        //     $validatedData['img'] = $imageUrl;
 
-        }
+        // }
+        $onlineCourse = OnlineCourse::find($id);
     
         $onlineCourse->update($validatedData);
     

@@ -96,7 +96,7 @@ const CoursePage = ({ course }: CoursePageProps) => {
     instructor_id: course.instructor_id,
     instructor_name: course.instructor_name,
     price: course.price,
-    img: course.img,
+    // img: course.img,
     created_at: course.created_at,
     updated_at: course.updated_at,
   });
@@ -168,21 +168,22 @@ const CoursePage = ({ course }: CoursePageProps) => {
     if (editCourse.price !== course.price) {
       changedProperties.price = editCourse.price;
     }
-    if (editCourse.img !== course.img) {
-      changedProperties.img = editCourse.img;
-    }
-    console.log("changed" + changedProperties.img);
+    // if (editCourse.img !== course.img) {
+    //   changedProperties.img = editCourse.img;
+    // }
+    // console.log("changed" + changedProperties.img);
 
     try {
-      const formData = new FormData();
-      formData.append("img", changedProperties.img);
-
-      const response = await axios.put(`${apiURL}/courses/${id}`, formData, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-          "Content-Type": "multipart/form-data",
-        },
-      });
+      const response = await axios.put(
+        `${apiURL}/courses/${id}`,
+        changedProperties,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+      // formData.append("img", changedProperties.img);
 
       console.log(response);
       if (response.status === 204) {
