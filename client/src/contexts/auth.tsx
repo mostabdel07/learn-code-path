@@ -26,8 +26,15 @@ export const useAuth = () => useContext(AuthContext);
 export const AuthProvider: React.FC<AuthContextProps> = ({
   children,
 }: AuthContextProps) => {
-  const { token, saveToken, clearToken, userId, saveUserID, clearUserID } =
-    useAuthToken();
+  const {
+    token,
+    saveToken,
+    clearToken,
+    userId,
+    saveUserID,
+    clearUserID,
+    clearUserRole,
+  } = useAuthToken();
   const [isAuthenticated, setIsAuthenticated] = useState<boolean>(
     Boolean(token)
   );
@@ -41,6 +48,7 @@ export const AuthProvider: React.FC<AuthContextProps> = ({
   const logout = () => {
     clearToken();
     clearUserID();
+    clearUserRole();
     setIsAuthenticated(false);
   };
 

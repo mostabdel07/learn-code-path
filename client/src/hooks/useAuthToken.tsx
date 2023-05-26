@@ -37,5 +37,17 @@ export const useAuthToken = () => {
     localStorage.removeItem("session_id");
   };
 
-  return { token, saveToken, clearToken, userId, saveUserID, clearUserID };
+  const clearUserRole = () => {
+    localStorage.removeItem("userRole");
+  };
+
+  return {
+    token,
+    saveToken,
+    clearToken,
+    userId,
+    saveUserID,
+    clearUserID,
+    clearUserRole,
+  };
 };
