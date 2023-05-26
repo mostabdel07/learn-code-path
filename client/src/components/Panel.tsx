@@ -34,6 +34,7 @@ export default function Panel(props: Props) {
 
   // Filters
   const [searchTerm, setSearchTerm] = useState<string>("");
+  const [selectedRating, setSelectedRating] = useState("");
   const [minPrice, setMinPrice] = useState<number>(0);
   const [maxPrice, setMaxPrice] = useState<number>(100);
 
@@ -46,6 +47,18 @@ export default function Panel(props: Props) {
   function handleCloseSlideOver() {
     setOpenSlideOver(false);
   }
+
+  const handleRatingChange = (event) => {
+    setSelectedRating(event.target.value);
+  };
+
+  const handleMinPriceChange = (event) => {
+    setMinPrice(parseFloat(event.target.value));
+  };
+
+  const handleMaxPriceChange = (event) => {
+    setMaxPrice(parseFloat(event.target.value));
+  };
 
   if (!data || loading) {
     return <div>Loading...</div>;
@@ -60,7 +73,9 @@ export default function Panel(props: Props) {
     const priceMatch =
       parseFloat(course.price) >= minPrice &&
       parseFloat(course.price) <= maxPrice;
-    return titleMatch && priceMatch;
+    const ratingMatch =
+      selectedRating === "" || course.rating === parseInt(selectedRating);
+    return titleMatch && priceMatch && ratingMatch;
   });
 
   return (
@@ -68,8 +83,8 @@ export default function Panel(props: Props) {
       <div className="sm:flex sm:items-center sm:justify-between">
         <div>
           <div className="flex items-center">
-            <span className="px-3 py-1 text-xs text-blue-600 bg-blue-100 rounded-full dark:bg-gray-800 dark:text-blue-400">
-              {totalCourses} courses
+            <span className="px-3 py-1 text-xs text-blue-600 bg-blue-100 rounded-full">
+              {totalCourses} Total cursos
             </span>
           </div>
         </div>
@@ -78,7 +93,7 @@ export default function Panel(props: Props) {
           <div className="flex items-center mt-4 gap-x-3">
             <button
               onClick={handleOpenSlideOver}
-              className="flex items-center justify-center w-1/2 px-5 py-2 text-sm tracking-wide text-white transition-colors duration-200 bg-blue-500 rounded-lg shrink-0 sm:w-auto gap-x-2 hover:bg-blue-600 dark:hover:bg-blue-500 dark:bg-blue-600"
+              className="flex items-center justify-center w-1/2 px-5 py-2 text-sm tracking-wide text-white transition-colors duration-200 bg-blue-500 rounded-lg shrink-0 sm:w-auto gap-x-2 hover:bg-blue-600 hover:bg-blue-500 bg-blue-600"
             >
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -112,28 +127,56 @@ export default function Panel(props: Props) {
 
       <div className="mt-6 md:flex md:items-center md:justify-between">
         <div className="flex items-center justify-center gap-3">
-          <label>Precio mínimo:</label>
-          <input
-            type="number"
-            placeholder="Min price"
-            value={minPrice !== 0 ? minPrice : ""}
-            onChange={(event) =>
-              setMinPrice(
-                event.target.value !== "" ? parseFloat(event.target.value) : 0
-              )
-            }
-          />
-          <label>Precio máximo:</label>
-          <input
-            type="number"
-            placeholder="Max price"
-            value={maxPrice !== 100 ? maxPrice : ""}
-            onChange={(event) =>
-              setMaxPrice(
-                event.target.value !== "" ? parseFloat(event.target.value) : 100
-              )
-            }
-          />
+          <div className="w-1/2">
+            <label htmlFor="price" className="text-gray-700">
+              Precio mínimo: {minPrice} &euro;
+            </label>
+            <input
+              type="range"
+              min="0"
+              name="price"
+              max="100"
+              value={minPrice}
+              className="w-full h-2 bg-blue-100 appearance-none"
+              onChange={handleMinPriceChange}
+            />
+          </div>
+          <div className="w-1/2">
+            <label htmlFor="price" className="text-gray-700">
+              Precio máximo: {maxPrice} &euro;
+            </label>
+            <input
+              type="range"
+              min="0"
+              name="price"
+              max="100"
+              value={maxPrice}
+              className="w-full h-2 bg-blue-100 appearance-none"
+              onChange={handleMaxPriceChange}
+            />
+          </div>
+        </div>
+
+        <div className="flex">
+          <label
+            htmlFor="rating-filter"
+            className="inline-block mr-2 text-sm text-gray-900"
+          >
+            Filtrar por valoración:
+          </label>
+          <select
+            id="rating-filter"
+            className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg  focus:border-blue-500 inline-block w-full p-2.5  placeholder-gray-400"
+            value={selectedRating}
+            onChange={handleRatingChange}
+          >
+            <option value="">Cualquiera</option>
+            <option value="1">1 estrella(s)</option>
+            <option value="2">2 estrella(s)</option>
+            <option value="3">3 estrella(s)</option>
+            <option value="4">4 estrella(s)</option>
+            <option value="5">5 estrella(s)</option>
+          </select>
         </div>
 
         <div className="relative flex items-center mt-4 md:mt-0">
@@ -144,7 +187,7 @@ export default function Panel(props: Props) {
               viewBox="0 0 24 24"
               strokeWidth="1.5"
               stroke="currentColor"
-              className="w-5 h-5 mx-3 text-gray-400 dark:text-gray-600"
+              className="w-5 h-5 mx-3 text-gray-400 "
             >
               <path
                 strokeLinecap="round"
@@ -156,8 +199,8 @@ export default function Panel(props: Props) {
 
           <input
             type="text"
-            placeholder="Search course"
-            className="block w-full py-1.5 pr-5 text-gray-700 bg-white border border-gray-200 rounded-lg md:w-80 placeholder-gray-400/70 pl-11 rtl:pr-11 rtl:pl-5 dark:bg-gray-900 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 dark:focus:border-blue-300 focus:ring-blue-300 focus:outline-none focus:ring focus:ring-opacity-40"
+            placeholder="Buscar curso"
+            className="block w-full py-1.5 pr-5 text-gray-700 bg-white border border-gray-200 rounded-lg md:w-80 placeholder-gray-400/70 pl-11 rtl:pr-11 rtl:pl-5 focus:border-blue-400 focus:ring-blue-300 focus:outline-none focus:ring focus:ring-opacity-40"
             value={searchTerm}
             onChange={(event) => setSearchTerm(event.target.value)}
           />

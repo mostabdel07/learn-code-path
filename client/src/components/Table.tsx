@@ -47,9 +47,7 @@ export default function Table(props: Props) {
     const usernameMatch = user.username
       .toLowerCase()
       .includes(searchTerm.toLowerCase());
-    const roleMatch =
-      selectedRole === "all" ||
-      data.some((user) => user.role_name === selectedRole);
+    const roleMatch = selectedRole === "all" || user.role_name === selectedRole;
     return usernameMatch && roleMatch;
   });
 
@@ -125,6 +123,22 @@ export default function Table(props: Props) {
                   onClick={() => setSelectedRole("user")}
                 >
                   User
+                </button>
+              </div>
+
+              <div>
+                <p>Ordenar por:</p>
+                <button
+                  className="px-2 py-1 text-xs font-medium text-gray-600 transition-colors duration-200 sm:text-sm dark:hover:bg-gray-800 dark:text-gray-300 hover:bg-gray-100"
+                  onClick={() => setSortOrder("asc")}
+                >
+                  Asc
+                </button>
+                <button
+                  className="px-2 py-1 text-xs font-medium text-gray-600 transition-colors duration-200 sm:text-sm dark:hover:bg-gray-800 dark:text-gray-300 hover:bg-gray-100"
+                  onClick={() => setSortOrder("desc")}
+                >
+                  Desc
                 </button>
               </div>
 
