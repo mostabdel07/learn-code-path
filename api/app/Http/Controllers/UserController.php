@@ -7,14 +7,16 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\Rules;
 use Illuminate\Support\Facades\Auth;
+use Spatie\Permission\Models\Role;
+
 
 
 class UserController extends Controller
 {
-    // public function __construct()
-    // {
-    //     $this->middleware('auth:api');
-    // }
+    public function __construct()
+    {
+        $this->middleware('auth:api');
+    }
 
     /**
      * Display a listing of the resource.
@@ -61,6 +63,8 @@ class UserController extends Controller
         if (!$user) {
             return response()->json(['error' => 'User not found'], 404);
         }
+
+        $user->role_name = $user->roles->first()->name ?? null;
     
         return response()->json($user);
     }
@@ -78,17 +82,24 @@ class UserController extends Controller
         $validatedData = $request->validate([
             'username' => 'string|max:255',
             'email' => 'string|email|max:255|unique:users,email',
-            // 'password' => ['string', 'min:8', 'regex:/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).+$/'],
+            'role_name' => 'string'
         ]);
 
-
-            // $validatedData['password'] = Hash::make($validatedData['password']);
-            // $validatedData['role_id'] = 3;
-
-   
-        
         $user = User::find($id);
         $user->update($validatedData);
+
+        if ($validatedData['role_name'] === 'admin') {
+            $role = Role::findByName('admin');
+            $user->syncRoles($role);
+        } elseif ($validatedData['role_name'] === 'user') {
+            $role = Role::findByName('user');
+            $user->syncRoles($role);
+        } else {
+            return response()->json(['error' => 'Invalid role_name'], 400);
+        }
+   
+        
+
     
         return response()->json($user, 204);
     }

@@ -34,6 +34,7 @@ const UsersPage = () => {
           return response.json();
         })
         .then((actualData) => {
+          console.log("data", JSON.stringify(actualData, null, 2));
           setData(actualData);
           setError(null);
         })

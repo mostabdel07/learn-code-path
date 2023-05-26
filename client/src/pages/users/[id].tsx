@@ -13,7 +13,7 @@ interface User {
   id: number;
   username: string;
   email: string;
-  role_id: number;
+  role_name: string;
   created_at: string;
   updated_at: string;
 }
@@ -80,6 +80,7 @@ const UserPage = ({ user }: UserPageProps) => {
   const [editUser, setEditUser] = useState<Partial<User>>({
     username: user.username,
     email: user.email,
+    role_name: user.role_name,
   });
 
   /**
@@ -88,6 +89,8 @@ const UserPage = ({ user }: UserPageProps) => {
    */
   function handleInputChange(event: any) {
     const { name, value } = event.target;
+    console.log("Name:", name);
+    console.log("Value:", value);
     setEditUser((prevUser) => ({ ...prevUser, [name]: value }));
   }
 
@@ -111,6 +114,11 @@ const UserPage = ({ user }: UserPageProps) => {
     }
     if (editUser.email !== user.email) {
       changedProperties.email = editUser.email;
+    }
+    if (editUser.role_name !== user.role_name) {
+      console.log("editUser.role_name" + editUser.role_name);
+      console.log("user.role_name" + user.role_name);
+      changedProperties.role_name = editUser.role_name;
     }
 
     try {
@@ -260,20 +268,22 @@ const UserPage = ({ user }: UserPageProps) => {
                     />
                   </div>
                   <div className="mb-6">
-                    {/* Traer el nombre del role no el ID */}
                     <label
-                      htmlFor="subject"
+                      htmlFor="role"
                       className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
                     >
                       Rol
                     </label>
-                    <input
-                      type="text"
-                      id="subject"
-                      className="disabled:text-gray-500 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                      value={user.role_id}
-                      disabled
-                    />
+                    <select
+                      id="role"
+                      name="role_name"
+                      value={editUser.role_name}
+                      onChange={handleInputChange}
+                      className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                    >
+                      <option value="user">Usuario</option>
+                      <option value="admin">Administrador</option>
+                    </select>
                   </div>
                   <button
                     type="button"
