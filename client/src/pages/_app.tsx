@@ -4,6 +4,7 @@ import { AuthProvider } from "@/contexts/AuthContext";
 import { ShoppingCartProvider } from "@/contexts/ShoppingCartContext";
 import Modal from "react-modal";
 import { useEffect, useState } from "react";
+import Loader from "@/components/utilities/Loader";
 
 Modal.setAppElement("#__next");
 
@@ -16,5 +17,7 @@ export default function App({ Component, pageProps }: AppProps) {
         <Component {...pageProps} />{" "}
       </ShoppingCartProvider>
     </AuthProvider>
-  ) : null;
+  ) : (
+    <Loader />
+  );
 }

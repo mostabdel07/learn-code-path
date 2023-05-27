@@ -4,7 +4,7 @@ import CartItem from "@/components/cart/CartItem";
 import ProgressBar from "@/components/ProgressBar";
 import useOnlineCourses from "@/hooks/useOnlineCourses";
 import axios from "axios";
-import { useAuth } from "@/contexts/auth";
+import { useAuth } from "@/contexts/AuthContext";
 import router from "next/router";
 import Cookies from "js-cookie";
 import DefaultLayout from "@/layouts/DefaultLayout";
@@ -14,7 +14,13 @@ import { loadStripe } from "@stripe/stripe-js";
 import PaymentForm from "@/components/forms/PaymentForm";
 
 const CheckoutPage = () => {
-  const { token } = useAuth();
+  // API fetch params
+  const { session } = useAuth();
+  const token = session?.token;
+  const userId = session?.user.id;
+  const apiURL = process.env.API_ENDPOINT;
+  // const stripePublicToken = process.env.STRIPE_PUBLIC_TOKEN;
+
   const { cartItems, clearCart } = useShoppingCart();
   const { data, loading, error } = useOnlineCourses();
 
@@ -32,9 +38,6 @@ const CheckoutPage = () => {
     }
     return total;
   }, 0);
-
-  const apiURL = process.env.API_ENDPOINT;
-  const stripePublicToken = process.env.STRIPE_PUBLIC_TOKEN;
 
   const stripePromise = loadStripe(
     "pk_test_51NAsfLHl9Ohy28dNJrBgiZ1oD6451u2cEplB8076BjTq3CBfVOu6bVAUtX8dt9BdcoFOD3AVNHIBBQiyJEtPsr7200LaScvl3J"
@@ -58,8 +61,6 @@ const CheckoutPage = () => {
   const handlePayment = async () => {
     try {
       const courseIds = cartItems.map((item) => item.id);
-
-      const userId = localStorage.getItem("session_id");
 
       const response = await axios.post(
         `${apiURL}/check_courses`,

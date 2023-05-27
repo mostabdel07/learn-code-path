@@ -1,13 +1,13 @@
 import DefaultLayout from "@/layouts/DefaultLayout";
 import Image from "next/image";
 import { useRouter } from "next/router";
-import { GetServerSideProps } from "next";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import SlideOver from "@/components/utilities/SlideOver";
 import Modal from "@/components/utilities/Modal";
 import { useAuth } from "@/contexts/AuthContext";
 import withAuth from "@/components/withAuth";
+import Loader from "@/components/utilities/Loader";
 
 interface User {
   id: number;
@@ -18,67 +18,78 @@ interface User {
   updated_at: string;
 }
 
-interface UserPageProps {
-  user: User;
-}
-
-export const getServerSideProps: GetServerSideProps<UserPageProps> = async (
-  context
-) => {
-  const { id } = context.params ?? {};
-
-  const token = context.req.headers.cookie?.replace(
-    /(?:(?:^|.*;\s*)authToken\s*\=\s*([^;]*).*$)|^.*$/,
-    "$1"
-  );
-  const apiURL = process.env.API_ENDPOINT;
-
-  if (!id) {
-    return {
-      notFound: true,
-    };
-  }
-
-  try {
-    const res = await axios.get(`${apiURL}/users/${id}`, {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    });
-
-    if (res.status === 404) {
-      return {
-        notFound: true,
-      };
-    }
-
-    const user = res.data;
-
-    return {
-      props: {
-        user,
-      },
-    };
-  } catch (error) {
-    return {
-      notFound: true,
-    };
-  }
-};
-
-const UserPage = ({ user }: UserPageProps) => {
+const UserPage = () => {
   const router = useRouter();
+  const id = router.query.id;
 
   // API fetch params
   const { session } = useAuth();
   const token = session?.token;
   const apiURL = process.env.API_ENDPOINT;
 
-  const [editUser, setEditUser] = useState<Partial<User>>({
-    username: user.username,
-    email: user.email,
-    role_name: user.role_name,
-  });
+  const [user, setUser] = useState<User | null>(null);
+  const [loading, setLoading] = useState<boolean>(true);
+  const [error, setError] = useState<string | null>(null);
+
+  const [openSlideOver, setOpenSlideOver] = useState(false);
+  const [openModalEdit, setOpenModalEdit] = useState(false);
+  const [openModalDelete, setOpenModalDelete] = useState(false);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      if (token) {
+        try {
+          const res = await axios.get(`${apiURL}/users/${id}`, {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          });
+
+          if (res.status === 404) {
+            return {
+              notFound: true,
+            };
+          }
+
+          const user = res.data;
+          setUser(user);
+        } catch (error: any) {
+          // Todo any
+          setError(error.message);
+          setUser(null);
+        } finally {
+          setLoading(false);
+        }
+      }
+    };
+    fetchData();
+  }, [apiURL, id, token]);
+
+  const [editUser, setEditUser] = useState<Partial<User>>(
+    user
+      ? {
+          username: user.username,
+          email: user.email,
+          role_name: user.role_name,
+        }
+      : {}
+  );
+
+  function handleOpenSlideOver() {
+    setOpenSlideOver(true);
+  }
+
+  function handleCloseSlideOver() {
+    setOpenSlideOver(false);
+  }
+
+  function handleCloseModalEdit() {
+    setOpenModalEdit(false);
+  }
+
+  function handleCloseModalDelete() {
+    setOpenModalDelete(false);
+  }
 
   /**
    * Handles the input change event and updates the `editUser` state based on the input's name and value.
@@ -106,15 +117,15 @@ const UserPage = ({ user }: UserPageProps) => {
 
     // Identify the changed properties
     let changedProperties: Partial<User> = {};
-    if (editUser.username !== user.username) {
+    if (editUser.username !== user?.username) {
       changedProperties.username = editUser.username;
     }
-    if (editUser.email !== user.email) {
+    if (editUser.email !== user?.email) {
       changedProperties.email = editUser.email;
     }
-    if (editUser.role_name !== user.role_name) {
+    if (editUser.role_name !== user?.role_name) {
       console.log("editUser.role_name" + editUser.role_name);
-      console.log("user.role_name" + user.role_name);
+      console.log("user.role_name" + user?.role_name);
       changedProperties.role_name = editUser.role_name;
     }
 
@@ -147,28 +158,8 @@ const UserPage = ({ user }: UserPageProps) => {
     } catch (error) {}
   }
 
-  const [openSlideOver, setOpenSlideOver] = useState(false);
-  const [openModalEdit, setOpenModalEdit] = useState(false);
-  const [openModalDelete, setOpenModalDelete] = useState(false);
-
-  function handleOpenSlideOver() {
-    setOpenSlideOver(true);
-  }
-
-  function handleCloseSlideOver() {
-    setOpenSlideOver(false);
-  }
-
-  function handleCloseModalEdit() {
-    setOpenModalEdit(false);
-  }
-
-  function handleCloseModalDelete() {
-    setOpenModalDelete(false);
-  }
-
-  if (!user || router.isFallback) {
-    return <div>Loading...</div>;
+  if (loading || !user) {
+    return <Loader />;
   }
 
   return (
