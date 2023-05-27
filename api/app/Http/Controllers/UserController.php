@@ -96,16 +96,21 @@ class UserController extends Controller
 
         $user->update($validatedData);
 
-        if ($validatedData['role_name'] === 'admin') {
-            $role = Role::findByName('admin');
-            $user->syncRoles($role);
-        } elseif ($validatedData['role_name'] === 'user') {
-            $role = Role::findByName('user');
-            $user->syncRoles($role);
-        } else {
-            return response()->json(['error' => 'Invalid role_name'], 400);
-        }
+        if (array_key_exists('role_name', $validatedData)) {
+            $roleName = $validatedData['role_name'];
     
+            if ($roleName !== $user->role_name) {
+                if ($roleName === 'admin') {
+                    $role = Role::findByName('admin');
+                    $user->syncRoles($role);
+                } elseif ($roleName === 'user') {
+                    $role = Role::findByName('user');
+                    $user->syncRoles($role);
+                } else {
+                    return response()->json(['error' => 'Invalid role_name'], 400);
+                }
+            }
+        }
         return response()->json($user, 204);
     }
 
