@@ -6,6 +6,7 @@ import axios from "axios";
 import router from "next/router";
 import { useAuth } from "@/contexts/AuthContext";
 import Loader from "@/components/utilities/Loader";
+import withAuth from "@/components/withAuth";
 
 type Course = {
   id: number;
@@ -236,4 +237,4 @@ const BootcampsPage = () => {
   );
 };
 
-export default BootcampsPage;
+export default withAuth(BootcampsPage);

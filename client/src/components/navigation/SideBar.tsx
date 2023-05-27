@@ -100,20 +100,84 @@ function SideBar({ children }: any) {
             </div>
             <div className="flex flex-grow items-center justify-end">
               <div className="flex items-center ml-3">
-                <button
-                  type="button"
-                  className="p-1 mr-4 text-white  hover:text-gray-300"
-                  onClick={openCart}
-                >
-                  <MdLocalGroceryStore className="h-6 w-6" aria-hidden="true" />
-                  {cartItems.length > 0 && (
-                    <span className="flex absolute -mt-5 ml-4">
-                      <span className="animate-ping absolute inline-flex h-3 w-3 rounded-full bg-red-400 bottom-2 opacity-75"></span>
-                      <span className="relative inline-flex rounded-full h-3 w-3 bg-red-500 bottom-2"></span>
-                    </span>
-                  )}
-                </button>
-                {!isAuthenticated ? (
+                {isAuthenticated ? (
+                  <>
+                    <button
+                      type="button"
+                      className="p-1 mr-4 text-white  hover:text-gray-300"
+                      onClick={openCart}
+                    >
+                      <MdLocalGroceryStore
+                        className="h-6 w-6"
+                        aria-hidden="true"
+                      />
+                      {cartItems.length > 0 && (
+                        <span className="flex absolute -mt-5 ml-4">
+                          <span className="animate-ping absolute inline-flex h-3 w-3 rounded-full bg-red-400 bottom-2 opacity-75"></span>
+                          <span className="relative inline-flex rounded-full h-3 w-3 bg-red-500 bottom-2"></span>
+                        </span>
+                      )}
+                    </button>
+                    <Menu as="div" className="relative mr-4">
+                      <div>
+                        <Menu.Button className="flex rounded-full text-white p-1.5 ring-gray-600 ring-2 text-sm focus:outline-none focus:ring-white">
+                          <span className="sr-only">Open user menu</span>
+                          <span className="pl-1 pr-3 text-md font-bold m-0">
+                            {session?.user.username}
+                          </span>
+                          <Image
+                            className="h-6 w-6 rounded-full"
+                            src="/images/avatar-img.png"
+                            alt=""
+                            height="256"
+                            width="256"
+                          />
+                        </Menu.Button>
+                      </div>
+                      <Transition
+                        as={Fragment}
+                        enter="transition ease-out duration-100"
+                        enterFrom="transform opacity-0 scale-95"
+                        enterTo="transform opacity-100 scale-100"
+                        leave="transition ease-in duration-75"
+                        leaveFrom="transform opacity-100 scale-100"
+                        leaveTo="transform opacity-0 scale-95"
+                      >
+                        <Menu.Items className="absolute right-0 z-10 mt-2 w-48 origin-top-right rounded-md bg-white py-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
+                          <Menu.Item>
+                            {({ active }) => (
+                              <Link
+                                href="/dashboard"
+                                className={classNames(
+                                  active ? "bg-gray-100" : "",
+                                  "block px-4 py-2 text-sm text-gray-700"
+                                )}
+                              >
+                                <UserCircleIcon className="h-4 w-4 inline-block mr-2" />
+                                Mi panel
+                              </Link>
+                            )}
+                          </Menu.Item>
+                          <Menu.Item>
+                            {({ active }) => (
+                              <a
+                                href="#"
+                                className={classNames(
+                                  active ? "bg-gray-100" : "",
+                                  "block px-4 py-2 text-sm text-gray-700"
+                                )}
+                                onClick={handleLogout}
+                              >
+                                <PowerIcon className="h-4 w-4 inline-block mr-2" />
+                                Cerrar sesión
+                              </a>
+                            )}
+                          </Menu.Item>
+                        </Menu.Items>
+                      </Transition>
+                    </Menu>
+                  </>
+                ) : (
                   <Link
                     href="/login"
                     className="font-orbitron relative inline-flex items-center justify-start px-4 py-2 overflow-hidden rounded-lg group"
@@ -125,65 +189,6 @@ function SideBar({ children }: any) {
                     </span>
                     <span className="absolute inset-0 border-2 border-white rounded-lg"></span>
                   </Link>
-                ) : (
-                  <Menu as="div" className="relative mr-4">
-                    <div>
-                      <Menu.Button className="flex rounded-full text-white p-1.5 ring-gray-600 ring-2 text-sm focus:outline-none focus:ring-white">
-                        <span className="sr-only">Open user menu</span>
-                        <span className="pl-1 pr-3 text-md font-bold m-0">
-                          {session?.user.username}
-                        </span>
-                        <Image
-                          className="h-6 w-6 rounded-full"
-                          src="/images/avatar-img.png"
-                          alt=""
-                          height="256"
-                          width="256"
-                        />
-                      </Menu.Button>
-                    </div>
-                    <Transition
-                      as={Fragment}
-                      enter="transition ease-out duration-100"
-                      enterFrom="transform opacity-0 scale-95"
-                      enterTo="transform opacity-100 scale-100"
-                      leave="transition ease-in duration-75"
-                      leaveFrom="transform opacity-100 scale-100"
-                      leaveTo="transform opacity-0 scale-95"
-                    >
-                      <Menu.Items className="absolute right-0 z-10 mt-2 w-48 origin-top-right rounded-md bg-white py-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
-                        <Menu.Item>
-                          {({ active }) => (
-                            <Link
-                              href="/dashboard"
-                              className={classNames(
-                                active ? "bg-gray-100" : "",
-                                "block px-4 py-2 text-sm text-gray-700"
-                              )}
-                            >
-                              <UserCircleIcon className="h-4 w-4 inline-block mr-2" />
-                              Mi panel
-                            </Link>
-                          )}
-                        </Menu.Item>
-                        <Menu.Item>
-                          {({ active }) => (
-                            <a
-                              href="#"
-                              className={classNames(
-                                active ? "bg-gray-100" : "",
-                                "block px-4 py-2 text-sm text-gray-700"
-                              )}
-                              onClick={handleLogout}
-                            >
-                              <PowerIcon className="h-4 w-4 inline-block mr-2" />
-                              Cerrar sesión
-                            </a>
-                          )}
-                        </Menu.Item>
-                      </Menu.Items>
-                    </Transition>
-                  </Menu>
                 )}
               </div>
             </div>

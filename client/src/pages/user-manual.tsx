@@ -1,7 +1,8 @@
 import React from "react";
 import DefaultLayout from "@/layouts/DefaultLayout";
+import withAuth from "@/components/withAuth";
 
-export default function UserManualPage() {
+function UserManualPage() {
   return (
     <DefaultLayout title="Manual de usuario">
       <div className="px-6 py-8 md:px-10 md:py-14">
@@ -123,3 +124,5 @@ export default function UserManualPage() {
     </DefaultLayout>
   );
 }
+
+export default withAuth(UserManualPage);

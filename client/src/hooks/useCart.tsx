@@ -1,9 +1,9 @@
-import Cookies from "js-cookie";
 import { useEffect, useState } from "react";
 
 export function useCart<T>(key: string, initialValue: T | (() => T)) {
   const [value, setValue] = useState<T>(() => {
-    const jsonValue = typeof window !== "undefined" ? Cookies.get(key) : null;
+    const jsonValue =
+      typeof window !== "undefined" ? localStorage.getItem(key) : null;
     if (jsonValue != null) return JSON.parse(jsonValue);
 
     if (typeof initialValue === "function") {
@@ -15,7 +15,7 @@ export function useCart<T>(key: string, initialValue: T | (() => T)) {
 
   useEffect(() => {
     if (typeof window !== "undefined") {
-      Cookies.set(key, JSON.stringify(value));
+      localStorage.setItem(key, JSON.stringify(value));
     }
   }, [key, value]);
 

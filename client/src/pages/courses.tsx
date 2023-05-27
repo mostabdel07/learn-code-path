@@ -3,7 +3,10 @@ import React, { useState } from "react";
 import DefaultLayout from "@/layouts/DefaultLayout";
 import withAuth from "@/components/withAuth";
 import useOnlineCourses from "@/hooks/useOnlineCourses";
-import { ArrowUpCircleIcon } from "@heroicons/react/24/solid";
+import {
+  ArrowUpCircleIcon,
+  ChevronDoubleUpIcon,
+} from "@heroicons/react/24/solid";
 import ProductCard from "@/components/ProductCard";
 import SlideOver from "@/components/utilities/SlideOver";
 import AddCourseForm from "@/components/forms/AddCourseForm";
@@ -230,9 +233,9 @@ const CoursesPage = () => {
               )}
           </div>
         </div>
-        <div className="fixed bottom-10 right-8 animate-bounce  brightness-100 rounded-full  md flex items-center justify-center hover:brightness-90">
+        <div className="fixed bottom-48 right-2 md: animate-bounce  brightness-100 rounded-full  md flex items-center justify-center hover:brightness-90">
           <a href="#">
-            <ArrowUpCircleIcon className="h-8 w-8 md:h-14 md:w-14 text-ctm-accent" />
+            <ChevronDoubleUpIcon className="h-10 w-10 md:h-14 md:w-14 text-ctm-dark" />
           </a>
         </div>
       </div>

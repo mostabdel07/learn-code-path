@@ -12,6 +12,7 @@ import Modal from "@/components/utilities/Modal";
 import { Elements } from "@stripe/react-stripe-js";
 import { loadStripe } from "@stripe/stripe-js";
 import PaymentForm from "@/components/forms/PaymentForm";
+import withAuth from "@/components/withAuth";
 
 const CheckoutPage = () => {
   // API fetch params
@@ -124,4 +125,4 @@ const CheckoutPage = () => {
   );
 };
 
-export default CheckoutPage;
+export default withAuth(CheckoutPage);

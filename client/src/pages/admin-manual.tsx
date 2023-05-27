@@ -1,7 +1,7 @@
 import React from "react";
 import DefaultLayout from "@/layouts/DefaultLayout";
 
-export default function AdminManualPage() {
+function AdminManualPage() {
   return (
     <DefaultLayout title="Manual de usuario">
       <div className="px-6 py-8 md:px-10 md:py-14">
@@ -123,3 +123,5 @@ export default function AdminManualPage() {
     </DefaultLayout>
   );
 }
+
+export default withAuth(AdminManualPage);
