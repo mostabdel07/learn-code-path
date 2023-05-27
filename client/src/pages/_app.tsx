@@ -9,15 +9,11 @@ import Loader from "@/components/utilities/Loader";
 Modal.setAppElement("#__next");
 
 export default function App({ Component, pageProps }: AppProps) {
-  const [render, setRender] = useState(false);
-  useEffect(() => setRender(true), []);
-  return render ? (
+  return (
     <AuthProvider>
       <ShoppingCartProvider>
         <Component {...pageProps} />{" "}
       </ShoppingCartProvider>
     </AuthProvider>
-  ) : (
-    <Loader />
   );
 }

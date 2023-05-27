@@ -40,59 +40,57 @@ const ProductCard = (props: Course) => {
   };
 
   return (
-    <Link href={`/courses/${id}`}>
-      <div className="w-full h-full max-w-sm bg-white rounded-lg shadow-xl transition-all duration-300 hover:drop-shadow-2xl">
-        <div className="rounded-t-lg w-full  drop-shadow-sm">
-          <div style={{ maxHeight: "220px", overflow: "hidden" }}>
-            <Image
-              src={img}
-              alt="course"
-              width={0}
-              height={0}
-              sizes="100vw"
-              className="w-full h-full bg-cover bg-center rounded-t-lg"
-            />
-          </div>
-        </div>
-
-        <div className="flex flex-col justify-between px-5 py-5">
-          <div>
-            <h5 className="text-md font-semibold tracking-tight text-gray-900 truncate">
-              {title}
-            </h5>
-          </div>
-          <div className="flex items-center mt-2.5">
-            {" "}
-            <p className="text-gray-600 mr-2">Valoración:</p>
-            {renderStars()}
-          </div>
-          <Link
-            href={`/courses/${id}`}
-            className="text-orange-400 hover:text-orange-600"
-          >
-            Más detalles del curso{" "}
-            <ArrowLongRightIcon className="inline-block h-4 w-4" />
-          </Link>
-          <div className="flex items-center justify-between">
-            <span className="text-xl font-bold text-gray-600 ">
-              {parseInt(price) === 0.0 ? "Gratuito" : price + " €"}
-            </span>
-            {/* <button onClick={() => handleDelete(id)}>Delete</button> */}
-            <button
-              type="button"
-              className="my-2 px-3 py-1.5 text-white bg-ctm-action hover:bg-gray-600 font-medium rounded text-sm text-center transition duration-150 ease-in-out"
-              onClick={() => addToCart(id)}
-            >
-              Añadir
-              <MdLocalGroceryStore
-                className="h-5 w-5 inline-block ml-2"
-                aria-hidden="true"
-              />
-            </button>
-          </div>
+    <div className="w-full h-full max-w-sm bg-white rounded-lg shadow-xl transition-all duration-300 hover:drop-shadow-2xl">
+      <div className="rounded-t-lg w-full  drop-shadow-sm">
+        <div style={{ maxHeight: "220px", overflow: "hidden" }}>
+          <Image
+            src={img}
+            alt="course"
+            width={0}
+            height={0}
+            sizes="100vw"
+            className="w-full h-full bg-cover bg-center rounded-t-lg"
+          />
         </div>
       </div>
-    </Link>
+
+      <div className="flex flex-col justify-between px-5 py-5">
+        <div>
+          <h5 className="text-md font-semibold tracking-tight text-gray-700 truncate">
+            {title}
+          </h5>
+        </div>
+        <div className="flex items-center mt-2.5">
+          {" "}
+          <p className="text-gray-600 mr-2">Valoración:</p>
+          {renderStars()}
+        </div>
+        <Link
+          href={`/courses/${id}`}
+          className="text-orange-400 hover:text-orange-600"
+        >
+          Más detalles del curso{" "}
+          <ArrowLongRightIcon className="inline-block h-4 w-4" />
+        </Link>
+        <div className="flex items-center justify-between">
+          <span className="text-lg font-bold text-gray-700 ">
+            {parseInt(price) === 0.0 ? "Gratuito" : price + " €"}
+          </span>
+          {/* <button onClick={() => handleDelete(id)}>Delete</button> */}
+          <button
+            type="button"
+            className="my-2 px-3 py-1.5 text-white bg-ctm-action hover:bg-gray-600 font-medium rounded text-sm text-center transition duration-150 ease-in-out"
+            onClick={() => addToCart(id)}
+          >
+            Añadir
+            <MdLocalGroceryStore
+              className="h-5 w-5 inline-block ml-2"
+              aria-hidden="true"
+            />
+          </button>
+        </div>
+      </div>
+    </div>
   );
 };
 

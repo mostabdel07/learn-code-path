@@ -46,15 +46,15 @@ const CoursesPage = () => {
     setOpenSlideOver(false);
   }
 
-  const handleRatingChange = (event) => {
+  const handleRatingChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
     setSelectedRating(event.target.value);
   };
 
-  const handleMinPriceChange = (event) => {
+  const handleMinPriceChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setMinPrice(parseFloat(event.target.value));
   };
 
-  const handleMaxPriceChange = (event) => {
+  const handleMaxPriceChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setMaxPrice(parseFloat(event.target.value));
   };
 
@@ -79,7 +79,7 @@ const CoursesPage = () => {
   return (
     <DefaultLayout title="Online courses">
       <div id="top" className="px-6 py-8 md:px-10 md:py-14">
-        <div>
+        <div className="bg-white p-5 rounded-lg mb-6">
           <div className="sm:flex sm:items-center sm:justify-between">
             <div>
               <div className="flex items-center gap-x-3">
@@ -97,7 +97,7 @@ const CoursesPage = () => {
               <div className="flex items-center mt-4 gap-x-3">
                 <button
                   onClick={handleOpenSlideOver}
-                  className="flex items-center justify-center w-1/2 px-5 py-2 text-sm tracking-wide text-white transition-colors duration-200 bg-blue-500 rounded-lg shrink-0 sm:w-auto gap-x-2 hover:bg-blue-600 hover:bg-blue-500 bg-blue-600"
+                  className="flex items-center justify-center w-1/2 px-5 py-2 text-sm tracking-wide text-white transition-colors duration-200 bg-blue-500 rounded-lg shrink-0 sm:w-auto gap-x-2 hover:bg-blue-600"
                 >
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
@@ -174,7 +174,7 @@ const CoursesPage = () => {
                 value={selectedRating}
                 onChange={handleRatingChange}
               >
-                <option value="">Cualquiera</option>
+                <option value="">Todas</option>
                 <option value="1">1 estrella(s)</option>
                 <option value="2">2 estrella(s)</option>
                 <option value="3">3 estrella(s)</option>
@@ -204,37 +204,40 @@ const CoursesPage = () => {
               <input
                 type="text"
                 placeholder="Buscar curso"
-                className="block w-full py-1.5 pr-5 text-gray-700 bg-white border border-gray-200 rounded-lg md:w-80 placeholder-gray-400/70 pl-11 rtl:pr-11 rtl:pl-5 focus:border-blue-400 focus:ring-blue-300 focus:outline-none focus:ring focus:ring-opacity-40"
+                className="block w-full py-1.5 pr-5 text-gray-700 bg-gray-50 border border-gray-200 rounded-lg md:w-80 placeholder-gray-400/70 pl-11 rtl:pr-11 rtl:pl-5 focus:border-blue-400 focus:ring-blue-300 focus:outline-none focus:ring focus:ring-opacity-40"
                 value={searchTerm}
                 onChange={(event) => setSearchTerm(event.target.value)}
               />
             </div>
           </div>
-          <div className="p-4">
-            <h3 className="text-4xl text-center bold">Cursos populares</h3>
-          </div>
-          {error && (
-            <div>{`Ha ocurrido un problema al querer traer los datos ${error}`}</div>
-          )}
-          <div className="grid gap-4 p-8 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5">
-            {data &&
-              filteredCourses.map(
-                ({ id, title, img, headline, price, rating }: Course) => (
-                  <div key={id}>
-                    <ProductCard
-                      id={id}
-                      title={title}
-                      img={img}
-                      headline={headline}
-                      price={price}
-                      rating={rating}
-                    />
-                  </div>
-                )
-              )}
-            <div id="bottom"></div>
-          </div>
         </div>
+        <div className="p-4">
+          <h3 className="text-4xl text-center bold font-orbitron">
+            Cursos populares
+          </h3>
+        </div>
+        {error && (
+          <div>{`Ha ocurrido un problema al querer traer los datos ${error}`}</div>
+        )}
+        <div className="grid gap-4 p-8 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5">
+          {data &&
+            filteredCourses.map(
+              ({ id, title, img, headline, price, rating }: Course) => (
+                <div key={id}>
+                  <ProductCard
+                    id={id}
+                    title={title}
+                    img={img}
+                    headline={headline}
+                    price={price}
+                    rating={rating}
+                  />
+                </div>
+              )
+            )}
+          <div id="bottom"></div>
+        </div>
+
         <div className="flex flex-col items-center justify-center gap-20 fixed bottom-48 right-2 md: animate-bounce">
           <a href="#top">
             <ChevronDoubleUpIcon className="h-8 w-8 md:h-10 md:w-10 text-ctm-dark hover:text-gray-500" />

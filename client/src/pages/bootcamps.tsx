@@ -132,7 +132,7 @@ const BootcampsPage = () => {
 
   return (
     <DefaultLayout title="Bootcamps">
-      <section className="bg-white dark:bg-gray-900">
+      <section>
         {error && (
           <div>{`Ha ocurrido un problema al querer traer los datos ${error}`}</div>
         )}
