@@ -77,7 +77,7 @@ const UsersPage = () => {
           <div>{`Ha ocurrido un problema al querer traer los datos ${error}`}</div>
         )}
         {data && (
-          <div className="bg-white p-5 rounded-lg mb-6">
+          <div className="bg-white shadow-md p-5 rounded-lg mb-6">
             <div className="sm:flex sm:items-center sm:justify-between">
               <div>
                 <div className="flex items-center gap-x-3">

@@ -79,7 +79,7 @@ const CoursesPage = () => {
   return (
     <DefaultLayout title="Online courses">
       <div id="top" className="px-6 py-8 md:px-10 md:py-14">
-        <div className="bg-white p-5 rounded-lg mb-6">
+        <div className="bg-white shadow-md p-5 rounded-lg mb-6">
           <div className="sm:flex sm:items-center sm:justify-between">
             <div>
               <div className="flex items-center gap-x-3">
@@ -211,7 +211,7 @@ const CoursesPage = () => {
             </div>
           </div>
         </div>
-        <div className="p-4">
+        <div className="p-4 mb-6">
           <h3 className="text-4xl text-center bold font-orbitron">
             Cursos populares
           </h3>

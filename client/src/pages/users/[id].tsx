@@ -28,6 +28,7 @@ const UserPage = () => {
   const apiURL = process.env.API_ENDPOINT;
 
   const [user, setUser] = useState<User | null>(null);
+  const [editUser, setEditUser] = useState<Partial<User>>({});
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
 
@@ -37,7 +38,7 @@ const UserPage = () => {
 
   useEffect(() => {
     const fetchData = async () => {
-      if (token) {
+      if (token && id) {
         try {
           const res = await axios.get(`${apiURL}/users/${id}`, {
             headers: {
@@ -52,7 +53,9 @@ const UserPage = () => {
           }
 
           const user = res.data;
+          console.log(user);
           setUser(user);
+          setEditUser(user);
         } catch (error: any) {
           // Todo any
           setError(error.message);
@@ -64,16 +67,6 @@ const UserPage = () => {
     };
     fetchData();
   }, [apiURL, id, token]);
-
-  const [editUser, setEditUser] = useState<Partial<User>>(
-    user
-      ? {
-          username: user.username,
-          email: user.email,
-          role_name: user.role_name,
-        }
-      : {}
-  );
 
   function handleOpenSlideOver() {
     setOpenSlideOver(true);
@@ -97,8 +90,6 @@ const UserPage = () => {
    */
   function handleInputChange(event: any) {
     const { name, value } = event.target;
-    console.log("Name:", name);
-    console.log("Value:", value);
     setEditUser((prevUser) => ({ ...prevUser, [name]: value }));
   }
 
@@ -124,8 +115,6 @@ const UserPage = () => {
       changedProperties.email = editUser.email;
     }
     if (editUser.role_name !== user?.role_name) {
-      console.log("editUser.role_name" + editUser.role_name);
-      console.log("user.role_name" + user?.role_name);
       changedProperties.role_name = editUser.role_name;
     }
 
@@ -161,6 +150,8 @@ const UserPage = () => {
   if (loading || !user) {
     return <Loader />;
   }
+
+  console.log(editUser.role_name);
 
   return (
     <DefaultLayout title="Gestionar usuario">
@@ -263,7 +254,7 @@ const UserPage = () => {
                       Rol
                     </label>
                     <select
-                      id="role"
+                      id="role_name"
                       name="role_name"
                       value={editUser.role_name}
                       onChange={handleInputChange}

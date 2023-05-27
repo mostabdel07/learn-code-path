@@ -35,6 +35,7 @@ const CoursePage = () => {
   const apiURL = process.env.API_ENDPOINT;
 
   const [course, setCourse] = useState<Course | null>(null);
+  const [editCourse, setEditCourse] = useState<Partial<Course>>({});
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
   const [errorList, setErrorList] = useState<any>([]);
@@ -45,7 +46,7 @@ const CoursePage = () => {
 
   useEffect(() => {
     const fetchData = async () => {
-      if (token) {
+      if (token && id) {
         try {
           const res = await axios.get(`${apiURL}/courses/${id}`, {
             headers: {
@@ -61,6 +62,7 @@ const CoursePage = () => {
 
           const course = res.data;
           setCourse(course);
+          setEditCourse(course);
         } catch (error: any) {
           // Todo any
           setError(error.message);
@@ -72,23 +74,6 @@ const CoursePage = () => {
     };
     fetchData();
   }, [apiURL, id, token]);
-
-  const [editCourse, setEditCourse] = useState<Partial<Course>>(
-    course
-      ? {
-          id: course.id,
-          title: course.title,
-          headline: course.headline,
-          rating: course.rating,
-          instructor_id: course.instructor_id,
-          instructor_name: course.instructor_name,
-          price: course.price,
-          // img: course.img,
-          created_at: course.created_at,
-          updated_at: course.updated_at,
-        }
-      : {}
-  );
 
   function handleOpenSlideOver() {
     setOpenSlideOver(true);
