@@ -1,17 +1,24 @@
 import { useState } from "react";
 import { useRouter } from "next/router";
-import axios from "axios";
-import { useAuth } from "@/contexts/auth";
+import { useAuth } from "@/contexts/AuthContext";
 import Link from "next/link";
 import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useForm } from "react-hook-form";
 import DefaultLayout from "@/layouts/DefaultLayout";
-import {
-  EnvelopeIcon,
-  LockClosedIcon,
-  UserIcon,
-} from "@heroicons/react/24/solid";
+import { EnvelopeIcon, LockClosedIcon } from "@heroicons/react/24/solid";
+
+interface User {
+  id: string;
+  username: string;
+  email: string;
+  role: string;
+}
+
+interface Session {
+  user: User;
+  token: string;
+}
 
 export default function LoginPage() {
   type FormValues = {
@@ -68,12 +75,21 @@ export default function LoginPage() {
    */
   const onSubmit = async (data: FormValues) => {
     try {
-      const fetchedToken = await fetchToken(data);
-      const token = fetchedToken.authorisation.token;
-      const userID = fetchedToken.user.id;
-      const userRole = fetchedToken.role;
-      localStorage.setItem("userRole", userRole);
-      login(token, userID);
+      const loggedInUser = await fetchToken(data);
+
+      // Session data structure
+      const session: Session = {
+        user: {
+          id: loggedInUser.user.id,
+          username: loggedInUser.user.username,
+          email: loggedInUser.user.email,
+          role: loggedInUser.role,
+        },
+        token: loggedInUser.authorisation.token,
+      };
+      console.log(session);
+
+      login(session);
 
       // Redirect to the '/dashboard' page
       router.push("/courses");

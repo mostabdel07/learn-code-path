@@ -4,13 +4,17 @@ import Image from "next/image";
 import { CheckIcon } from "@heroicons/react/24/outline";
 import axios from "axios";
 import router from "next/router";
-import { useAuth } from "@/contexts/auth";
+import { useAuth } from "@/contexts/AuthContext";
 
 // Data for bootcamps
 
 const BootcampsPage = () => {
-  const { token, userId } = useAuth();
+  // API fetch params
+  const { session } = useAuth();
+  const token = session?.token;
+  const userId = session?.user.id;
   const apiURL = process.env.API_ENDPOINT;
+
   const [bootcamps, setBootcamps] = useState<object[]>([]);
   const [subscriptions, setSubscriptions] = useState<number[]>([]);
 

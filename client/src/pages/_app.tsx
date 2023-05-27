@@ -1,6 +1,6 @@
 import "@/styles/globals.css";
 import type { AppProps } from "next/app";
-import { AuthProvider } from "@/contexts/auth";
+import { AuthProvider } from "@/contexts/AuthContext";
 import { ShoppingCartProvider } from "@/contexts/ShoppingCartContext";
 import Modal from "react-modal";
 import { useEffect, useState } from "react";

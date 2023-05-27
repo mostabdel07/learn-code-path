@@ -3,14 +3,17 @@ import { useForm } from "react-hook-form";
 import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
 import axios from "axios";
-import { useAuth } from "@/contexts/auth";
+import { useAuth } from "@/contexts/AuthContext";
 import useInstructors from "@/hooks/useInstructors";
 import router from "next/router";
 
 function AddCourseForm() {
-  const { token } = useAuth();
-  const { data } = useInstructors();
+  // API fetch params
+  const { session } = useAuth();
+  const token = session?.token;
   const apiURL = process.env.API_ENDPOINT;
+
+  const { data } = useInstructors();
 
   const [errorList, setErrorList] = useState<any>([]);
   const [selectedFile, setSelectedFile] = useState<File | null>(null);

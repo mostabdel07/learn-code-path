@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { useAuth } from "@/contexts/auth";
+import { useAuth } from "@/contexts/AuthContext";
 
 interface Course {
   id: number;
@@ -18,11 +18,13 @@ const useOnlineCourses = () => {
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
 
-  const { token } = useAuth();
+  // API fetch params
+  const { session } = useAuth();
+  const token = session?.token;
   const apiURL = process.env.API_ENDPOINT;
 
   useEffect(() => {
-    const fetchData = async () => {
+    const fetchCourses = async () => {
       if (token) {
         try {
           const response = await fetch(`${apiURL}/courses`, {
@@ -52,8 +54,8 @@ const useOnlineCourses = () => {
       }
     };
 
-    fetchData();
-  }, [token]);
+    fetchCourses();
+  }, [apiURL, token]);
 
   return {
     data,

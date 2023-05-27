@@ -82,9 +82,13 @@ export default function Panel(props: Props) {
     <div>
       <div className="sm:flex sm:items-center sm:justify-between">
         <div>
-          <div className="flex items-center">
-            <span className="px-3 py-1 text-xs text-blue-600 bg-blue-100 rounded-full">
-              {totalCourses} Total cursos
+          <div className="flex items-center gap-x-3">
+            <h2 className="text-lg font-medium text-gray-800 dark:text-gray-700">
+              Cantidad total
+            </h2>
+
+            <span className="px-3 py-1 text-xs text-blue-600 bg-blue-100 rounded-full dark:bg-gray-800 dark:text-blue-400">
+              {totalCourses} cursos
             </span>
           </div>
         </div>
@@ -128,30 +132,30 @@ export default function Panel(props: Props) {
       <div className="mt-6 md:flex md:items-center md:justify-between">
         <div className="flex items-center justify-center gap-3">
           <div className="w-1/2">
-            <label htmlFor="price" className="text-gray-700">
+            <label htmlFor="min-price" className="text-gray-700">
               Precio mínimo: {minPrice} &euro;
             </label>
             <input
               type="range"
               min="0"
-              name="price"
-              max="100"
+              name="min-price"
+              max="49"
               value={minPrice}
-              className="w-full h-2 bg-blue-100 appearance-none"
+              className="w-full h-2 bg-blue-100 appearance-none cursor-grabbing"
               onChange={handleMinPriceChange}
             />
           </div>
           <div className="w-1/2">
-            <label htmlFor="price" className="text-gray-700">
+            <label htmlFor="max-price" className="text-gray-700">
               Precio máximo: {maxPrice} &euro;
             </label>
             <input
               type="range"
-              min="0"
-              name="price"
+              min="50"
+              name="max-price"
               max="100"
               value={maxPrice}
-              className="w-full h-2 bg-blue-100 appearance-none"
+              className="w-full h-2 bg-blue-100 appearance-none cursor-grabbing"
               onChange={handleMaxPriceChange}
             />
           </div>

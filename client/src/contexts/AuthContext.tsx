@@ -1,11 +1,22 @@
 import { createContext, useContext, useEffect, useState } from "react";
-import { useAuthToken } from "@/hooks/useAuthToken";
+import { useAuthSession } from "@/hooks/useAuthSession";
+
+interface User {
+  id: string;
+  username: string;
+  email: string;
+  role: string;
+}
+
+interface Session {
+  user: User;
+  token: string;
+}
 
 type AuthContextType = {
   isAuthenticated: boolean;
-  token: string | null;
-  userId: string | null;
-  login: (token: string, userId: number) => void;
+  session: Session | null;
+  login: (session: Session) => void;
   logout: () => void;
 };
 
@@ -15,8 +26,7 @@ type AuthContextProps = {
 
 const AuthContext = createContext<AuthContextType>({
   isAuthenticated: false,
-  token: null,
-  userId: null,
+  session: null,
   login: () => {},
   logout: () => {},
 });
@@ -26,39 +36,35 @@ export const useAuth = () => useContext(AuthContext);
 export const AuthProvider: React.FC<AuthContextProps> = ({
   children,
 }: AuthContextProps) => {
-  const {
-    token,
-    saveToken,
-    clearToken,
-    userId,
-    saveUserID,
-    clearUserID,
-    clearUserRole,
-  } = useAuthToken();
+  const { session, saveSession, clearSession } = useAuthSession();
   const [isAuthenticated, setIsAuthenticated] = useState<boolean>(
-    Boolean(token)
+    Boolean(session)
   );
 
-  const login = (newToken: string, userId: number) => {
-    saveToken(newToken);
-    saveUserID(userId);
+  const login = (session: Session) => {
+    saveSession(JSON.stringify(session));
+
     setIsAuthenticated(true);
   };
 
   const logout = () => {
-    clearToken();
-    clearUserID();
-    clearUserRole();
+    clearSession();
     setIsAuthenticated(false);
   };
 
   useEffect(() => {
-    setIsAuthenticated(Boolean(token));
-  }, [token]);
+    const parsedSession = session ? JSON.parse(session) : null;
+    setIsAuthenticated(Boolean(parsedSession));
+  }, [session]);
 
   return (
     <AuthContext.Provider
-      value={{ isAuthenticated, token, login, logout, userId }}
+      value={{
+        isAuthenticated,
+        session: session ? JSON.parse(session) : null,
+        login,
+        logout,
+      }}
     >
       {children}
     </AuthContext.Provider>

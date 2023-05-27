@@ -1,8 +1,6 @@
 import React, { useEffect, useState } from "react";
-import Card from "./Card";
 import axios from "axios";
-import { useAuth } from "@/contexts/auth";
-import ProductCard from "./ProductCard";
+import { useAuth } from "@/contexts/AuthContext";
 import SliderScroll from "./SliderScroll";
 
 interface Course {
@@ -21,8 +19,12 @@ interface MyCoursesProps {
 }
 
 const MyCourses = () => {
-  const { token, userId } = useAuth();
+  // API fetch params
+  const { session } = useAuth();
+  const token = session?.token;
+  const userId = session?.user.id;
   const apiURL = process.env.API_ENDPOINT;
+
   const [myCourses, setMyCourses] = useState<MyCoursesProps>({ data: null }); // define the state variable with the MyCoursesProps interface
 
   useEffect(() => {

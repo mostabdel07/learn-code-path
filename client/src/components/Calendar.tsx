@@ -1,4 +1,4 @@
-import { useAuth } from "@/contexts/auth";
+import { useAuth } from "@/contexts/AuthContext";
 import { Menu, Transition } from "@headlessui/react";
 import { EllipsisVerticalIcon } from "@heroicons/react/24/outline";
 import { ChevronLeftIcon, ChevronRightIcon } from "@heroicons/react/24/solid";
@@ -24,8 +24,12 @@ function classNames(...classes: (string | boolean)[]) {
 }
 
 export default function Calendar() {
-  const { token, userId } = useAuth();
+  // API fetch params
+  const { session } = useAuth();
+  const token = session?.token;
+  const userId = session?.user.id;
   const apiURL = process.env.API_ENDPOINT;
+
   const [bootcamps, setbootcamps] = useState<any[]>([]);
 
   let today = startOfToday();

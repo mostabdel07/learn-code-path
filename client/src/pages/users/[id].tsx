@@ -6,7 +6,7 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import SlideOver from "@/components/utilities/SlideOver";
 import Modal from "@/components/utilities/Modal";
-import { useAuth } from "@/contexts/auth";
+import { useAuth } from "@/contexts/AuthContext";
 import withAuth from "@/components/withAuth";
 
 interface User {
@@ -68,14 +68,11 @@ export const getServerSideProps: GetServerSideProps<UserPageProps> = async (
 
 const UserPage = ({ user }: UserPageProps) => {
   const router = useRouter();
-  const { token } = useAuth();
-  const apiURL = process.env.API_ENDPOINT;
-  const [userRole, setUserRole] = useState<string | null>(null);
 
-  useEffect(() => {
-    const role = localStorage.getItem("userRole");
-    setUserRole(role);
-  }, []);
+  // API fetch params
+  const { session } = useAuth();
+  const token = session?.token;
+  const apiURL = process.env.API_ENDPOINT;
 
   const [editUser, setEditUser] = useState<Partial<User>>({
     username: user.username,
@@ -209,7 +206,7 @@ const UserPage = ({ user }: UserPageProps) => {
               {user.updated_at}
             </p>
             <div className="flex justify-center mt-4">
-              {userRole === "admin" && (
+              {session?.user.role === "admin" && (
                 <>
                   <button
                     className="inline-flex text-white bg-blue-500 border-0 py-2 px-6 focus:outline-none hover:bg-blue-600 rounded text-lg"

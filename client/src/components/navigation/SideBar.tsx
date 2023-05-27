@@ -3,7 +3,7 @@ import { Fragment } from "react";
 import { Menu, Transition } from "@headlessui/react";
 import { MdLocalGroceryStore } from "react-icons/md";
 import Image from "next/image";
-import { useAuth } from "@/contexts/auth";
+import { useAuth } from "@/contexts/AuthContext";
 import { useRouter } from "next/router";
 import { useState, useEffect } from "react";
 import {
@@ -17,7 +17,6 @@ import { FaUsers } from "react-icons/fa";
 import { AiFillHome } from "react-icons/ai";
 import Link from "next/link";
 import { useShoppingCart } from "@/contexts/ShoppingCartContext";
-import { UserContext } from "@/contexts/UserContext";
 
 const links = [
   {
@@ -52,14 +51,12 @@ function classNames(...classes: any) {
 }
 
 function SideBar({ children }: any) {
-  const { isAuthenticated, logout } = useAuth();
+  const { session, isAuthenticated, logout } = useAuth();
   const { openCart, cartItems } = useShoppingCart();
-  const { user } = useContext(UserContext);
+
   const router = useRouter();
 
   // States
-  const [username, setUsername] = useState("");
-  const [userRole, setUserRole] = useState<string | null>(null);
   const [isOpen, setIsOpen] = useState(false);
 
   const toggleSidebar = () => {
@@ -70,14 +67,6 @@ function SideBar({ children }: any) {
     logout();
     router.push("/login");
   };
-
-  useEffect(() => {
-    if (user) {
-      setUsername(user.username);
-    }
-
-    setUserRole(localStorage.getItem("userRole"));
-  }, [user]);
 
   return (
     <div>
@@ -142,7 +131,7 @@ function SideBar({ children }: any) {
                       <Menu.Button className="flex rounded-full text-white p-1.5 ring-gray-600 ring-2 text-sm focus:outline-none focus:ring-white">
                         <span className="sr-only">Open user menu</span>
                         <span className="pl-1 pr-3 text-md font-bold m-0">
-                          {username}
+                          {session?.user.username}
                         </span>
                         <Image
                           className="h-6 w-6 rounded-full"
@@ -212,9 +201,19 @@ function SideBar({ children }: any) {
         <div className="flex flex-col justify-between lg:py-8 lg:justify-center space-y-6 lg:space-y-0 h-full px-3 pb-4 overflow-y-auto lg:overflow-y-hidden bg-ctm-dark">
           <ul className="flex-grow lg:flex lg:justify-between pt-14 lg:pt-0 space-y-4 lg:space-y-0 font-orbitron">
             {links.map((item, index) => {
+              if (!isAuthenticated) {
+                if (
+                  item.title === "Cursos en línea" ||
+                  item.title === "Bootcamps" ||
+                  item.title === "Mi panel" ||
+                  item.title === "Gestión de usuarios"
+                ) {
+                  return null;
+                }
+              }
               if (
                 item.title === "Gestión de usuarios" &&
-                userRole !== "admin"
+                session?.user.role !== "admin"
               ) {
                 return null;
               }

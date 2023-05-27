@@ -2,14 +2,16 @@ import React, { useState, useEffect } from "react";
 import DefaultLayout from "@/layouts/DefaultLayout";
 import Table from "@/components/Table";
 import withAuth from "@/components/withAuth";
-import { useAuth } from "@/contexts/auth";
+import { useAuth } from "@/contexts/AuthContext";
 
 const UsersPage = () => {
   const [data, setData] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
-  const { token } = useAuth();
+  // API fetch params
+  const { session } = useAuth();
+  const token = session?.token;
   const apiURL = process.env.API_ENDPOINT;
 
   /**
@@ -46,7 +48,7 @@ const UsersPage = () => {
           setLoading(false);
         });
     }
-  }, [token]);
+  }, [apiURL, token]);
 
   return (
     <DefaultLayout title="Users management">

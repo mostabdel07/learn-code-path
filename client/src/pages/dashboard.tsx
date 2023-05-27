@@ -1,16 +1,12 @@
 import React, { useEffect, useState } from "react";
-import SliderScroll from "@/components/SliderScroll";
 import DefaultLayout from "@/layouts/DefaultLayout";
 import withAuth from "@/components/withAuth";
-import useOnlineCourses from "@/hooks/useOnlineCourses";
 import Image from "next/image";
 import axios from "axios";
-import { useAuth } from "@/contexts/auth";
+import { useAuth } from "@/contexts/AuthContext";
 import Modal from "@/components/utilities/Modal";
 import SlideOver from "@/components/utilities/SlideOver";
 import { useRouter } from "next/router";
-import ProductCard from "@/components/ProductCard";
-import Card from "@/components/Card";
 import MyCourses from "@/components/MyCourses";
 import Calendar from "@/components/Calendar";
 
@@ -28,7 +24,11 @@ interface User {
 const DashboardPage = () => {
   // const { data, loading, error } = useOnlineCourses();
   const router = useRouter();
-  const { token, userId } = useAuth();
+
+  // API fetch params
+  const { session } = useAuth();
+  const token = session?.token;
+  const userId = session?.user.id;
   const apiURL = process.env.API_ENDPOINT;
 
   // States

@@ -14,8 +14,8 @@ const withAuth = <P extends object>(Component: React.ComponentType<P>) => {
 
     useEffect(() => {
       // Check if the user has a valid JWT token
-      const token = Cookies.get("authToken");
-      if (!token) {
+      const session = Cookies.get("session");
+      if (!session) {
         router.push("/login");
       }
     }, []);

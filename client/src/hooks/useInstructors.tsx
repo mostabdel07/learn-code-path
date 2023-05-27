@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { useAuth } from "@/contexts/auth";
+import { useAuth } from "@/contexts/AuthContext";
 
 interface Instructor {
   id: number;
@@ -14,7 +14,9 @@ const useInstructors = () => {
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
 
-  const { token } = useAuth();
+  // API fetch params
+  const { session } = useAuth();
+  const token = session?.token;
   const apiURL = process.env.API_ENDPOINT;
 
   useEffect(() => {
@@ -49,7 +51,7 @@ const useInstructors = () => {
     };
 
     fetchData();
-  }, [token]);
+  }, [apiURL, token]);
 
   return {
     data,

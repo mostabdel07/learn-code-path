@@ -1,8 +1,10 @@
 import React, { useEffect, useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
+import { useAuth } from "@/contexts/AuthContext";
 
 export default function Footer() {
+  const { session, isAuthenticated } = useAuth();
   const [currentYear, setCurrentYear] = useState(new Date().getFullYear());
 
   useEffect(() => {
@@ -24,14 +26,26 @@ export default function Footer() {
             />
           </Link>
           <ul className="flex flex-wrap justify-center items-center mb-6 text-sm font-medium sm:mb-0 text-gray-400">
-            <li>
-              <Link
-                href="/user-manual"
-                className="mr-4 hover:underline md:mr-6"
-              >
-                Manual de usuario
-              </Link>
-            </li>
+            {isAuthenticated && session?.user.role === "admin" && (
+              <li>
+                <Link
+                  href="/admin-manual"
+                  className="mr-4 hover:underline md:mr-6"
+                >
+                  Manual de administrador
+                </Link>
+              </li>
+            )}
+            {isAuthenticated && session?.user.role === "user" && (
+              <li>
+                <Link
+                  href="/user-manual"
+                  className="mr-4 hover:underline md:mr-6"
+                >
+                  Manual de usuario
+                </Link>
+              </li>
+            )}
             <li>
               <Link
                 href="privacy-policy"
