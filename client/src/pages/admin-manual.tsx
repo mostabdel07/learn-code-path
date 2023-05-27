@@ -1,5 +1,6 @@
 import React from "react";
 import DefaultLayout from "@/layouts/DefaultLayout";
+import withAuth from "@/components/withAuth";
 
 function AdminManualPage() {
   return (

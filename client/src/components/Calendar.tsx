@@ -191,7 +191,9 @@ export default function Calendar() {
 }
 
 function Meeting({ bootcamp }: any) {
-  const { token } = useAuth();
+  // API fetch params
+  const { session } = useAuth();
+  const token = session?.token;
   const apiURL = process.env.API_ENDPOINT;
 
   let startDateTime = parseISO(bootcamp.startDatetime);
