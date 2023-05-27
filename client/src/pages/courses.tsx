@@ -27,7 +27,6 @@ interface Course {
 
 const CoursesPage = () => {
   const { data, loading, error } = useOnlineCourses();
-  console.log(data);
   const { session } = useAuth();
 
   // Filters

@@ -1,5 +1,24 @@
+import React, { useEffect } from "react";
 import { useRouter } from "next/router";
-import { useEffect } from "react";
+import jwtDecode from "jwt-decode";
+
+interface DecodedToken {
+  exp: number;
+}
+
+function isTokenValid(token: string): boolean {
+  try {
+    const decoded: DecodedToken = jwtDecode(token);
+    if (!decoded || !decoded.exp) {
+      return false;
+    }
+
+    const currentTime = Math.floor(Date.now() / 1000); // Convert to seconds
+    return currentTime < decoded.exp;
+  } catch (error) {
+    return false;
+  }
+}
 
 /**
  * Higher-order component that adds authentication logic to a wrapped component.
@@ -11,12 +30,19 @@ const withAuth = <P extends object>(Component: React.ComponentType<P>) => {
     const router = useRouter();
 
     useEffect(() => {
-      // Check if the user has a valid JWT token
+      const sessionLocalStorage = localStorage.getItem("session");
+      if (sessionLocalStorage) {
+        // Check if the user has a valid JWT token
+        const session = JSON.parse(sessionLocalStorage);
+        const isValid = isTokenValid(session.token);
 
-      if (!localStorage.getItem("session")) {
+        if (!isValid) {
+          router.push("/login");
+        }
+      } else {
         router.push("/login");
       }
-    }, []);
+    }, [router]);
 
     return <Component {...props} />;
   };
