@@ -27,7 +27,7 @@ const DashboardPage = () => {
   const router = useRouter();
 
   // API fetch params
-  const { session } = useAuth();
+  const { session, logout } = useAuth();
   const token = session?.token;
   const userId = session?.user.id;
   const apiURL = process.env.API_ENDPOINT;
@@ -39,8 +39,16 @@ const DashboardPage = () => {
     email: user?.email,
   });
   const [openSlideOver, setOpenSlideOver] = useState(false);
+  const [openSlideOverData, setOpenSlideOverData] = useState(false);
   const [openModalEdit, setOpenModalEdit] = useState(false);
   const [openModalDelete, setOpenModalDelete] = useState(false);
+
+  const [formData, setFormData] = useState({
+    name: "",
+    surname: "",
+    birthday: "",
+    location: "",
+  });
 
   useEffect(() => {
     const fetchData = async () => {
@@ -75,6 +83,14 @@ const DashboardPage = () => {
 
   function handleCloseSlideOver() {
     setOpenSlideOver(false);
+  }
+
+  function handleOpenSlideOverData() {
+    setOpenSlideOverData(true);
+  }
+
+  function handleCloseSlideOverData() {
+    setOpenSlideOverData(false);
   }
 
   function handleCloseModalEdit() {
@@ -124,6 +140,33 @@ const DashboardPage = () => {
     } catch (error) {}
   }
 
+  async function handleSavePersonal(id: number) {
+    setOpenSlideOverData(false);
+
+    console.log("formdata", formData);
+    try {
+      const response = await axios.put(
+        `${apiURL}/personal_data/${id}`,
+        formData,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+
+      if (response.status === 204) router.reload();
+    } catch (error) {}
+  }
+
+  const handleInputChangeData = (event: any) => {
+    const { name, value } = event.target;
+    setFormData((prevFormData) => ({
+      ...prevFormData,
+      [name]: value,
+    }));
+  };
+
   /**
    * Handles the deletion of a user with the specified ID.
    * It sets the open modal edit flag to true, indicating that the delete modal is open.
@@ -140,7 +183,10 @@ const DashboardPage = () => {
         },
       });
 
-      if (response.status === 204) router.push("/users");
+      if (response.status === 204) {
+        logout();
+        router.push("/login");
+      }
     } catch (error) {}
   }
 
@@ -223,33 +269,40 @@ const DashboardPage = () => {
                   </span>
                 </li>
                 <li className="flex border-b py-2">
-                  <span className="font-bold w-24">Apellido:</span>
+                  <span className="font-bold w-24">Apellidos:</span>
                   <span className="text-gray-700">
                     {user.personal_data?.surname}
                   </span>
                 </li>
                 <li className="flex border-b py-2">
-                  <span className="font-bold w-24">Registro:</span>
-                  <span className="text-gray-700">{user.created_at}</span>
-                </li>
-                <li className="flex border-b py-2">
-                  <span className="font-bold w-24">Modificación:</span>
-                  <span className="text-gray-700">{user.updated_at}</span>
-                </li>
-                <li className="flex border-b py-2">
-                  <span className="font-bold w-24">Móvil:</span>
-                  <span className="text-gray-700">(123) 123-1234</span>
-                </li>
-                <li className="flex border-b py-2">
-                  <span className="font-bold w-24">Email:</span>
-                  <span className="text-gray-700">{user.email}</span>
+                  <span className="font-bold w-24">Fecha nacimiento:</span>
+                  <span className="text-gray-700">
+                    {new Date(user.personal_data?.birthday).toLocaleDateString(
+                      "es-ES"
+                    )}
+                  </span>
                 </li>
                 <li className="flex border-b py-2">
                   <span className="font-bold w-24">Localización:</span>
-                  <span className="text-gray-700">Barcelona, ESP</span>
+                  <span className="text-gray-700">
+                    {user.personal_data?.location}
+                  </span>
+                </li>
+                <li className="flex border-b py-2">
+                  <span className="font-bold w-24">Miembro desde:</span>
+                  <span className="text-gray-700">
+                    {new Date(user.created_at).toLocaleDateString("es-ES")}
+                  </span>
                 </li>
               </ul>
+              <button
+                className="flex items-center bg-blue-600 hover:bg-blue-700 text-gray-100 px-4 py-2 rounded text-sm space-x-2 transition duration-100"
+                onClick={handleOpenSlideOverData}
+              >
+                <span>Editar</span>
+              </button>
             </div>
+
             <div className="flex-1 bg-white rounded-lg shadow-xl mt-4 p-8">
               <h4 className="text-xl text-gray-900 font-bold">Estadísticas</h4>
               <div className="grid gap-8 mt-4">
@@ -497,6 +550,65 @@ const DashboardPage = () => {
             type="button"
             className="text-white bg-green-700 hover:bg-green-800 w-full focus:ring-4 focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-green-600 dark:hover:bg-green-700 focus:outline-none dark:focus:ring-green-800 block"
             onClick={() => handleSave(user.id)}
+          >
+            Guardar
+          </button>
+        </form>
+      </SlideOver>
+      <SlideOver
+        title="Editar información personal"
+        openSlideOver={openSlideOverData}
+        onClose={handleCloseSlideOverData}
+      >
+        <form className="mb-6">
+          <div className="mb-6">
+            <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+              Nombre
+            </label>
+            <input
+              type="text"
+              name="name"
+              className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+              onChange={handleInputChangeData}
+            />
+          </div>
+          <div className="mb-6">
+            <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+              Apellidos
+            </label>
+            <input
+              type="text"
+              name="surname"
+              className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+              onChange={handleInputChangeData}
+            />
+          </div>
+          <div className="mb-6">
+            <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+              Fecha de nacimiento
+            </label>
+            <input
+              type="date"
+              name="birthday"
+              className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+              onChange={handleInputChangeData}
+            />
+          </div>
+          <div className="mb-6">
+            <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+              Localizacion
+            </label>
+            <input
+              type="text"
+              name="location"
+              className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+              onChange={handleInputChangeData}
+            />
+          </div>
+          <button
+            type="button"
+            className="text-white bg-green-700 hover:bg-green-800 w-full focus:ring-4 focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-green-600 dark:hover:bg-green-700 focus:outline-none dark:focus:ring-green-800 block"
+            onClick={() => handleSavePersonal(user.id)}
           >
             Guardar
           </button>

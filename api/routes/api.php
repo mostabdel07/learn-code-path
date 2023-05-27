@@ -10,6 +10,8 @@ use App\Http\Controllers\BootcampController;
 use App\Http\Controllers\PurchaseController;
 use App\Http\Controllers\SubscriptionController;
 use App\Http\Controllers\InstructorController;
+use App\Http\Controllers\PersonalDataController;
+
 
 
 /*
@@ -39,6 +41,8 @@ Route::apiResource('users', UserController::class);
 Route::apiResource('courses', OnlineCourseController::class);
 
 Route::apiResource('instructors', InstructorController::class);
+
+Route::apiResource('personal_data', PersonalDataController::class);
 
 Route::post('check_courses', [OnlineCourseController::class, 'checkCourses']);
 Route::get('bootcamps', [BootcampController::class, 'index']);
