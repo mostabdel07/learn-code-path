@@ -5,18 +5,32 @@ import { CheckIcon } from "@heroicons/react/24/outline";
 import axios from "axios";
 import router from "next/router";
 import { useAuth } from "@/contexts/AuthContext";
+import Loader from "@/components/utilities/Loader";
 
-// Data for bootcamps
+type Course = {
+  id: number;
+  title: string;
+  description: string;
+  image: string;
+  location: string;
+  startDatetime: string;
+  endDatetime: string;
+  duration: string;
+  created_at: string;
+  updated_at: string;
+};
 
 const BootcampsPage = () => {
+  const [bootcamps, setBootcamps] = useState<Course[] | null>(null);
+  const [subscriptions, setSubscriptions] = useState<number[]>([]);
+  const [loading, setLoading] = useState<boolean>(true);
+  const [error, setError] = useState<string | null>(null);
+
   // API fetch params
   const { session } = useAuth();
   const token = session?.token;
   const userId = session?.user.id;
   const apiURL = process.env.API_ENDPOINT;
-
-  const [bootcamps, setBootcamps] = useState<object[]>([]);
-  const [subscriptions, setSubscriptions] = useState<number[]>([]);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -57,11 +71,17 @@ const BootcampsPage = () => {
           };
         }
 
-        const data: any = res.data;
-        if (data) {
-          setBootcamps(data);
-        }
-      } catch (error) {}
+        const responseData: Course[] = res.data;
+
+        setBootcamps(responseData);
+        setError(null);
+      } catch (error: any) {
+        // Todo any
+        setError(error.message);
+        setBootcamps(null);
+      } finally {
+        setLoading(false);
+      }
     };
     fetchData();
   }, [apiURL, token]);
@@ -105,9 +125,16 @@ const BootcampsPage = () => {
     }
   };
 
+  if (loading || !bootcamps) {
+    return <Loader />;
+  }
+
   return (
     <DefaultLayout title="Bootcamps">
       <section className="bg-white dark:bg-gray-900">
+        {error && (
+          <div>{`Ha ocurrido un problema al querer traer los datos ${error}`}</div>
+        )}
         <div className="container px-6 py-10 mx-auto">
           {bootcamps &&
             bootcamps.map(
@@ -116,7 +143,6 @@ const BootcampsPage = () => {
                 title,
                 startDatetime,
                 endDatetime,
-                duration,
                 location,
                 description,
                 image,
@@ -130,7 +156,6 @@ const BootcampsPage = () => {
                       height="0"
                       sizes="100vw"
                       className="transition duration-300 ease-in-out hover:scale-110 w-full  rounded-xl h-48 md:h-72 lg:h-96"
-                      // className="w-full lg:mx-6  rounded-xl h-72 lg:h-96"
                       src={image}
                     />
                   </div>

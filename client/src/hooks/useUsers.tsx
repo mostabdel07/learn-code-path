@@ -1,20 +1,15 @@
 import { useState, useEffect } from "react";
 import { useAuth } from "@/contexts/AuthContext";
 
-interface Course {
+interface User {
   id: number;
-  title: string;
-  headline: string;
-  instructor: string;
-  price: string;
-  img: string;
-  rating: number;
-  created_at: string;
-  updated_at: string;
+  username: string;
+  email: string;
+  role_name: string;
 }
 
-const useOnlineCourses = () => {
-  const [data, setData] = useState<Course[] | null>(null);
+const useUsers = () => {
+  const [data, setData] = useState<User[] | null>(null);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
 
@@ -27,7 +22,7 @@ const useOnlineCourses = () => {
     const fetchData = async () => {
       if (token) {
         try {
-          const response = await fetch(`${apiURL}/courses`, {
+          const response = await fetch(`${apiURL}/users`, {
             method: "GET",
             headers: {
               Authorization: `Bearer ${token}`,
@@ -64,4 +59,4 @@ const useOnlineCourses = () => {
   };
 };
 
-export default useOnlineCourses;
+export default useUsers;

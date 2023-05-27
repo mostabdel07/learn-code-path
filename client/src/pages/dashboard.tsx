@@ -9,6 +9,7 @@ import SlideOver from "@/components/utilities/SlideOver";
 import { useRouter } from "next/router";
 import MyCourses from "@/components/MyCourses";
 import Calendar from "@/components/Calendar";
+import Loader from "@/components/utilities/Loader";
 
 interface User {
   id: number;
@@ -144,19 +145,7 @@ const DashboardPage = () => {
   }
 
   if (!user) {
-    return (
-      <div className="h-screen w-screen flex flex-col justify-center items-center">
-        <p className="block text-black mb-8">Loading...</p>
-        <div
-          className="inline-block h-12 w-12 animate-spin rounded-full border-4 border-solid border-current border-r-transparent align-[-0.125em] motion-reduce:animate-[spin_1.5s_linear_infinite]"
-          role="status"
-        >
-          <span className="!absolute !-m-px !h-px !w-px !overflow-hidden !whitespace-nowrap !border-0 !p-0 ![clip:rect(0,0,0,0)]">
-            Loading...
-          </span>
-        </div>
-      </div>
-    );
+    return <Loader />;
   }
 
   return (
