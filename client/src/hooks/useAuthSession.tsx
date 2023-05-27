@@ -1,18 +1,26 @@
 import { useEffect, useState } from "react";
+import { AES, enc } from "crypto-js";
+
+const secretKey = "YourSecretKey"; // Replace with your own secret key
 
 export const useAuthSession = () => {
   const [session, setSession] = useState<string | null>(null);
 
   useEffect(() => {
-    const storedsession = localStorage.getItem("session");
+    const encryptedData = localStorage.getItem("session");
+    if (encryptedData) {
+      const decryptedData = AES.decrypt(encryptedData, secretKey).toString(
+        enc.Utf8
+      );
 
-    if (storedsession) {
-      setSession(storedsession);
+      setSession(decryptedData);
     }
   }, []);
 
   const saveSession = (session: string) => {
-    localStorage.setItem("session", session);
+    const encryptedData = AES.encrypt(session, secretKey).toString();
+
+    localStorage.setItem("session", encryptedData);
     setSession(session);
   };
 

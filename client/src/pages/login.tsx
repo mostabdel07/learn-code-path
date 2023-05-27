@@ -87,7 +87,6 @@ export default function LoginPage() {
         },
         token: loggedInUser.authorisation.token,
       };
-      console.log(session);
 
       login(session);
 
