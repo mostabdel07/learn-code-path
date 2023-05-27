@@ -79,6 +79,7 @@ class UserController extends Controller
      */
     public function update(Request $request, $id)
     {
+
         $validatedData = $request->validate([
             'username' => 'string|max:255',
             'email' => 'string|email|max:255|unique:users,email',
@@ -86,6 +87,13 @@ class UserController extends Controller
         ]);
 
         $user = User::find($id);
+
+    if (!$request->user()->hasRole('admin')) {
+        if ($user->id !== $request->user()->id) {
+            return response()->json(['error' => 'Acceso denegado'], 403);
+        }
+    }
+
         $user->update($validatedData);
 
         if ($validatedData['role_name'] === 'admin') {
@@ -97,9 +105,6 @@ class UserController extends Controller
         } else {
             return response()->json(['error' => 'Invalid role_name'], 400);
         }
-   
-        
-
     
         return response()->json($user, 204);
     }
@@ -113,16 +118,23 @@ class UserController extends Controller
     public function destroy($id)
     {
 
-        $user = User::find(Auth::user()->id);
-        
-        // Comprobar si el usuario tiene el rol de administrador
-        if ($user->hasRole('admin')) {
-        // Realizar la lógica para eliminar el recurso, ya que el usuario tiene el rol de administrador
-        $user = User::find($id);
-        $user->delete();
-        return response()->json(null, 204); 
-    }
-        // Si el usuario no tiene el rol de administrador, devolver una respuesta de error o redireccionar a una página no autorizada
+        $userToDelete = User::find($id);
+
+        if (!$userToDelete) {
+            return response()->json([
+                'status' => 'error',
+                'message' => 'Usuario no encontrado.'
+            ], 404);
+        }
+    
+        $loggedInUser = User::find(Auth::user()->id);
+    
+        if ($loggedInUser->hasRole('admin') || $userToDelete->id === $loggedInUser->id) {
+            $userToDelete->delete();
+            return response()->json(null, 204);
+        }
+
+    
         return response()->json([
             'status' => 'error',
             'message' => 'No tienes permiso para realizar esta acción.'
