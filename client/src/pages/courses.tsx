@@ -4,7 +4,7 @@ import DefaultLayout from "@/layouts/DefaultLayout";
 import withAuth from "@/components/withAuth";
 import useOnlineCourses from "@/hooks/useOnlineCourses";
 import {
-  ArrowUpCircleIcon,
+  ChevronDoubleDownIcon,
   ChevronDoubleUpIcon,
 } from "@heroicons/react/24/solid";
 import ProductCard from "@/components/ProductCard";
@@ -27,6 +27,7 @@ interface Course {
 
 const CoursesPage = () => {
   const { data, loading, error } = useOnlineCourses();
+  console.log(data);
   const { session } = useAuth();
 
   // Filters
@@ -77,7 +78,7 @@ const CoursesPage = () => {
 
   return (
     <DefaultLayout title="Online courses">
-      <div className="px-6 py-8 md:px-10 md:py-14">
+      <div id="top" className="px-6 py-8 md:px-10 md:py-14">
         <div>
           <div className="sm:flex sm:items-center sm:justify-between">
             <div>
@@ -140,7 +141,7 @@ const CoursesPage = () => {
                   name="min-price"
                   max="49"
                   value={minPrice}
-                  className="w-full h-2 bg-blue-100 appearance-none cursor-grabbing"
+                  className="w-full h-2 bg-blue-100 appearance-none cursor-grabbing rounded-lg"
                   onChange={handleMinPriceChange}
                 />
               </div>
@@ -154,7 +155,7 @@ const CoursesPage = () => {
                   name="max-price"
                   max="100"
                   value={maxPrice}
-                  className="w-full h-2 bg-blue-100 appearance-none cursor-grabbing"
+                  className="w-full h-2 bg-blue-100 appearance-none cursor-grabbing rounded-lg"
                   onChange={handleMaxPriceChange}
                 />
               </div>
@@ -215,7 +216,7 @@ const CoursesPage = () => {
           {error && (
             <div>{`Ha ocurrido un problema al querer traer los datos ${error}`}</div>
           )}
-          <div className="grid gap-4 p-8 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+          <div className="grid gap-4 p-8 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5">
             {data &&
               filteredCourses.map(
                 ({ id, title, img, headline, price, rating }: Course) => (
@@ -231,11 +232,16 @@ const CoursesPage = () => {
                   </div>
                 )
               )}
+            <div id="bottom"></div>
           </div>
         </div>
-        <div className="fixed bottom-48 right-2 md: animate-bounce  brightness-100 rounded-full  md flex items-center justify-center hover:brightness-90">
-          <a href="#">
-            <ChevronDoubleUpIcon className="h-10 w-10 md:h-14 md:w-14 text-ctm-dark" />
+        <div className="flex flex-col items-center justify-center gap-20 fixed bottom-48 right-2 md: animate-bounce">
+          <a href="#top">
+            <ChevronDoubleUpIcon className="h-8 w-8 md:h-10 md:w-10 text-ctm-dark hover:text-gray-500" />
+          </a>
+
+          <a href="#bottom">
+            <ChevronDoubleDownIcon className="h-8 w-8 md:h-10 md:w-10 text-ctm-dark hover:text-gray-500" />
           </a>
         </div>
       </div>
