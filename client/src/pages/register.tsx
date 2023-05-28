@@ -32,6 +32,10 @@ const RegisterPage = () => {
     email: yup
       .string()
       .email("Correo electrónico inválido")
+      .matches(
+        /^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$/,
+        "Correo electrónico inválido"
+      )
       .required("El correo electrónico es obligatorio")
       .max(50, "El correo electrónico no debe exceder los 50 caracteres"),
     password: yup

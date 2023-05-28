@@ -35,6 +35,10 @@ export default function LoginPage() {
     email: yup
       .string()
       .email("Correo electrónico inválido")
+      .matches(
+        /^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$/,
+        "Correo electrónico inválido"
+      )
       .required("El correo electrónico es obligatorio"),
     password: yup.string().required("La contraseña es obligatoria"),
   });
@@ -45,6 +49,7 @@ export default function LoginPage() {
     formState: { errors, isValid },
   } = useForm<FormValues>({
     resolver: yupResolver(schema),
+    mode: "onChange",
   });
 
   async function fetchToken(data: FormValues) {
