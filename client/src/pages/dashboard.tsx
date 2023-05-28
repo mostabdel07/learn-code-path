@@ -184,7 +184,7 @@ const DashboardPage = () => {
    * @param {number} id - The ID of the user to be deleted.
    */
   async function handleDelete(id: number) {
-    setOpenModalEdit(true);
+    // setOpenModalEdit(true);
 
     try {
       const response = await axios.delete(`${apiURL}/users/${id}`, {
@@ -286,11 +286,13 @@ const DashboardPage = () => {
                 </li>
                 <li className="flex border-b py-2">
                   <span className="font-bold w-24">Fecha nacimiento:</span>
-                  <span className="text-gray-700">
-                    {new Date(user.personal_data?.birthday).toLocaleDateString(
-                      "es-ES"
-                    )}
-                  </span>
+                  {user.personal_data?.birthday && (
+                    <span className="text-gray-700">
+                      {new Date(user.personal_data.birthday).toLocaleDateString(
+                        "es-ES"
+                      )}
+                    </span>
+                  )}
                 </li>
                 <li className="flex border-b py-2">
                   <span className="font-bold w-24">Localización:</span>
