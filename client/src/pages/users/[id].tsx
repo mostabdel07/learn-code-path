@@ -31,6 +31,7 @@ const UserPage = () => {
   const [editUser, setEditUser] = useState<Partial<User>>({});
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
+  const [errorList, setErrorList] = useState<any>([]);
 
   const [openSlideOver, setOpenSlideOver] = useState(false);
   const [openModalEdit, setOpenModalEdit] = useState(false);
@@ -103,8 +104,7 @@ const UserPage = () => {
    * @param id The ID of the user to update
    */
   async function handleSave(id: number) {
-    setOpenSlideOver(false);
-    setOpenModalEdit(true);
+    //setOpenSlideOver(false);
 
     // Identify the changed properties
     let changedProperties: Partial<User> = {};
@@ -130,7 +130,12 @@ const UserPage = () => {
       );
 
       if (response.status === 204) router.reload();
-    } catch (error) {}
+    } catch (error: any) {
+      if (error.response.status === 422) {
+        const errors = error.response.data.errors;
+        setErrorList(Object.values(errors).flat());
+      }
+    }
   }
 
   async function handleDelete(id: number) {
@@ -142,9 +147,8 @@ const UserPage = () => {
           Authorization: `Bearer ${token}`,
         },
       });
-
       if (response.status === 204) router.push("/users");
-    } catch (error) {}
+    } catch (error: any) {}
   }
 
   if (loading || !user) {
@@ -271,6 +275,15 @@ const UserPage = () => {
                   >
                     Guardar
                   </button>
+                  {errorList.length > 0 && (
+                    <div className="text-red-600">
+                      <ul>
+                        {errorList.map((error: any) => (
+                          <li key={error}>{error}</li>
+                        ))}
+                      </ul>
+                    </div>
+                  )}
                 </form>
               </SlideOver>
               {/* Modal aviso guardar */}

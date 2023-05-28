@@ -82,8 +82,17 @@ class UserController extends Controller
 
         $validatedData = $request->validate([
             'username' => 'string|max:255',
-            'email' => 'string|email|max:255|unique:users,email',
+            'email' => 'string|email|max:255|unique:users,email|regex:/^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$/',
             'role_name' => 'string'
+        ], [
+            'username.string' => 'El campo nombre de usuario debe ser una cadena de caracteres.',
+            'username.max' => 'El campo nombre de usuario no debe exceder los 30 caracteres.',
+            'email.string' => 'El campo correo electrónico debe ser una cadena de caracteres.',
+            'email.email' => 'El campo correo electrónico debe ser una dirección de correo válida.',
+            'email.max' => 'El campo correo electrónico no debe exceder los 50 caracteres.',
+            'email.unique' => 'El correo electrónico ingresado ya está registrado.',
+            'email.regex' => 'El campo correo electrónico debe ser una dirección de correo válida.',
+
         ]);
 
         $user = User::find($id);

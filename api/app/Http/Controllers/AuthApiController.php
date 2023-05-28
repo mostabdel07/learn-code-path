@@ -19,8 +19,15 @@ class AuthApiController extends Controller
     public function login(Request $request)
     {
         $request->validate([
-            'email' => 'required|string|email',
-            'password' => 'required|string|min:6',
+            'email' => 'required|string|email|regex:/^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$/',
+            'password' => 'required|string',
+        ], [
+            'email.required' => 'El campo correo electrónico es requerido.',
+            'email.string' => 'El campo correo electrónico debe ser una cadena de caracteres.',
+            'email.email' => 'El campo correo electrónico debe ser una dirección de correo válida.',
+            'email.regex' => 'El campo correo electrónico debe ser una dirección de correo válida.',
+            'password.required' => 'El campo contraseña es requerido.',
+            'password.string' => 'El campo contraseña debe ser una cadena de caracteres.',
         ]);
 
         $credentials = $request->only('email', 'password');
@@ -53,7 +60,7 @@ class AuthApiController extends Controller
     {
         $request->validate([
             'username' => 'required|string|max:30',
-            'email' => 'required|string|email|max:50|unique:users,email',
+            'email' => 'required|string|email|max:50|unique:users,email|regex:/^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$/',
             'password' => 'required|string|min:6|regex:/^(?=.*[a-zA-Z])(?=.*\d).+$/',
         ], [
             'username.required' => 'El campo nombre de usuario es requerido.',
@@ -64,6 +71,7 @@ class AuthApiController extends Controller
             'email.email' => 'El campo correo electrónico debe ser una dirección de correo válida.',
             'email.max' => 'El campo correo electrónico no debe exceder los 50 caracteres.',
             'email.unique' => 'El correo electrónico ingresado ya está registrado.',
+            'email.regex' => 'El campo correo electrónico debe ser una dirección de correo válida.',
             'password.required' => 'El campo contraseña es requerido.',
             'password.string' => 'El campo contraseña debe ser una cadena de caracteres.',
             'password.min' => 'El campo contraseña debe tener al menos 6 caracteres.',

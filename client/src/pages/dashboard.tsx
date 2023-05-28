@@ -45,6 +45,7 @@ const DashboardPage = () => {
   const [openSlideOverData, setOpenSlideOverData] = useState(false);
   const [openModalEdit, setOpenModalEdit] = useState(false);
   const [openModalDelete, setOpenModalDelete] = useState(false);
+  const [errorList, setErrorList] = useState<any>([]);
 
   const [formData, setFormData] = useState({
     name: "",
@@ -119,9 +120,6 @@ const DashboardPage = () => {
    * @param {number} id - The ID of the user to be updated.
    */
   async function handleSave(id: number) {
-    setOpenSlideOver(false);
-    setOpenModalEdit(true);
-
     // Identify the changed properties
     let changedProperties: Partial<User> = {};
     if (editUser.username !== user?.username) {
@@ -147,7 +145,12 @@ const DashboardPage = () => {
       );
 
       if (response.status === 204) router.reload();
-    } catch (error) {}
+    } catch (error: any) {
+      if (error.response.status === 422) {
+        const errors = error.response.data.errors;
+        setErrorList(Object.values(errors).flat());
+      }
+    }
   }
 
   async function handleSavePersonal(id: number) {
@@ -549,6 +552,15 @@ const DashboardPage = () => {
           >
             Guardar
           </button>
+          {errorList.length > 0 && (
+            <div className="text-red-600">
+              <ul>
+                {errorList.map((error: any) => (
+                  <li key={error}>{error}</li>
+                ))}
+              </ul>
+            </div>
+          )}
         </form>
       </SlideOver>
       <SlideOver
