@@ -116,7 +116,7 @@ const UsersPage = () => {
                   Administradores
                 </button>
                 <button
-                  className={`inline-flex items-center px-3 py-2 text-sm font-medium text-gray-900 bg-white border border-gray-200 rounded-r-md hover:bg-gray-200 ${
+                  className={`inline-flex items-center px-3 py-2 text-sm font-medium text-gray-900 border border-gray-200 rounded-r-md hover:bg-gray-200 ${
                     selectedRole === "user" ? "bg-gray-200" : ""
                   }`}
                   onClick={() => setSelectedRole("user")}
@@ -146,7 +146,7 @@ const UsersPage = () => {
 
                 <input
                   type="text"
-                  placeholder="Buscar curso"
+                  placeholder="Buscar usuario"
                   className="block w-full py-1.5 pr-5 text-gray-700 bg-gray-50 border border-gray-200 rounded-lg md:w-80 placeholder-gray-400/70 pl-11 rtl:pr-11 rtl:pl-5 focus:border-blue-400 focus:ring-blue-300 focus:outline-none focus:ring focus:ring-opacity-40"
                   value={searchTerm}
                   onChange={(event) => setSearchTerm(event.target.value)}

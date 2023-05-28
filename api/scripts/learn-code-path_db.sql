@@ -20,22 +20,22 @@ SET time_zone = "+00:00";
 --
 -- Base de datos: `learn-code-path`
 --
-DROP TABLE IF EXISTS bootcamps;
 DROP TABLE IF EXISTS failed_jobs;
+DROP TABLE IF EXISTS purchases;
+DROP TABLE IF EXISTS online_courses;
 DROP TABLE IF EXISTS instructors;
+DROP TABLE IF EXISTS subscriptions;
+DROP TABLE IF EXISTS bootcamps;
 DROP TABLE IF EXISTS migrations;
 DROP TABLE IF EXISTS model_has_permissions;
 DROP TABLE IF EXISTS model_has_roles;
-DROP TABLE IF EXISTS online_courses;
 DROP TABLE IF EXISTS password_reset_tokens;
+DROP TABLE IF EXISTS role_has_permissions;
 DROP TABLE IF EXISTS permissions;
 DROP TABLE IF EXISTS personal_access_tokens;
-DROP TABLE IF EXISTS personal_datas;
-DROP TABLE IF EXISTS purchases;
-DROP TABLE IF EXISTS roles;
-DROP TABLE IF EXISTS role_has_permissions;
-DROP TABLE IF EXISTS subscriptions;
 DROP TABLE IF EXISTS users;
+DROP TABLE IF EXISTS personal_datas;
+DROP TABLE IF EXISTS roles;
 
 -- --------------------------------------------------------
 

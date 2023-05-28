@@ -77,7 +77,12 @@ const CoursesPage = () => {
 
   return (
     <DefaultLayout title="Online courses">
-      <div id="top" className="px-6 py-8 md:px-10 md:py-14">
+      <div id="top" className=" px-2 py-3 sm:px-6 sm:py-8 md:px-10 md:py-14">
+        <div className="p-4 mb-6">
+          <h3 className="text-4xl text-center bold font-orbitron">
+            Cursos populares
+          </h3>
+        </div>
         <div className="bg-white shadow-md p-5 rounded-lg mb-6">
           <div className="sm:flex sm:items-center sm:justify-between">
             <div>
@@ -128,8 +133,8 @@ const CoursesPage = () => {
             )}
           </div>
 
-          <div className="mt-6 md:flex md:items-center md:justify-between">
-            <div className="flex items-center justify-center gap-3">
+          <div className="mt-6 gap-4 md:flex md:flex-wrap md:items-center md:justify-between">
+            <div className="flex items-center justify-center gap-3 mb-2">
               <div className="w-1/2">
                 <label htmlFor="min-price" className="text-gray-700">
                   Precio mínimo: {minPrice} &euro;
@@ -210,11 +215,6 @@ const CoursesPage = () => {
             </div>
           </div>
         </div>
-        <div className="p-4 mb-6">
-          <h3 className="text-4xl text-center bold font-orbitron">
-            Cursos populares
-          </h3>
-        </div>
         {error && (
           <div>{`Ha ocurrido un problema al querer traer los datos ${error}`}</div>
         )}
@@ -222,7 +222,7 @@ const CoursesPage = () => {
           {data &&
             filteredCourses.map(
               ({ id, title, img, headline, price, rating }: Course) => (
-                <div key={id}>
+                <div className="w-[295px] sm:w-full mx-auto" key={id}>
                   <ProductCard
                     id={id}
                     title={title}
@@ -234,10 +234,10 @@ const CoursesPage = () => {
                 </div>
               )
             )}
-          <div id="bottom"></div>
+          <div id="bottom" />
         </div>
 
-        <div className="flex flex-col items-center justify-center gap-20 fixed bottom-48 right-2 md: animate-bounce">
+        <div className="flex py-3 px-1 flex-col items-center justify-center gap-32 fixed bottom-48 right-2 rounded-lg transition-all duration-300 bg-white shadow-sm bg-opacity-40  hover:bg-opacity-100">
           <a href="#top">
             <ChevronDoubleUpIcon className="h-8 w-8 md:h-10 md:w-10 text-ctm-dark hover:text-gray-500" />
           </a>
