@@ -70,9 +70,13 @@ class OnlineCourseController extends Controller
 
         $imagePath = $request->file('img')->store('public/images');
         $imageName = basename($imagePath);
-        $imageUrl = asset('storage/images/' . $imageName);
+        $url = asset('storage/images/' . $imageName);
+        
+        // Replace "http://" with "https://"
+        $imageUrl = str_replace('http://', 'https://', $url);
         
         $validatedData['img'] = $imageUrl;
+
 
         $onlineCourse = OnlineCourse::create($validatedData);
 
