@@ -51,22 +51,22 @@ class DatabaseSeeder extends Seeder
 
         \App\Models\Bootcamp::create([
             'title'=> 'Iniciación en la programación con Java y MySQL',
-            'startDatetime' => '2023-06-09T13:00',
-            'endDatetime' => '2023-06-09T14:30',
+            'startDatetime' => '2023-06-09T08:00',
+            'endDatetime' => '2023-06-09T18:30',
             'duration'=> '2 semana(s)',
             'location'=> 'Barcelona',
-            'description'=> 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Iure Lorem ipsum dolor sit, amet consectetur adipisicing elit. Unde tempore aliquid voluptate natus. Odio iste perspiciatis vitae harum! Atque itaque officiis consequatur doloremque, fugit odio est minus voluptates magni beatae! Lorem ipsum dolor sit amet consectetur adipisicing elit. Iure Lorem ipsum dolor sit, amet consectetur adipisicing elit. Unde tempore aliquid voluptate natus. Odio iste perspiciatis vitae harum! Atque itaque officiis consequatur doloremque, fugit odio est minus voluptates magni beatae! odio est minus voluptates magni beatae! Lorem ipsum dolor sit amet consectetur adipisicing elit. Iure Lorem ipsum dolor sit, amet consectetur adipisicing elit.',
-            'image'=> 'https://ts-production.imgix.net/images/088e397f-8949-42ad-a09c-631d611fd773.jpg?auto=compress,format&w=800&h=450',
+            'description'=> 'Únase a "Iniciación en la programación con Java y MySQL" y sumérjase en el mundo de la programación. Aprenda los fundamentos de la programación en Java, incluyendo sintaxis, tipos de datos y principios orientados a objetos. Explore MySQL para una gestión eficaz de los datos. Con la orientación de expertos y ejercicios prácticos, obtendrá una base sólida en Java y MySQL. Comience hoy mismo su viaje por la programación con este completo curso.',
+            'image'=> 'java-course.jpg',
         ]);
 
         \App\Models\Bootcamp::create([
             'title'=> 'Laravel 9 y Next.js Full-stack',
-            'startDatetime' => '2023-05-28T13:00',
-            'endDatetime' => '2023-05-28T14:30',
+            'startDatetime' => '2023-06-28T08:00',
+            'endDatetime' => '2023-06-28T18:00',
             'duration'=> '4 semana(s)',
             'location'=> 'Barcelona',
-            'description'=> 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Iure Lorem ipsum dolor sit, amet consectetur adipisicing elit. Unde tempore aliquid voluptate natus. Odio iste perspiciatis vitae harum! Atque itaque officiis consequatur doloremque, fugit odio est minus voluptates magni beatae! Lorem ipsum dolor sit amet consectetur adipisicing elit. Iure Lorem ipsum dolor sit, amet consectetur adipisicing elit. Unde tempore aliquid voluptate natus. Odio iste perspiciatis vitae harum! Atque itaque officiis consequatur doloremque, fugit odio est minus voluptates magni beatae! odio est minus voluptates magni beatae! Lorem ipsum dolor sit amet consectetur adipisicing elit. Iure Lorem ipsum dolor sit, amet consectetur adipisicing elit.',
-            'image'=> 'https://reffect.co.jp/wp-content/uploads/2022/03/Laravel9_-next_js-1024x585.png',
+            'description'=> "Únete a Laravel 9 y Next.js Full-stack Bootcamp y domina el arte de construir aplicaciones web de vanguardia. Explore las potentes capacidades de backend de Laravel, incluyendo enrutamiento, gestión de bases de datos y autenticación, mientras aprovecha Next.js para crear interfaces frontend ultrarrápidas y SEO-friendly. Con proyectos prácticos y la orientación de expertos, obtendrá las habilidades necesarias para sobresalir en el desarrollo full-stack. Acelera tu carrera y crea aplicaciones web impactantes con este bootcamp inmersivo.",
+            'image'=> 'laravel-course.jpg',
         ]);
     }
 }

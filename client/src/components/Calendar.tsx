@@ -17,7 +17,26 @@ import {
   parseISO,
   startOfToday,
 } from "date-fns";
+import router, { useRouter } from "next/router";
 import { Fragment, useEffect, useState } from "react";
+
+type Bootcamp = {
+  created_at: string;
+  description: string;
+  duration: string;
+  endDatetime: string;
+  id: number;
+  image: string;
+  location: string;
+  startDatetime: string;
+  title: string;
+  updated_at: string;
+};
+
+type Subscription = {
+  bootcamp: Bootcamp;
+  subscriptionId: number;
+};
 
 function classNames(...classes: (string | boolean)[]) {
   return classes.filter(Boolean).join(" ");
@@ -30,7 +49,9 @@ export default function Calendar() {
   const userId = session?.user.id;
   const apiURL = process.env.API_ENDPOINT;
 
-  const [bootcamps, setbootcamps] = useState<any[]>([]);
+  const [subscriptions, setSubscriptions] = useState<Subscription[] | null>(
+    null
+  );
 
   let today = startOfToday();
   let [selectedDay, setSelectedDay] = useState(today);
@@ -52,10 +73,6 @@ export default function Calendar() {
     setCurrentMonth(format(firstDayNextMonth, "MMM-yyyy"));
   }
 
-  let selectedDayBootcamps = bootcamps.filter((bootcamp) =>
-    isSameDay(parseISO(bootcamp.startDatetime), selectedDay)
-  );
-
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -65,9 +82,9 @@ export default function Calendar() {
           },
         });
 
-        const data: any = res.data;
+        const data: Subscription[] = res.data;
 
-        setbootcamps(data);
+        setSubscriptions(data);
 
         if (res.status === 404) {
           return {
@@ -80,6 +97,10 @@ export default function Calendar() {
     };
     fetchData();
   }, [apiURL, token, userId]);
+
+  let selectedDayBootcamps = subscriptions?.filter((subscription) =>
+    isSameDay(parseISO(subscription.bootcamp?.startDatetime), selectedDay)
+  );
 
   return (
     <div className="pt-16">
@@ -157,11 +178,12 @@ export default function Calendar() {
                   </button>
 
                   <div className="w-1 h-1 mx-auto mt-1">
-                    {bootcamps.some((bootcamp) =>
-                      isSameDay(parseISO(bootcamp.startDatetime), day)
-                    ) && (
-                      <div className="w-1 h-1 rounded-full bg-sky-500"></div>
-                    )}
+                    {subscriptions &&
+                      subscriptions.some(({ bootcamp }) =>
+                        isSameDay(parseISO(bootcamp.startDatetime), day)
+                      ) && (
+                        <div className="w-1 h-1 rounded-full bg-sky-500"></div>
+                      )}
                   </div>
                 </div>
               ))}
@@ -175,9 +197,12 @@ export default function Calendar() {
               </time>
             </h2>
             <ol className="mt-4 space-y-1 text-sm leading-6 text-gray-500">
-              {selectedDayBootcamps.length > 0 ? (
-                selectedDayBootcamps.map((bootcamp) => (
-                  <Meeting bootcamp={bootcamp} key={bootcamp.id} />
+              {selectedDayBootcamps && selectedDayBootcamps?.length > 0 ? (
+                selectedDayBootcamps.map((subscription) => (
+                  <Meeting
+                    subscription={subscription}
+                    key={subscription?.subscriptionId}
+                  />
                 ))
               ) : (
                 <p>No hay eventos para este día.</p>
@@ -190,21 +215,22 @@ export default function Calendar() {
   );
 }
 
-function Meeting({ bootcamp }: any) {
+function Meeting({ subscription }: any) {
+  const router = useRouter();
   // API fetch params
   const { session } = useAuth();
   const token = session?.token;
   const apiURL = process.env.API_ENDPOINT;
 
-  let startDateTime = parseISO(bootcamp.startDatetime);
-  let endDateTime = parseISO(bootcamp.endDatetime);
+  let startDateTime = parseISO(subscription.bootcamp.startDatetime);
+  let endDateTime = parseISO(subscription.bootcamp.endDatetime);
 
   /**
    * Handles the unsubscription from a bootcamp.
    * @param id The ID of the bootcamp subscription to unsubscribe from
    * @returns A Promise that resolves once the unsubscription is successful
    */
-  async function handleUnsubscribe(id: any): Promise<void> {
+  async function handleUnsubscribe(id: number) {
     try {
       const response = await axios.delete(
         `${apiURL}/bootcamps/subscriptions/${id}`,
@@ -214,26 +240,25 @@ function Meeting({ bootcamp }: any) {
           },
         }
       );
-      if (response.status === 204) {
-      }
-    } catch (error) {}
+      if (response.status === 204) router.reload();
+    } catch (error: any) {}
   }
 
   return (
     <li className="flex items-center px-4 py-2 space-x-4 group rounded-xl focus-within:bg-gray-100 hover:bg-gray-100">
       <img
-        src={bootcamp.image}
+        src={`/images/${subscription.bootcamp.image}`}
         alt=""
         className="flex-none w-10 h-10 rounded-full"
       />
       <div className="flex-auto">
-        <p className="text-gray-900">{bootcamp.title}</p>
+        <p className="text-gray-900">{subscription.bootcamp.title}</p>
         <p className="mt-0.5">
-          <time dateTime={bootcamp.startDatetime}>
+          <time dateTime={subscription.bootcamp.startDatetime}>
             {format(startDateTime, "h:mm a")}
           </time>{" "}
           -{" "}
-          <time dateTime={bootcamp.endDatetime}>
+          <time dateTime={subscription.bootcamp.endDatetime}>
             {format(endDateTime, "h:mm a")}
           </time>
         </p>
@@ -262,16 +287,17 @@ function Meeting({ bootcamp }: any) {
             <div className="py-1">
               <Menu.Item>
                 {({ active }) => (
-                  <a
-                    href="#"
+                  <button
                     className={classNames(
                       active ? "bg-gray-100 text-gray-900" : "text-gray-700",
                       "block px-4 py-2 text-sm"
                     )}
-                    onClick={() => handleUnsubscribe(bootcamp.id)}
+                    onClick={() =>
+                      handleUnsubscribe(subscription.subscriptionId)
+                    }
                   >
                     Cancelar inscripción
-                  </a>
+                  </button>
                 )}
               </Menu.Item>
             </div>

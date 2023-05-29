@@ -18,7 +18,9 @@ const ProgressBar = () => {
             </div>
           </div>
 
-          <div className="text-xs text-center md:text-base">Added to cart</div>
+          <div className="text-xs text-center md:text-base">
+            Añadido al carrito
+          </div>
         </div>
 
         <div className="w-1/4">
@@ -48,7 +50,9 @@ const ProgressBar = () => {
             </div>
           </div>
 
-          <div className="text-xs text-center md:text-base">Checkout</div>
+          <div className="text-xs text-center md:text-base">
+            Comprobación de compra
+          </div>
         </div>
 
         <div className="w-1/4">
@@ -78,7 +82,7 @@ const ProgressBar = () => {
             </div>
           </div>
 
-          <div className="text-xs text-center md:text-base">Payment</div>
+          <div className="text-xs text-center md:text-base">Realizar pago</div>
         </div>
 
         <div className="w-1/4">
@@ -117,7 +121,7 @@ const ProgressBar = () => {
             </div>
           </div>
 
-          <div className="text-xs text-center md:text-base">Finished</div>
+          <div className="text-xs text-center md:text-base">Finalizado</div>
         </div>
       </div>
     </div>

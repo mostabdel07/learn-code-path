@@ -13,6 +13,8 @@ import { Elements } from "@stripe/react-stripe-js";
 import { loadStripe } from "@stripe/stripe-js";
 import PaymentForm from "@/components/forms/PaymentForm";
 import withAuth from "@/components/withAuth";
+import Loader from "@/components/utilities/Loader";
+import Link from "next/link";
 
 const CheckoutPage = () => {
   // API fetch params
@@ -21,16 +23,20 @@ const CheckoutPage = () => {
   const userId = session?.user.id;
   const apiURL = process.env.API_ENDPOINT;
   // const stripePublicToken = process.env.STRIPE_PUBLIC_TOKEN;
+  const stripePromise = loadStripe(
+    "pk_test_51NAsfLHl9Ohy28dNJrBgiZ1oD6451u2cEplB8076BjTq3CBfVOu6bVAUtX8dt9BdcoFOD3AVNHIBBQiyJEtPsr7200LaScvl3J"
+  );
 
   const { cartItems, clearCart } = useShoppingCart();
   const { data, loading, error } = useOnlineCourses();
 
-  const totalPrice = cartItems.reduce((total: any, item) => {
-    //Todo Any
-    if (!data || loading) {
-      return <div>Loading...</div>;
-    }
+  const [openModalPayment, setOpenModalPayment] = useState(false);
 
+  if (loading || !data) {
+    return <Loader />;
+  }
+
+  const totalPrice = cartItems.reduce((total: any, item) => {
     const itemData = data.find((d: { id: number }) => d.id === item.id);
 
     if (itemData) {
@@ -39,12 +45,6 @@ const CheckoutPage = () => {
     }
     return total;
   }, 0);
-
-  const stripePromise = loadStripe(
-    "pk_test_51NAsfLHl9Ohy28dNJrBgiZ1oD6451u2cEplB8076BjTq3CBfVOu6bVAUtX8dt9BdcoFOD3AVNHIBBQiyJEtPsr7200LaScvl3J"
-  );
-
-  const [openModalPayment, setOpenModalPayment] = useState(false);
 
   const handleOpenModalPayment = () => {
     setOpenModalPayment(true);
@@ -79,46 +79,68 @@ const CheckoutPage = () => {
       if (response.data) {
         router.push("/dashboard");
         clearCart();
-        Cookies.remove("shopping-cart");
       } else {
         alert(
           "El pago no se ha realizado porque algunos cursos no están disponibles."
         );
         router.push("/courses");
         clearCart();
-        Cookies.remove("shopping-cart");
       }
     } catch (error) {}
   };
 
+  function calcIVA(price: number) {
+    let priceWithIVA = parseFloat(price.toString()) + price * 0.21;
+    const formattedPrice = priceWithIVA.toFixed(2);
+    return formattedPrice;
+  }
+
   return (
     <DefaultLayout>
       <div className="px-6 py-8 md:px-10 md:py-14">
+        <div className="p-4 mb-6">
+          <h3 className="text-4xl text-center bold font-orbitron">
+            Comprobación de compra
+          </h3>
+        </div>
         <ProgressBar />
-        <div className="container mx-auto bg-gray-200 p-8 rounded-xl shadow-xl mt-12">
-          {cartItems.map((item) => (
-            <CartItem key={item.id} {...item} />
-          ))}
-          <div className="mt-4 font-medium text-lg text-gray-900">
-            Total: {totalPrice} &euro;
-          </div>
-          <div className="mt-6">
-            <button
-              className="flex items-center justify-center mx-auto rounded-md border border-transparent bg-ctm-action px-12 py-3 text-base font-medium text-white shadow-sm hover:bg-gray-700"
-              onClick={handleOpenModalPayment}
-            >
-              Checkout
-            </button>
-            <Modal
-              title="Realizar pago"
-              openModal={openModalPayment}
-              onClose={() => setOpenModalPayment(false)}
-            >
-              <Elements stripe={stripePromise}>
-                <PaymentForm onSuccess={handlePayment} />
-              </Elements>
-            </Modal>
-          </div>
+        <div className="container mx-auto bg-white p-8 rounded-xl shadow-xl mt-12">
+          {error && (
+            <div>{`Ha ocurrido un problema al querer traer los datos ${error}`}</div>
+          )}
+          {cartItems.length > 0 ? (
+            <>
+              {cartItems.map((item) => (
+                <CartItem key={item.id} {...item} />
+              ))}
+              <div className="mt-4 text-lg text-gray-900">
+                Total a pagar:{" "}
+                <span className="font-medium">{totalPrice} &euro;</span>{" "}
+                <span className="text-xs italic text-gray-500">
+                  Con IVA y gastos incluido
+                </span>
+              </div>
+              <div className="mt-6">
+                <button
+                  className="flex items-center justify-center mx-auto rounded-md border border-transparent bg-amber-500 px-12 py-3 text-base font-medium text-white shadow-sm duration-100 hover:bg-amber-600"
+                  onClick={handleOpenModalPayment}
+                >
+                  Realizar pago
+                </button>
+                <Modal
+                  title="Pasarela de pago"
+                  openModal={openModalPayment}
+                  onClose={() => setOpenModalPayment(false)}
+                >
+                  <Elements stripe={stripePromise}>
+                    <PaymentForm onSuccess={handlePayment} />
+                  </Elements>
+                </Modal>
+              </div>
+            </>
+          ) : (
+            <p>No hay cursos añadidos.</p>
+          )}
         </div>
       </div>
     </DefaultLayout>

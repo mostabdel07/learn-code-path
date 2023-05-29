@@ -9,19 +9,29 @@ use Illuminate\Http\Request;
 class SubscriptionController extends Controller
 {
     public function getUserBootcamps($userId)
-{
-
-    // Obtén todas las compras del usuario
-    $subscriptions = Subscription::where('user_id', $userId)->get();
-
-    // Obtén los IDs de los cursos comprados
-    $bootcampId = $subscriptions->pluck('bootcamp_id')->toArray();
-
-    // Obtén los cursos correspondientes a los IDs
-    $bootcamps = Bootcamp::whereIn('id', $bootcampId)->get();
-
-    return response()->json($bootcamps);
-}
+    {
+        // Obtén todas las compras del usuario
+        $subscriptions = Subscription::where('user_id', $userId)->get();
+    
+        // Obtén los IDs de los cursos comprados
+        $bootcampIds = $subscriptions->pluck('bootcamp_id')->toArray();
+    
+        // Obtén los cursos correspondientes a los IDs
+        $bootcamps = Bootcamp::whereIn('id', $bootcampIds)->get();
+    
+        // Crear un arreglo asociativo para almacenar el ID de suscripción por cada bootcamp
+        $bootcampsWithSubscriptionIds = [];
+    
+        foreach ($bootcamps as $bootcamp) {
+            $subscriptionId = $subscriptions->where('bootcamp_id', $bootcamp->id)->first()->id;
+            $bootcampsWithSubscriptionIds[] = [
+                'bootcamp' => $bootcamp,
+                'subscriptionId' => $subscriptionId,
+            ];
+        }
+    
+        return response()->json($bootcampsWithSubscriptionIds);
+    }
 
   
     /**

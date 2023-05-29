@@ -92,7 +92,7 @@ function AddCourseForm() {
     } catch (error: any) {
       if (error.response.status === 422) {
         const errors = error.response.data.errors;
-        console.log(errors);
+
         setErrorList(Object.values(errors).flat());
       } else {
       }
@@ -211,7 +211,7 @@ function AddCourseForm() {
       <button
         type="submit"
         disabled={!isValid}
-        className="inline-flex items-center justify-center w-full px-4 py-2 mt-4 font-medium text-white bg-blue-600 border border-transparent rounded-md shadow-sm hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
+        className="text-white bg-green-700 hover:bg-green-800 w-full font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 block"
       >
         Añadir curso
       </button>

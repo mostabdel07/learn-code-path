@@ -14,7 +14,7 @@ module.exports = {
       },
       colors: {
         "ctm-dark": "#0D1321",
-        "ctm-light": "#F2F5FF",
+        "ctm-light": "#f7f9fc",
         "ctm-black": "#0d1117",
         "ctm-red": "#f23d3d",
         "ctm-gray": "#3C4048",

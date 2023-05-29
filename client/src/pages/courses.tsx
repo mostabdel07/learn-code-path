@@ -143,7 +143,7 @@ const CoursesPage = () => {
                   type="range"
                   min="0"
                   name="min-price"
-                  max="49"
+                  max={maxPrice}
                   value={minPrice}
                   className="w-full h-2 bg-blue-100 appearance-none cursor-grabbing rounded-lg"
                   onChange={handleMinPriceChange}
@@ -155,7 +155,7 @@ const CoursesPage = () => {
                 </label>
                 <input
                   type="range"
-                  min="50"
+                  min={minPrice}
                   name="max-price"
                   max="100"
                   value={maxPrice}
@@ -237,13 +237,13 @@ const CoursesPage = () => {
           <div id="bottom" />
         </div>
 
-        <div className="flex py-3 px-1 flex-col items-center justify-center gap-32 fixed bottom-48 right-2 rounded-lg transition-all duration-300 bg-white shadow-sm bg-opacity-40  hover:bg-opacity-100">
+        <div className="flex py-3 px-1 flex-col items-center justify-center gap-44 fixed bottom-48 right-2 rounded-lg transition-all duration-300 bg-white shadow-sm bg-opacity-40  hover:bg-opacity-100">
           <a href="#top">
-            <ChevronDoubleUpIcon className="h-8 w-8 md:h-10 md:w-10 text-ctm-dark hover:text-gray-500" />
+            <ChevronDoubleUpIcon className="h-4 w-4 md:h-6 md:w-6 text-ctm-dark hover:text-gray-500 animate-bounce" />
           </a>
 
           <a href="#bottom">
-            <ChevronDoubleDownIcon className="h-8 w-8 md:h-10 md:w-10 text-ctm-dark hover:text-gray-500" />
+            <ChevronDoubleDownIcon className="h-4 w-4 md:h-6 md:w-6 text-ctm-dark hover:text-gray-500 animate-bounce" />
           </a>
         </div>
       </div>

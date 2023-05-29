@@ -67,19 +67,18 @@ const ProductCard = (props: Course) => {
         </div>
         <Link
           href={`/courses/${id}`}
-          className="text-orange-400 hover:text-orange-600"
+          className="text-amber-600 hover:text-orange-700 duration-100"
         >
-          Más detalles del curso{" "}
-          <ArrowLongRightIcon className="inline-block h-4 w-4" />
+          Más detalles del curso <span aria-hidden="true"> &rarr;</span>
         </Link>
         <div className="flex items-center justify-between">
           <span className="text-lg font-bold text-gray-700 ">
             {parseInt(price) === 0.0 ? "Gratuito" : price + " €"}
           </span>
-          {/* <button onClick={() => handleDelete(id)}>Delete</button> */}
+
           <button
             type="button"
-            className="my-2 px-3 py-1.5 text-white bg-ctm-action hover:bg-gray-600 font-medium rounded text-sm text-center transition duration-150 ease-in-out"
+            className="my-2 px-3 py-1.5 text-white bg-amber-500 hover:bg-amber-600 duration-100 font-medium rounded text-sm text-center transition duration-150 ease-in-out"
             onClick={() => addToCart(id)}
           >
             Añadir

@@ -7,31 +7,40 @@ import router from "next/router";
 import { useAuth } from "@/contexts/AuthContext";
 import Loader from "@/components/utilities/Loader";
 import withAuth from "@/components/withAuth";
+import { Swiper, SwiperSlide } from "swiper/react";
+import "swiper/swiper.min.css";
 
-type Course = {
-  id: number;
-  title: string;
+type Bootcamp = {
+  created_at: string;
   description: string;
+  duration: string;
+  endDatetime: string;
+  id: number;
   image: string;
   location: string;
   startDatetime: string;
-  endDatetime: string;
-  duration: string;
-  created_at: string;
+  title: string;
   updated_at: string;
 };
 
-const BootcampsPage = () => {
-  const [bootcamps, setBootcamps] = useState<Course[] | null>(null);
-  const [subscriptions, setSubscriptions] = useState<number[]>([]);
-  const [loading, setLoading] = useState<boolean>(true);
-  const [error, setError] = useState<string | null>(null);
+type Subscription = {
+  bootcamp: Bootcamp;
+  subscriptionId: number;
+};
 
+const BootcampsPage = () => {
   // API fetch params
   const { session } = useAuth();
   const token = session?.token;
   const userId = session?.user.id;
   const apiURL = process.env.API_ENDPOINT;
+
+  const [bootcamps, setBootcamps] = useState<Bootcamp[] | null>(null);
+  const [subscriptions, setSubscriptions] = useState<Subscription[]>([]);
+  const [loading, setLoading] = useState<boolean>(true);
+  const [error, setError] = useState<string | null>(null);
+
+  const [showMore, setShowMore] = useState(false);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -42,7 +51,7 @@ const BootcampsPage = () => {
           },
         });
 
-        const data: any = res.data;
+        const data: Subscription[] = res.data;
 
         if (res.status === 404) {
           return {
@@ -72,7 +81,7 @@ const BootcampsPage = () => {
           };
         }
 
-        const responseData: Course[] = res.data;
+        const responseData: Bootcamp[] = res.data;
 
         setBootcamps(responseData);
         setError(null);
@@ -87,6 +96,12 @@ const BootcampsPage = () => {
     fetchData();
   }, [apiURL, token]);
 
+  function checkSubscription(id: number): boolean {
+    return subscriptions.some(
+      (subscription) => subscription.bootcamp.id === id
+    );
+  }
+
   /**
    * Handles the subscription process for a specific bootcamp identified by its ID.
    * If the bootcamp ID is not already included in the subscriptions list, it adds it.
@@ -96,15 +111,8 @@ const BootcampsPage = () => {
    * @param id The ID of the bootcamp to subscribe to
    */
   const handleSubscribe = async (id: number) => {
-    // Handle the subscription logic here
-
-    if (!subscriptions.includes(id)) {
-      setSubscriptions([...subscriptions, id]);
-    }
-
+    // Handle the subscription logic heres
     try {
-      const userId = localStorage.getItem("session_id");
-
       const response = await axios.post(
         `${apiURL}/subscription_bootcamp`,
         {
@@ -132,11 +140,14 @@ const BootcampsPage = () => {
 
   return (
     <DefaultLayout title="Bootcamps">
-      <section>
+      <div className=" px-6 py-8 md:px-10 md:py-14">
+        <div className="p-4 mb-6">
+          <h3 className="text-4xl text-center bold font-orbitron">Bootcamps</h3>
+        </div>
         {error && (
           <div>{`Ha ocurrido un problema al querer traer los datos ${error}`}</div>
         )}
-        <div className="container px-6 py-10 mx-auto">
+        <div className="container mx-auto">
           {bootcamps &&
             bootcamps.map(
               ({
@@ -149,48 +160,57 @@ const BootcampsPage = () => {
                 image,
                 instructor,
               }: any) => (
-                <div key={id} className="mt-8 lg:-mx-6 lg:flex lg:items-center">
-                  <div className="relative w-full overflow-hidden bg-cover bg-no-repeat rounded-xl lg:mx-6 lg:w-1/2">
-                    <Image
-                      alt="bootcamp"
-                      width="0"
-                      height="0"
-                      sizes="100vw"
-                      className="transition duration-300 ease-in-out hover:scale-110 w-full  rounded-xl h-48 md:h-72 lg:h-96"
-                      src={image}
-                    />
-                  </div>
+                <div
+                  key={id}
+                  className="mt-8 lg:-mx-6 bg-white p-4 rounded-lg shadow-lg"
+                >
+                  <Image
+                    alt="bootcamp"
+                    width="0"
+                    height="0"
+                    sizes="100vw"
+                    className="w-full rounded-xl h-32 sm:h-44 md:h-64 lg:h-96"
+                    src={`/images/${image}`}
+                  />
 
-                  <div className="mt-6 lg:w-1/2 lg:mt-0 lg:mx-6 ">
-                    <h3 className="block text-2xl font-semibold text-gray-800 dark:text-white md:text-3xl">
+                  <div className="mt-6 lg:mx-6">
+                    <h3 className="block lg md:text-2xl font-semibold text-gray-800 dark:text-white lg:text-3xl">
                       {title}
                     </h3>
                     <div className="mt-4">
-                      <p className="text-sm text-white-500">
+                      <p className="text-sm lg:text-base text-white-500">
                         <span className="font-medium text-blue-500">
                           Fecha inicio:{" "}
                         </span>
                         {startDatetime}
                       </p>
-                      <p className="text-sm text-white-500">
+                      <p className="text-sm lg:text-base text-white-500">
                         <span className="font-medium text-blue-500">
                           Fecha finalización:{" "}
                         </span>
                         {endDatetime}
                       </p>
-                      <p className="text-sm">
+                      <p className="text-sm lg:text-base">
                         <span className="font-medium text-blue-500">
                           Localización:{" "}
                         </span>
                         {location}
                       </p>
 
-                      <p className="mt-3 text-sm text-gray-500 dark:text-gray-300 md:text-sm">
+                      <p className="mt-3 text-sm lg:text-base text-gray-500 dark:text-gray-300 md:text-sm">
                         <span className="font-medium text-blue-500">
                           Descripción:{" "}
                         </span>
-                        {description}
+                        {showMore
+                          ? description
+                          : `${description.substring(0, 120)}...`}
                       </p>
+                      <button
+                        className="text-sm lg:text-base font-normal hover:text-gray-700"
+                        onClick={() => setShowMore(!showMore)}
+                      >
+                        {!showMore ? "Mostrar más" : "Mostrar menos"}
+                      </button>
                     </div>
 
                     <div className=" mt-6">
@@ -210,20 +230,20 @@ const BootcampsPage = () => {
                           </p>
                         </div>
                       </div>
-                      {!subscriptions.includes(id) ? (
-                        <button
-                          onClick={() => handleSubscribe(id)}
-                          className="inline-block text-md mt-4 font-semibold leading-6 text-gray-700 bg-gray-100 rounded-lg py-2 px-4 hover:bg-gray-500 hover:text-white"
-                        >
-                          Inscribirse
-                        </button>
-                      ) : (
+                      {checkSubscription(id) ? (
                         <button
                           disabled
                           className="inline-block text-md mt-4 font-semibold leading-6 bg-gray-500 text-white rounded-lg py-2 px-4"
                         >
                           Inscrito{" "}
                           <CheckIcon className="inline-block h-4 w-4" />
+                        </button>
+                      ) : (
+                        <button
+                          onClick={() => handleSubscribe(id)}
+                          className="inline-block text-md mt-4 font-semibold leading-6 text-gray-700 bg-gray-100 rounded-lg py-2 px-4 hover:bg-gray-500 hover:text-white"
+                        >
+                          Inscribirse
                         </button>
                       )}
                     </div>
@@ -232,7 +252,7 @@ const BootcampsPage = () => {
               )
             )}
         </div>
-      </section>
+      </div>
     </DefaultLayout>
   );
 };

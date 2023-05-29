@@ -75,7 +75,7 @@ const PaymentForm: React.FC<PaymentFormProps> = ({ onSuccess }) => {
   return (
     <form onSubmit={handleSubmit} className="mt-4 m-10">
       <div className="mb-4">
-        <label className="block mb-2 text-lg font-medium text-gray-700">
+        <label className="block mb-2 text-sm font-medium text-gray-700">
           Tarjeta de crédito
         </label>
         <div className="p-4 bg-white border border-gray-300 rounded-lg">
@@ -97,9 +97,9 @@ const PaymentForm: React.FC<PaymentFormProps> = ({ onSuccess }) => {
       <button
         type="submit"
         disabled={!stripe || isLoading}
-        className="px-4 py-2 bg-blue-500 text-white rounded-md disabled:bg-gray-400 disabled:cursor-not-allowed"
+        className="mt-4 px-4 py-2 bg-green-500 hover:bg-green-600 duration-100 text-white mx-auto block rounded-md disabled:bg-gray-400 disabled:cursor-not-allowed"
       >
-        {isLoading ? "Procesando pago..." : "Pagar"}
+        {isLoading ? "Procesando pago..." : "Confirmar pago"}
       </button>
       {paymentError && <div>{paymentError}</div>}
     </form>

@@ -24,7 +24,6 @@ interface User {
 }
 
 const DashboardPage = () => {
-  // const { data, loading, error } = useOnlineCourses();
   const router = useRouter();
 
   // API fetch params
@@ -35,11 +34,6 @@ const DashboardPage = () => {
 
   // States
   const [user, setUser] = useState<User | null>(null);
-  // const [editUser, setEditUser] = useState<Partial<User>>({
-  //   username: user?.username,
-  //   email: user?.email,
-  //   role_name: user?.role_name,
-  // });
   const [editUser, setEditUser] = useState<Partial<User>>({});
   const [openSlideOver, setOpenSlideOver] = useState(false);
   const [openSlideOverData, setOpenSlideOverData] = useState(false);
@@ -56,28 +50,28 @@ const DashboardPage = () => {
 
   useEffect(() => {
     const fetchData = async () => {
-      try {
-        const res = await axios.get(`${apiURL}/users/${userId}`, {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        });
+      if (userId) {
+        try {
+          const res = await axios.get(`${apiURL}/users/${userId}`, {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          });
 
-        if (res.status === 404) {
-          return {
-            notFound: true,
-          };
-        }
+          if (res.status === 404) {
+            return {
+              notFound: true,
+            };
+          }
 
-        const user: User = res.data;
+          const user: User = res.data;
 
-        if (user) {
-          console.log("user", user);
-          setUser(user);
-          setEditUser(user);
-          console.log("edituser", editUser);
-        }
-      } catch (error) {}
+          if (user) {
+            setUser(user);
+            setEditUser(user);
+          }
+        } catch (error) {}
+      }
     };
     fetchData();
   }, [apiURL, token, userId]);
@@ -228,27 +222,11 @@ const DashboardPage = () => {
             />
             <div className="flex items-center space-x-2 mt-2">
               <p className="text-2xl text-black">{user.username}</p>
-              <span className="bg-blue-500 rounded-full p-1" title="Verified">
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  className="text-gray-100 h-2.5 w-2.5"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke="currentColor"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth="4"
-                    d="M5 13l4 4L19 7"
-                  ></path>
-                </svg>
-              </span>
+              <p className="text-sm text-blue-400 capitalize font-medium rounded-full py-1 px-2 bg-gray-100">
+                {user.role_name}
+              </p>
             </div>
             <p className="text-gray-700">{user.email}</p>
-            <p className="text-sm text-gray-500 capitalize">
-              {/* {user.role.role_name} */}
-            </p>
           </div>
           <div className="flex-1 flex flex-col items-center lg:items-end justify-end px-8 mt-2">
             <div className="flex items-center space-x-4 mt-2">
@@ -275,22 +253,22 @@ const DashboardPage = () => {
                 Información Personal
               </h4>
               <ul className="mt-2 text-gray-700">
-                <li className="flex border-y py-2">
-                  <span className="font-bold w-24">Nombre:</span>
-                  <span className="text-gray-700">
+                <li className="flex border-b py-2">
+                  <span className="font-bold">Nombre:</span>
+                  <span className="ml-2 text-gray-700">
                     {user.personal_data?.name}
                   </span>
                 </li>
                 <li className="flex border-b py-2">
-                  <span className="font-bold w-24">Apellidos:</span>
-                  <span className="text-gray-700">
+                  <span className="font-bold">Apellidos:</span>
+                  <span className="ml-2 text-gray-700">
                     {user.personal_data?.surname}
                   </span>
                 </li>
                 <li className="flex border-b py-2">
-                  <span className="font-bold w-24">Fecha nacimiento:</span>
+                  <span className="font-bold">Fecha nacimiento:</span>
                   {user.personal_data?.birthday && (
-                    <span className="text-gray-700">
+                    <span className="ml-2 text-gray-700">
                       {new Date(user.personal_data.birthday).toLocaleDateString(
                         "es-ES"
                       )}
@@ -298,20 +276,20 @@ const DashboardPage = () => {
                   )}
                 </li>
                 <li className="flex border-b py-2">
-                  <span className="font-bold w-24">Localización:</span>
-                  <span className="text-gray-700">
+                  <span className="font-bold">Localización:</span>
+                  <span className="ml-2 text-gray-700">
                     {user.personal_data?.location}
                   </span>
                 </li>
                 <li className="flex border-b py-2">
-                  <span className="font-bold w-24">Miembro desde:</span>
-                  <span className="text-gray-700">
+                  <span className="font-bold">Miembro desde:</span>
+                  <span className="ml-2 text-gray-700">
                     {new Date(user.created_at).toLocaleDateString("es-ES")}
                   </span>
                 </li>
               </ul>
               <button
-                className="flex items-center bg-blue-600 hover:bg-blue-700 text-gray-100 px-4 py-2 rounded text-sm space-x-2 transition duration-100"
+                className="flex items-center bg-blue-600 hover:bg-blue-700 text-gray-100 px-4 py-2 mt-4 rounded text-sm space-x-2 transition duration-100"
                 onClick={handleOpenSlideOverData}
               >
                 <span>Editar</span>
@@ -515,7 +493,7 @@ const DashboardPage = () => {
               htmlFor="subject"
               className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
             >
-              Username
+              Usuario
             </label>
             <input
               type="text"
@@ -533,7 +511,7 @@ const DashboardPage = () => {
               htmlFor="email"
               className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
             >
-              Email
+              Correo electrónico
             </label>
             <input
               type="email"
@@ -615,7 +593,7 @@ const DashboardPage = () => {
           </div>
           <button
             type="button"
-            className="text-white bg-green-700 hover:bg-green-800 w-full focus:ring-4 focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-green-600 dark:hover:bg-green-700 focus:outline-none dark:focus:ring-green-800 block"
+            className="text-white bg-green-700 hover:bg-green-800 w-full font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 block"
             onClick={() => handleSavePersonal(user.id)}
           >
             Guardar

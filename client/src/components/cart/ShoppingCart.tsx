@@ -34,50 +34,71 @@ const ShoppingCart = ({ isOpen }: ShoppingCartProps) => {
       openSlideOver={isOpen}
       onClose={closeCart}
     >
-      <div className="mt-8">
-        <div className="flow-root">
-          <ul role="list" className="-my-6 divide-y divide-gray-200">
-            {cartItems.length > 0 ? (
-              cartItems.map((item) => <CartItem key={item.id} {...item} />)
-            ) : (
-              <div className="px-4 py-6 sm:px-6">
-                No hay productos en el carrito.
-              </div>
-            )}
-          </ul>
-        </div>
-      </div>
+      {cartItems.length > 0 ? (
+        <>
+          <div className="mt-8">
+            <div className="flow-root">
+              <ul role="list" className="-my-6 divide-y divide-gray-200">
+                {cartItems.map((item) => (
+                  <CartItem key={item.id} {...item} />
+                ))}
+              </ul>
+            </div>
+          </div>
 
-      <div className="border-t border-gray-200 px-4 py-6 mt-8 sm:px-6">
-        <div className="flex justify-between text-base font-medium text-gray-900">
-          <p>Subtotal</p>
-          <p>{totalPrice} &euro;</p>
+          <div className="border-t border-gray-200 px-4 py-6 mt-8 sm:px-6">
+            <div className="flex justify-between text-base font-medium text-gray-900">
+              <p>Subtotal</p>
+              <p>{totalPrice} &euro;</p>
+            </div>
+            <p className="mt-0.5 text-sm text-gray-500">
+              Gastos de envío e impuestos calculados en el momento de la compra.
+            </p>
+            <div className="mt-6">
+              <Link
+                href="/checkout"
+                className="flex items-center justify-center rounded-md border border-transparent bg-amber-500 px-6 py-3 text-base duration-100 font-medium text-white shadow-sm hover:bg-amber-600"
+                onClick={() => closeCart()}
+              >
+                Confirmar compra
+              </Link>
+            </div>
+            <div className="mt-6 flex justify-center text-center text-sm text-gray-500">
+              <p>
+                <button
+                  type="button"
+                  className="font-medium text-amber-600 hover:text-amber-700 duration-100"
+                  onClick={() => closeCart()}
+                >
+                  Seguir comprando
+                  <span aria-hidden="true"> &rarr;</span>
+                </button>
+              </p>
+            </div>
+          </div>
+        </>
+      ) : (
+        <div className="px-4 py-4 mt-8 sm:px-6">
+          <div className="border-b border-gray-200">
+            <p className=" mb-2 text-sm text-gray-500">
+              No hay cursos en el carrito
+            </p>
+          </div>
+
+          <div className="mt-6 flex justify-center text-center text-sm text-gray-500">
+            <p>
+              <button
+                type="button"
+                className="font-medium text-amber-600 hover:text-amber-700 duration-100"
+                onClick={() => closeCart()}
+              >
+                Seguir comprando
+                <span aria-hidden="true"> &rarr;</span>
+              </button>
+            </p>
+          </div>
         </div>
-        <p className="mt-0.5 text-sm text-gray-500">
-          Gastos de envío e impuestos calculados en el momento de la compra.
-        </p>
-        <div className="mt-6">
-          <Link
-            href="/checkout"
-            className="flex items-center justify-center rounded-md border border-transparent bg-ctm-action px-6 py-3 text-base font-medium text-white shadow-sm hover:bg-gray-700"
-            onClick={() => closeCart()}
-          >
-            Comprar
-          </Link>
-        </div>
-        <div className="mt-6 flex justify-center text-center text-sm text-gray-500">
-          <p>
-            <button
-              type="button"
-              className="font-medium text-ctm-action hover:text-gray-700"
-              onClick={() => closeCart()}
-            >
-              Seguir comprando
-              <span aria-hidden="true"> &rarr;</span>
-            </button>
-          </p>
-        </div>
-      </div>
+      )}
     </SlideOver>
   );
 };
