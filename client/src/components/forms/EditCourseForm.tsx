@@ -88,7 +88,7 @@ const EditCourseForm: React.FC<Props> = ({
           ))}
         </select>
       </div>
-      <div className="mb-6">
+      {/* <div className="mb-6">
         <label htmlFor="file_input" className="block font-medium text-gray-700">
           Imagen
           <div className="flex flex-col items-center justify-center pt-5 pb-6">
@@ -123,7 +123,7 @@ const EditCourseForm: React.FC<Props> = ({
             onChange={handleInputChange}
           />
         </label>
-      </div>
+      </div> */}
       <div className="mb-6">
         <label
           htmlFor="price"

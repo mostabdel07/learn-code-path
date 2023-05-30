@@ -99,7 +99,7 @@ export default function About() {
                     <ul className="flex space-x-4">
                       <li>
                         <a
-                          href="#"
+                          href="https://www.linkedin.com/in/v%C3%ADctor-mu%C3%B1oz-calzada-b52681256"
                           className="text-gray-500 hover:text-white"
                           target="blank_"
                         >
@@ -108,7 +108,7 @@ export default function About() {
                       </li>
                       <li>
                         <a
-                          href="#"
+                          href="https://github.com/VictorMunozCalzada"
                           className="text-gray-500 hover:text-white"
                           target="blank_"
                         >
@@ -117,7 +117,7 @@ export default function About() {
                       </li>
                       <li>
                         <a
-                          href="mailto:elcorreoquequieres@correo.com"
+                          href="mailto:victor19944991@gmail.com"
                           className="text-gray-500 hover:text-white"
                         >
                           <AiFillMessage className="w-4 h-4" />

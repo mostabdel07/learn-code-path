@@ -128,17 +128,6 @@ function AddCourseForm() {
       <div className="mb-6">
         <label htmlFor="file_input" className="block font-medium text-gray-700">
           Imagen
-          {/* <input
-          {...register("img")}
-          className="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-300 rounded-md shadow-sm focus:outline-none focus:border-blue-500 focus:ring-blue-500"
-          aria-describedby="file_input_help"
-          id="file_input"
-          type="file"
-          onChange={onFileChange}
-        />
-        {errors.img && (
-          <span className="text-red-600">{errors.img.message}</span>
-        )} */}
           <div className="flex flex-col items-center justify-center pt-5 pb-6">
             <svg
               aria-hidden="true"
