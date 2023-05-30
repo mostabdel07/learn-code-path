@@ -13,6 +13,7 @@ class Instructor extends Model
     protected $fillable = [
         "name",
         "job_title",
+        "image"
     ];
 
     protected $guarded = [

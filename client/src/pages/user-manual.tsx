@@ -1,6 +1,7 @@
 import React from "react";
 import DefaultLayout from "@/layouts/DefaultLayout";
 import withAuth from "@/components/withAuth";
+import Image from "next/image";
 
 function UserManualPage() {
   return (
@@ -50,37 +51,97 @@ function UserManualPage() {
         </ul>
         <br />
         <h3 className="text-lg font-medium">3. Funcionalidades</h3>
-        <h4 className="text-md font-medium">3.1 Funcionalidad 1</h4>
-        <ul className="list-disc list-inside">
-          <li>
-            Descripción: Comprende qué ofrece la Funcionalidad 1 y cómo mejora
-            tu experiencia.
-          </li>
-          <li>
-            Uso: Aprende cómo acceder y utilizar la Funcionalidad 1 con
-            instrucciones detalladas paso a paso.
-          </li>
-          <li>
-            Consejos y Trucos: Descubre consejos útiles y atajos para optimizar
-            tu flujo de trabajo con la Funcionalidad 1.
-          </li>
-        </ul>
-        <br />
-        <h4 className="text-md font-medium">3.2 Funcionalidad 2</h4>
-        <ul className="list-disc list-inside">
-          <li>
-            Descripción: Explora los beneficios y funcionalidades de la
-            Funcionalidad 2.
-          </li>
-          <li>
-            Uso: Familiarízate con la Funcionalidad 2 siguiendo las
-            instrucciones proporcionadas.
-          </li>
-          <li>
-            Mejores Prácticas: Descubre prácticas y estrategias recomendadas
-            para utilizar la Funcionalidad 2 de manera efectiva.
-          </li>
-        </ul>
+
+        <div className="grid gap-6 md:grid-cols-2">
+          <div>
+            <h4 className="text-md font-medium">3.1 Comprar cursos</h4>
+            <Image
+              src="/images/funcionalities/user-func-1.png"
+              alt="bg-header"
+              width="0"
+              height="0"
+              sizes="100vw"
+              className=" w-full mb-4"
+            />
+            <Image
+              src="/images/funcionalities/user-func-2.png"
+              alt="bg-header"
+              width="0"
+              height="0"
+              sizes="100vw"
+              className=" w-full mb-4"
+            />
+
+            <ul className="list-disc list-inside">
+              <li>
+                Descripción: Comprende qué ofrece la Funcionalidad 1 y cómo
+                mejora tu experiencia.
+              </li>
+              <li>
+                Uso: Aprende cómo acceder y utilizar la Funcionalidad 1 con
+                instrucciones detalladas paso a paso.
+              </li>
+              <li>
+                Consejos y Trucos: Descubre consejos útiles y atajos para
+                optimizar tu flujo de trabajo con la Funcionalidad 1.
+              </li>
+            </ul>
+            <br />
+          </div>
+          <div>
+            <h4 className="text-md font-medium">
+              3.2 Apuntarse a bootcamps y ver calendario
+            </h4>
+            <Image
+              src="/images/funcionalities/user-func-3.png"
+              alt="bg-header"
+              width="0"
+              height="0"
+              sizes="100vw"
+              className=" w-full mb-4"
+            />
+            <Image
+              src="/images/funcionalities/user-func-4.png"
+              alt="bg-header"
+              width="0"
+              height="0"
+              sizes="100vw"
+              className=" w-full mb-4"
+            />
+            <ul className="list-disc list-inside">
+              <li>
+                Descripción: Explora los beneficios y funcionalidades de la
+                Funcionalidad 2.
+              </li>
+              <li>
+                Uso: Familiarízate con la Funcionalidad 2 siguiendo las
+                instrucciones proporcionadas.
+              </li>
+              <li>
+                Mejores Prácticas: Descubre prácticas y estrategias recomendadas
+                para utilizar la Funcionalidad 2 de manera efectiva.
+              </li>
+            </ul>
+          </div>
+          <div>
+            <h3 className="text-lg font-medium">4. Solución de Problemas</h3>
+            <p>
+              ¿Te encuentras con problemas? Consulta la sección de Solución de
+              Problemas para encontrar soluciones a problemas comunes. Aquí se
+              tratan algunos temas:
+            </p>
+            <ul className="list-disc list-inside">
+              <li>
+                Mensajes de error frecuentes y los pasos para solucionarlos.
+              </li>
+              <li>Problemas comunes y sus resoluciones.</li>
+              <li>
+                Cómo contactar a nuestro equipo de soporte para obtener ayuda
+                adicional.
+              </li>
+            </ul>
+          </div>
+        </div>
         <br />
         <h3 className="text-lg font-medium">4. Solución de Problemas</h3>
         <p>

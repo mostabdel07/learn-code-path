@@ -4,19 +4,19 @@ import { ChevronLeftIcon, ChevronRightIcon } from "@heroicons/react/24/solid";
 
 const images = [
   {
-    src: "/images/courses-view.png",
+    src: "/images/slides/slide-1.png",
     alt: "Image 1",
     width: 1200,
     height: 800,
   },
   {
-    src: "/images/dashboard-view.png",
+    src: "/images/slides/slide-2.png",
     alt: "Image 2",
     width: 1200,
     height: 800,
   },
   {
-    src: "/images/courses-view.png",
+    src: "/images/slides/slide-3.png",
     alt: "Image 3",
     width: 1200,
     height: 800,

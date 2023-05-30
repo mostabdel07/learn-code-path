@@ -1,12 +1,6 @@
 import Caroussel from "@/components/Caroussel";
 import React from "react";
 
-const images = [
-  "images/courses-view.png",
-  "images/dashboard-view.png",
-  "images/courses-view.png",
-];
-
 export default function Gallery() {
   return (
     <section

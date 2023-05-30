@@ -42,7 +42,7 @@ Password: 8s%BdstT7mC%hWJW
 1. Install dependencies in api dir: `php composer install`
 2. Configure environment variables in api dir: Create a `.env` file and set the required variables (database credentials, API keys, etc.).
 3. Set a new hash key with `php artisan key:generate`
-4. Create Database tables, structure using `php artisan migrate:fresh --seed`
+4. Create Database tables, structure using in scripts dir `mysql -u user1 -p learn-code-path < learn-code-path_db.sql`
 5. Execute the `.sql` script in api/scripts/ dir to fill the database with data.
 6. Start the server api server: `pm2 start ecosystem.config.json`
 

@@ -69,10 +69,12 @@ class CourseApiController extends Controller
 
                     $instructorName = $course->visible_instructors[0]->title;
                     $instructorJobTitle = $course->visible_instructors[0]->job_title;
+                    $instructorImage = $course->visible_instructors[0]->image_100x100;
 
                     $instructor = Instructor::firstOrCreate([
                         'name' => $instructorName,
                         'job_title' => $instructorJobTitle,
+                        'image' => $instructorImage
                     ]);
                     
                     $onlineCourse = OnlineCourse::create([

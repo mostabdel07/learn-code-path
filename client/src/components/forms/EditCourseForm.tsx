@@ -37,7 +37,7 @@ const EditCourseForm: React.FC<Props> = ({
           htmlFor="title"
           className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
         >
-          Titulo
+          Título
         </label>
         <input
           type="text"
@@ -55,7 +55,7 @@ const EditCourseForm: React.FC<Props> = ({
           htmlFor="headline"
           className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
         >
-          Descripcion
+          Descripción
         </label>
         <input
           type="text"
@@ -129,7 +129,7 @@ const EditCourseForm: React.FC<Props> = ({
           htmlFor="price"
           className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
         >
-          Price
+          Precio
         </label>
         <input
           type="number"

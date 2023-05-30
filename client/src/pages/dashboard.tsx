@@ -125,7 +125,6 @@ const DashboardPage = () => {
     if (editUser.role_name !== user?.role_name) {
       changedProperties.role_name = editUser.role_name;
     }
-    console.log("changed", changedProperties);
 
     try {
       const response = await axios.put(
@@ -150,7 +149,6 @@ const DashboardPage = () => {
   async function handleSavePersonal(id: number) {
     setOpenSlideOverData(false);
 
-    console.log("formdata", formData);
     try {
       const response = await axios.put(
         `${apiURL}/personal_data/${id}`,
@@ -206,8 +204,12 @@ const DashboardPage = () => {
       <div className="px-6 py-8 md:px-10 md:py-14">
         <div className="bg-white rounded-lg shadow-xl pb-8">
           <div className="w-full h-[250px]">
-            <img
+            <Image
               src="/images/bg-profile.jpg"
+              alt="bg-header"
+              width="0"
+              height="0"
+              sizes="100vw"
               className="w-full h-full object-cover rounded-tl-lg rounded-tr-lg"
             />
           </div>
@@ -296,7 +298,7 @@ const DashboardPage = () => {
               </button>
             </div>
 
-            <div className="flex-1 bg-white rounded-lg shadow-xl mt-4 p-8">
+            {/* <div className="flex-1 bg-white rounded-lg shadow-xl mt-4 p-8">
               <h4 className="text-xl text-gray-900 font-bold">Estadísticas</h4>
               <div className="grid gap-8 mt-4">
                 <div className="px-6 py-6 bg-gray-100 border border-gray-300 rounded-lg shadow-xl">
@@ -462,7 +464,7 @@ const DashboardPage = () => {
                   </div>
                 </div>
               </div>
-            </div>
+            </div> */}
           </div>
           <div className="flex flex-col w-full 2xl:w-2/3">
             <div className="flex-1 bg-white rounded-lg shadow-xl p-8">
@@ -470,7 +472,6 @@ const DashboardPage = () => {
                 <h4 className="text-xl text-gray-900 font-bold">Mis cursos</h4>
                 <MyCourses />
               </div>
-
               <div className="mt-8 text-black">
                 <h4 className="text-xl text-gray-900 font-bold">
                   Calendario de formaciones

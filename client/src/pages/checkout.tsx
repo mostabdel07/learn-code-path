@@ -115,7 +115,9 @@ const CheckoutPage = () => {
               ))}
               <div className="mt-4 text-lg text-gray-900">
                 Total a pagar:{" "}
-                <span className="font-medium">{totalPrice} &euro;</span>{" "}
+                <span className="font-medium">
+                  {calcIVA(totalPrice)} &euro;
+                </span>{" "}
                 <span className="text-xs italic text-gray-500">
                   Con IVA y gastos incluido
                 </span>

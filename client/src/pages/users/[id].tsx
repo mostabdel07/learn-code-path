@@ -159,8 +159,8 @@ const UserPage = () => {
 
   return (
     <DefaultLayout title="Gestionar usuario">
-      <section className="text-gray-600 body-font">
-        <div className="container mx-auto flex px-5 py-24 md:flex-row flex-col items-center">
+      <section className="text-gray-600 body-font px-6 py-8 md:px-10 md:py-14">
+        <div className="container mx-auto flex md:flex-row flex-col items-center shadow-lg bg-white rounded-lg p-6">
           <div className="lg:max-w-lg lg:w-full md:w-1/2 w-5/6 mb-10 md:mb-0">
             <Image
               src="https://cdn2.iconfinder.com/data/icons/flatfaces-everyday-people-square/128/beard_male_man_face_avatar-512.png"
@@ -173,15 +173,11 @@ const UserPage = () => {
           <div className="lg:flex-grow md:w-1/2 lg:pl-24 md:pl-16 flex flex-col md:items-start md:text-left items-center text-center">
             <h2 className="title-font sm:text-4xl text-3xl mb-4 font-medium text-gray-900 dark:text-gray-200">
               {user.username}
-              <span className="ml-2 text-blue-500">#{user.id}</span>
+              <span className="ml-2 text-blue-500">ID: {user.id}</span>
             </h2>
             <p className="mb-4">
               <span className="font-bold">Email: </span>
               {user.email}
-            </p>
-            <p className="mb-4">
-              <span className="font-bold">ID: </span>
-              {user.id}
             </p>
             <p className="mb-4">
               <span className="font-bold">Fecha de creación: </span>
@@ -220,7 +216,7 @@ const UserPage = () => {
                       htmlFor="subject"
                       className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
                     >
-                      Username
+                      Usuario
                     </label>
                     <input
                       type="text"
@@ -238,7 +234,7 @@ const UserPage = () => {
                       htmlFor="email"
                       className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
                     >
-                      Email
+                      Correo electrónico
                     </label>
                     <input
                       type="email"

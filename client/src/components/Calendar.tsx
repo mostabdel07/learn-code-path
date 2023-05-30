@@ -17,8 +17,9 @@ import {
   parseISO,
   startOfToday,
 } from "date-fns";
-import router, { useRouter } from "next/router";
+import { useRouter } from "next/router";
 import { Fragment, useEffect, useState } from "react";
+import Image from "next/image";
 
 type Bootcamp = {
   created_at: string;
@@ -244,22 +245,36 @@ function Meeting({ subscription }: any) {
     } catch (error: any) {}
   }
 
+  function formatDate(date: any) {
+    const originalDate = new Date(date);
+
+    const day = originalDate.getDate().toString().padStart(2, "0");
+    const month = (originalDate.getMonth() + 1).toString().padStart(2, "0");
+    const year = originalDate.getFullYear().toString();
+
+    const formattedDate = `${day}/${month}/${year}`;
+    return formattedDate;
+  }
+
   return (
     <li className="flex items-center px-4 py-2 space-x-4 group rounded-xl focus-within:bg-gray-100 hover:bg-gray-100">
-      <img
+      <Image
         src={`/images/${subscription.bootcamp.image}`}
-        alt=""
+        alt="bg-bootcamp-image"
+        width="0"
+        height="0"
+        sizes="100vw"
         className="flex-none w-10 h-10 rounded-full"
       />
       <div className="flex-auto">
         <p className="text-gray-900">{subscription.bootcamp.title}</p>
         <p className="mt-0.5">
           <time dateTime={subscription.bootcamp.startDatetime}>
-            {format(startDateTime, "h:mm a")}
+            {formatDate(startDateTime)}
           </time>{" "}
           -{" "}
           <time dateTime={subscription.bootcamp.endDatetime}>
-            {format(endDateTime, "h:mm a")}
+            {formatDate(endDateTime)}
           </time>
         </p>
       </div>

@@ -21,6 +21,10 @@ type Bootcamp = {
   startDatetime: string;
   title: string;
   updated_at: string;
+  instructor: {
+    name: string;
+    charge: string;
+  };
 };
 
 type Subscription = {
@@ -102,6 +106,17 @@ const BootcampsPage = () => {
     );
   }
 
+  function formatDate(date: any) {
+    const originalDate = new Date(date);
+
+    const day = originalDate.getDate().toString().padStart(2, "0");
+    const month = (originalDate.getMonth() + 1).toString().padStart(2, "0");
+    const year = originalDate.getFullYear().toString();
+
+    const formattedDate = `${day}/${month}/${year}`;
+    return formattedDate;
+  }
+
   /**
    * Handles the subscription process for a specific bootcamp identified by its ID.
    * If the bootcamp ID is not already included in the subscriptions list, it adds it.
@@ -140,8 +155,8 @@ const BootcampsPage = () => {
 
   return (
     <DefaultLayout title="Bootcamps">
-      <div className=" px-6 py-8 md:px-10 md:py-14">
-        <div className="p-4 mb-6">
+      <div className=" px-6 py-8 md:px-8 md:py-10">
+        <div className="p-4 mb-2">
           <h3 className="text-4xl text-center bold font-orbitron">Bootcamps</h3>
         </div>
         {error && (
@@ -182,13 +197,13 @@ const BootcampsPage = () => {
                         <span className="font-medium text-blue-500">
                           Fecha inicio:{" "}
                         </span>
-                        {startDatetime}
+                        {formatDate(startDatetime)}
                       </p>
                       <p className="text-sm lg:text-base text-white-500">
                         <span className="font-medium text-blue-500">
                           Fecha finalización:{" "}
                         </span>
-                        {endDatetime}
+                        {formatDate(endDatetime)}
                       </p>
                       <p className="text-sm lg:text-base">
                         <span className="font-medium text-blue-500">
@@ -214,26 +229,10 @@ const BootcampsPage = () => {
                     </div>
 
                     <div className=" mt-6">
-                      <div className="flex items-center">
-                        <img
-                          className="object-cover object-center w-10 h-10 rounded-full"
-                          src="https://images.unsplash.com/photo-1531590878845-12627191e687?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=764&q=80"
-                          alt="profile-image"
-                        />
-
-                        <div className="mx-4">
-                          <h1 className="text-sm text-gray-700 dark:text-gray-200">
-                            Amelia Anderson
-                          </h1>
-                          <p className="text-sm text-gray-500 dark:text-gray-400">
-                            Instructor, Lead Developer
-                          </p>
-                        </div>
-                      </div>
                       {checkSubscription(id) ? (
                         <button
                           disabled
-                          className="inline-block text-md mt-4 font-semibold leading-6 bg-gray-500 text-white rounded-lg py-2 px-4"
+                          className="inline-block text-lg mt-4 font-semibold leading-6 bg-gray-500 text-white rounded-lg py-2 px-4"
                         >
                           Inscrito{" "}
                           <CheckIcon className="inline-block h-4 w-4" />
@@ -241,7 +240,7 @@ const BootcampsPage = () => {
                       ) : (
                         <button
                           onClick={() => handleSubscribe(id)}
-                          className="inline-block text-md mt-4 font-semibold leading-6 text-gray-700 bg-gray-100 rounded-lg py-2 px-4 hover:bg-gray-500 hover:text-white"
+                          className="inline-block text-lg mt-4 font-semibold leading-6 text-white bg-amber-500 duration-100 rounded-lg py-2 px-4 hover:bg-amber-600"
                         >
                           Inscribirse
                         </button>

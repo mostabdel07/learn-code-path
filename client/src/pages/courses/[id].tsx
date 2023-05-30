@@ -11,7 +11,16 @@ import EditCourseForm from "@/components/forms/EditCourseForm";
 import { useShoppingCart } from "@/contexts/ShoppingCartContext";
 import Loader from "@/components/utilities/Loader";
 
-interface Course {
+type Instructor = {
+  created_at: string;
+  id: number;
+  image: string;
+  job_title: string;
+  name: string;
+  updated_at: string;
+};
+
+type Course = {
   id: number;
   title: string;
   headline: string;
@@ -22,7 +31,8 @@ interface Course {
   img: any;
   created_at: string;
   updated_at: string;
-}
+  instructor: Instructor;
+};
 
 const CoursePage = () => {
   const router = useRouter();
@@ -61,6 +71,7 @@ const CoursePage = () => {
           }
 
           const course = res.data;
+          console.log(course);
           setCourse(course);
           setEditCourse(course);
         } catch (error: any) {
@@ -186,7 +197,7 @@ const CoursePage = () => {
     <DefaultLayout title="Gestionar curso">
       <section className="text-gray-600 body-font overflow-hidden">
         <div className="container px-5 py-24 mx-auto">
-          <div className="lg:w-4/5 mx-auto flex flex-wrap">
+          <div className="lg:w-4/5 mx-auto flex flex-wrap shadow-lg rounded-lg bg-white p-6">
             <Image
               src={course.img}
               alt="course"
@@ -196,16 +207,33 @@ const CoursePage = () => {
               className="lg:w-1/2 w-full lg:h-auto h-64 object-cover object-center rounded"
             />
             <div className="lg:w-1/2 w-full lg:pl-10 lg:py-6 mt-6 lg:mt-0">
-              <h1 className="text-gray-900 text-3xl title-font font-medium mb-1">
+              <h1 className="text-gray-900 text-3xl title-font font-medium mb-4">
                 {course.title}
               </h1>
-              <div className="flex mb-4">{renderStars()}</div>
-              <p className="leading-relaxed font-bold italic">
-                {course.instructor_name}
-              </p>
-              <p className="leading-relaxed">{course.headline}</p>
+              <div className="flex mb-4">Valoración: {renderStars()}</div>
+
+              <div className="flex items-center mb-2">
+                <Image
+                  className="object-cover object-center w-10 h-10 rounded-full"
+                  width="0"
+                  height="0"
+                  sizes="100vw"
+                  src={course.instructor.image}
+                  alt="instructor-image"
+                />
+
+                <div className="mx-4">
+                  <p className="leading-relaxed font-bold italic">
+                    {course.instructor.name}
+                  </p>
+                  <p className="text-sm text-gray-500 dark:text-gray-400">
+                    {course.instructor.job_title}
+                  </p>
+                </div>
+              </div>
+              <p className="leading-relaxed mb-2">{course.headline}</p>
               <p className="title-font font-medium text-2xl text-gray-900">
-                {course.price == 0.0 ? "Gratuito" : course.price + "€"}
+                {course.price == 0.0 ? "Gratuito" : course.price + " €"}
               </p>
               <div className="flex justify-center mt-4">
                 {session?.user.role === "admin" && (
